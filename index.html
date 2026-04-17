@@ -1,0 +1,1157 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Connie Harris — Decorative Arts</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300;1,400&family=Outfit:wght@200;300;400&display=swap" rel="stylesheet"/>
+<style>
+:root {
+  --gold:   #b8892a;
+  --umber:  #1a1410;
+  --plaster:#f2ede3;
+  --sienna: #9c4520;
+  --serif:  'Cormorant Garamond', Georgia, serif;
+  --sans:   'Outfit', system-ui, sans-serif;
+  --ease:   cubic-bezier(.16,1,.3,1);
+}
+*,*::before,*::after { box-sizing:border-box; margin:0; padding:0; }
+html,body { width:100%; height:100%; overflow:hidden; }
+body { font-family:var(--sans); background:var(--umber); color:var(--plaster); cursor:none; font-weight:300; }
+
+/* grain */
+body::before {
+  content:''; position:fixed; inset:0; z-index:9000; pointer-events:none;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200'%3E%3Cfilter id='g'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.78' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='200' height='200' filter='url(%23g)'/%3E%3C/svg%3E");
+  opacity:.04; mix-blend-mode:multiply;
+}
+
+/* ── CURSOR ── */
+#cursor {
+  position:fixed; z-index:99999;
+  width:10px; height:10px;
+  background:var(--gold); border-radius:50%;
+  pointer-events:none; transform:translate(-50%,-50%);
+  transition:width .3s var(--ease),height .3s var(--ease);
+  mix-blend-mode:difference;
+}
+#cursor.big { width:52px; height:52px; background:rgba(184,137,42,.2); border:1px solid var(--gold); }
+#cursor-label {
+  position:fixed; z-index:99998;
+  font-size:.44rem; letter-spacing:.2em; text-transform:uppercase;
+  color:var(--gold); pointer-events:none;
+  opacity:0; transition:opacity .3s; white-space:nowrap;
+  transform:translate(-50%,30px);
+}
+#cursor-label.show { opacity:1; }
+
+/* ── TRANSITION ── */
+#veil {
+  position:fixed; inset:0; z-index:8000;
+  background:var(--umber); pointer-events:none; opacity:0;
+  transition:opacity .5s var(--ease);
+}
+#veil.dark { opacity:1; pointer-events:all; }
+
+/* ── LOADING ── */
+#loading {
+  position:fixed; inset:0; z-index:9500;
+  background:var(--umber);
+  display:flex; flex-direction:column;
+  align-items:center; justify-content:center; gap:24px;
+  transition:opacity .8s var(--ease);
+}
+#loading.done { opacity:0; pointer-events:none; }
+.ld-name { font-family:var(--serif); font-style:italic; font-weight:300; font-size:2rem; color:rgba(242,237,227,.55); }
+.ld-bar { width:140px; height:1px; background:rgba(242,237,227,.1); position:relative; overflow:hidden; }
+.ld-fill { position:absolute; top:0; left:0; bottom:0; width:0; background:var(--gold); animation:ldF 2s var(--ease) forwards; }
+@keyframes ldF { to { width:100%; } }
+.ld-sub { font-size:.46rem; letter-spacing:.28em; text-transform:uppercase; color:rgba(242,237,227,.2); }
+
+/* ── SCENES ── */
+#house { position:fixed; inset:0; }
+.scene { position:absolute; inset:0; display:none; overflow:hidden; }
+.scene.active { display:block; }
+
+.sbg {
+  position:absolute; inset:0; width:100%; height:110%;
+  object-fit:cover; object-position:center 30%;
+  transform:scale(1.04);
+  transition:transform 20s linear;
+  filter:brightness(.65) saturate(.82);
+}
+.scene.active .sbg { transform:scale(1); }
+
+.sovl {
+  position:absolute; inset:0;
+  background:linear-gradient(to top,rgba(26,20,16,.92) 0%,rgba(26,20,16,.35) 38%,rgba(26,20,16,.08) 65%,transparent 100%);
+  pointer-events:none;
+}
+.stop {
+  position:absolute; top:0; left:0; right:0; height:150px;
+  background:linear-gradient(to bottom,rgba(26,20,16,.6) 0%,transparent 100%);
+  pointer-events:none;
+}
+
+/* ── NAV ── */
+#nav {
+  position:fixed; top:0; left:0; right:0; z-index:500;
+  height:60px; display:flex; align-items:center; justify-content:space-between;
+  padding:0 clamp(24px,5vw,60px);
+  transition:background .4s,border-color .4s;
+  border-bottom:1px solid transparent;
+}
+#nav.solid { background:rgba(26,20,16,.95); backdrop-filter:blur(20px); border-color:rgba(255,255,255,.06); }
+.nav-logo { font-family:var(--serif); font-style:italic; font-weight:300; font-size:1rem; letter-spacing:.04em; color:rgba(242,237,227,.7); text-decoration:none; cursor:none; }
+.nav-links { display:flex; gap:22px; list-style:none; }
+.nav-links a { font-size:.5rem; letter-spacing:.2em; text-transform:uppercase; text-decoration:none; color:rgba(242,237,227,.35); transition:color .25s; cursor:none; }
+.nav-links a:hover { color:rgba(242,237,227,.8); }
+.nav-cta { font-size:.5rem; letter-spacing:.2em; text-transform:uppercase; text-decoration:none; color:var(--gold); border:1px solid rgba(184,137,42,.35); padding:8px 16px; transition:.3s; cursor:none; }
+.nav-cta:hover { background:rgba(184,137,42,.1); border-color:var(--gold); }
+
+/* ── MINIMAP ── */
+#minimap { position:fixed; right:18px; top:50%; transform:translateY(-50%); z-index:400; display:flex; flex-direction:column; gap:8px; }
+.mmdot { width:4px; height:4px; border-radius:50%; background:rgba(242,237,227,.18); border:1px solid rgba(242,237,227,.1); cursor:none; transition:background .3s,height .4s var(--ease),border-radius .4s; }
+.mmdot.cur { background:var(--gold); border-color:var(--gold); height:18px; border-radius:2px; }
+.mmdot.vis { background:rgba(184,137,42,.35); border-color:rgba(184,137,42,.4); }
+
+/* ── SCENE FOOTER ── */
+.sfooter { position:absolute; bottom:0; left:0; right:0; padding:0 clamp(24px,5vw,60px) 28px; display:flex; justify-content:space-between; align-items:flex-end; z-index:20; pointer-events:none; }
+.sfooter-loc { font-size:.46rem; letter-spacing:.2em; text-transform:uppercase; color:rgba(242,237,227,.2); }
+.sfooter-hint { font-family:var(--serif); font-style:italic; font-size:.85rem; color:rgba(242,237,227,.2); animation:hpulse 3s ease infinite; }
+@keyframes hpulse { 0%,100%{opacity:.2} 50%{opacity:.5} }
+
+/* ═══ EXTERIOR ═══ */
+#exterior .sbg { object-position:center 25%; filter:brightness(.6) saturate(.8); }
+#exterior .sovl { background:linear-gradient(to top,rgba(26,20,16,.9) 0%,rgba(26,20,16,.2) 45%,transparent 75%),linear-gradient(to right,rgba(26,20,16,.3) 0%,transparent 40%); }
+.ext-content { position:absolute; bottom:12%; left:50%; transform:translateX(-50%); text-align:center; z-index:20; display:flex; flex-direction:column; align-items:center; }
+.ext-name { font-family:var(--serif); font-style:italic; font-weight:300; font-size:clamp(4rem,10vw,11rem); color:rgba(242,237,227,.88); line-height:.86; letter-spacing:-.04em; margin-bottom:20px; }
+.ext-name small { display:block; font-style:normal; font-weight:300; font-size:.28em; letter-spacing:.2em; color:rgba(242,237,227,.35); margin-bottom:8px; }
+.ext-stroke { display:block; margin:0 auto 16px; width:min(260px,55%); }
+.ext-tag { font-size:.54rem; letter-spacing:.28em; text-transform:uppercase; color:rgba(184,137,42,.65); margin-bottom:14px; }
+.ext-tagline { font-family:var(--serif); font-style:italic; font-weight:300; font-size:clamp(.85rem,1.6vw,1.15rem); color:rgba(242,237,227,.28); margin-bottom:36px; max-width:40ch; }
+.ext-enter { display:inline-flex; align-items:center; gap:14px; background:none; border:none; cursor:none; padding:0; font-family:var(--serif); font-style:italic; font-weight:300; font-size:1.15rem; color:rgba(184,137,42,.8); transition:color .3s; }
+.ext-enter:hover { color:var(--gold); }
+.ext-enter-ring { width:48px; height:48px; border-radius:50%; border:1px solid rgba(184,137,42,.4); display:flex; align-items:center; justify-content:center; font-size:.9rem; font-style:normal; transition:border-color .3s,background .3s; }
+.ext-enter:hover .ext-enter-ring { border-color:var(--gold); background:rgba(184,137,42,.1); }
+
+/* ═══ FRONT DOOR ═══ */
+#door .sbg { object-position:center center; filter:brightness(.6) saturate(.8); }
+.door-content { position:absolute; bottom:15%; left:50%; transform:translateX(-50%); z-index:20; text-align:center; }
+.door-label { font-family:var(--serif); font-style:italic; font-weight:300; font-size:clamp(1.5rem,4vw,3rem); color:rgba(242,237,227,.75); margin-bottom:28px; }
+.door-btn { display:inline-flex; align-items:center; gap:12px; background:none; border:none; cursor:none; padding:0; font-size:.52rem; letter-spacing:.26em; text-transform:uppercase; color:rgba(184,137,42,.7); transition:color .3s; }
+.door-btn:hover { color:var(--gold); }
+.door-btn-ring { width:42px; height:42px; border-radius:50%; border:1px solid rgba(184,137,42,.35); display:flex; align-items:center; justify-content:center; font-size:.8rem; transition:border-color .3s,background .3s; }
+.door-btn:hover .door-btn-ring { border-color:var(--gold); background:rgba(184,137,42,.1); }
+
+/* ═══ FOYER ═══ */
+#foyer .sbg { filter:brightness(.52) saturate(.8); object-position:center 40%; }
+.foyer-hotspots { position:absolute; inset:0; z-index:20; display:flex; }
+.fh { flex:1; cursor:none; display:flex; flex-direction:column; align-items:center; justify-content:flex-end; padding-bottom:18%; border-bottom:3px solid transparent; transition:background .3s,border-color .3s; }
+.fh:hover { background:rgba(184,137,42,.07); border-bottom-color:var(--gold); }
+.fh-ring { width:40px; height:40px; border-radius:50%; border:1px solid rgba(184,137,42,0); display:flex; align-items:center; justify-content:center; font-size:.75rem; color:rgba(184,137,42,0); transition:all .35s; margin-bottom:10px; }
+.fh:hover .fh-ring { border-color:rgba(184,137,42,.55); background:rgba(184,137,42,.1); color:var(--gold); }
+.fh-name { font-family:var(--serif); font-style:italic; font-weight:300; font-size:clamp(.9rem,1.8vw,1.4rem); color:rgba(184,137,42,0); transition:color .35s; text-align:center; text-shadow:0 2px 20px rgba(0,0,0,.8); padding:0 6px; }
+.fh:hover .fh-name { color:rgba(184,137,42,.9); }
+.fh-num { font-size:.42rem; letter-spacing:.22em; text-transform:uppercase; color:rgba(242,237,227,0); transition:color .35s; margin-top:5px; }
+.fh:hover .fh-num { color:rgba(242,237,227,.4); }
+.foyer-prompt { position:absolute; bottom:60px; left:50%; transform:translateX(-50%); text-align:center; z-index:20; pointer-events:none; }
+.fp-text { font-family:var(--serif); font-style:italic; font-weight:300; font-size:clamp(1rem,2vw,1.5rem); color:rgba(242,237,227,.45); }
+
+/* ═══ ROOM PLATES ═══ */
+.room-plate { position:absolute; bottom:90px; left:clamp(24px,5vw,60px); z-index:20; pointer-events:none; }
+.rp-kicker { font-size:.5rem; letter-spacing:.38em; text-transform:uppercase; color:rgba(184,137,42,.75); margin-bottom:10px; display:flex; align-items:center; gap:12px; }
+.rp-kicker::before { content:''; display:block; width:18px; height:1px; background:rgba(184,137,42,.75); }
+.rp-title { font-family:var(--serif); font-style:italic; font-weight:300; font-size:clamp(2.8rem,6vw,6rem); color:rgba(242,237,227,.9); line-height:.88; letter-spacing:-.04em; margin-bottom:14px; }
+.rp-desc { font-size:.8rem; line-height:1.9; color:rgba(242,237,227,.28); max-width:38ch; margin-bottom:20px; }
+.rp-back { display:inline-flex; align-items:center; gap:8px; font-size:.48rem; letter-spacing:.24em; text-transform:uppercase; color:rgba(184,137,42,.55); text-decoration:none; cursor:none; pointer-events:all; transition:color .25s; }
+.rp-back:hover { color:var(--gold); }
+.rp-back::before { content:'←'; letter-spacing:0; font-size:.7rem; }
+
+/* Discipline overlays */
+#room-walls    .sovl { background:linear-gradient(135deg,rgba(30,45,66,.5) 0%,transparent 50%),linear-gradient(to top,rgba(26,20,16,.92) 0%,rgba(26,20,16,.08) 65%,transparent 100%); }
+#room-murals   .sovl { background:linear-gradient(135deg,rgba(40,70,58,.5) 0%,transparent 50%),linear-gradient(to top,rgba(26,20,16,.92) 0%,rgba(26,20,16,.08) 65%,transparent 100%); }
+#room-cabinets .sovl { background:linear-gradient(135deg,rgba(40,55,38,.5) 0%,transparent 50%),linear-gradient(to top,rgba(26,20,16,.92) 0%,rgba(26,20,16,.08) 65%,transparent 100%); }
+#room-ceilings .sovl { background:linear-gradient(135deg,rgba(28,36,28,.5) 0%,transparent 50%),linear-gradient(to top,rgba(26,20,16,.92) 0%,rgba(26,20,16,.08) 65%,transparent 100%); }
+#room-relief   .sovl { background:linear-gradient(135deg,rgba(74,50,38,.5) 0%,transparent 50%),linear-gradient(to top,rgba(26,20,16,.92) 0%,rgba(26,20,16,.08) 65%,transparent 100%); }
+#room-classes  .sovl { background:linear-gradient(135deg,rgba(30,26,20,.55) 0%,transparent 50%),linear-gradient(to top,rgba(26,20,16,.92) 0%,rgba(26,20,16,.08) 65%,transparent 100%); }
+
+/* ═══ BEFORE/AFTER PANEL ═══ */
+.ba-panel { position:absolute; right:clamp(24px,4vw,52px); top:50%; transform:translateY(-50%); width:min(340px,32vw); z-index:20; }
+.ba-top { font-size:.46rem; letter-spacing:.34em; text-transform:uppercase; color:var(--gold); margin-bottom:12px; display:flex; align-items:center; gap:12px; }
+.ba-top::before { content:''; display:block; width:16px; height:1px; background:var(--gold); }
+.ba-slider { position:relative; overflow:hidden; height:min(220px,22vw); cursor:ew-resize; user-select:none; }
+.ba-after { position:absolute; inset:0; width:100%; height:100%; object-fit:cover; object-position:center 40%; }
+.ba-before-wrap { position:absolute; inset:0; overflow:hidden; width:50%; }
+.ba-before { position:absolute; inset:0; width:min(340px,32vw); height:100%; object-fit:cover; object-position:center 40%; filter:saturate(.35) brightness(.65); }
+.ba-handle { position:absolute; top:0; bottom:0; left:50%; width:2px; background:rgba(255,255,255,.85); transform:translateX(-50%); z-index:5; pointer-events:none; box-shadow:0 0 12px rgba(0,0,0,.3); }
+.ba-grip { position:absolute; top:50%; left:50%; transform:translate(-50%,-50%); width:38px; height:38px; border-radius:50%; background:var(--plaster); display:flex; align-items:center; justify-content:center; font-size:.6rem; color:var(--umber); box-shadow:0 2px 14px rgba(0,0,0,.25); }
+.ba-tags { display:flex; justify-content:space-between; margin-top:8px; }
+.ba-tag { font-size:.42rem; letter-spacing:.18em; text-transform:uppercase; color:rgba(242,237,227,.28); }
+.ba-hint { animation:baHint 1.6s var(--ease) 1.5s both; }
+@keyframes baHint { 0%{width:50%} 35%{width:25%} 70%{width:68%} 100%{width:50%} }
+
+/* ═══ VIEW ALL ═══ */
+.view-all { display:inline-flex; align-items:center; gap:10px; position:absolute; right:clamp(24px,4vw,52px); bottom:160px; z-index:20; font-size:.48rem; letter-spacing:.22em; text-transform:uppercase; color:rgba(184,137,42,.6); text-decoration:none; cursor:none; border:1px solid rgba(184,137,42,.18); padding:9px 16px; transition:.3s; }
+.view-all:hover { color:var(--gold); border-color:rgba(184,137,42,.5); background:rgba(184,137,42,.05); }
+
+/* ═══ IMAGE STRIP ═══ */
+.img-strip { position:absolute; bottom:0; left:0; right:0; height:130px; display:flex; gap:3px; overflow:hidden; z-index:15; }
+.strip-item { flex:1; overflow:hidden; cursor:none; position:relative; transition:flex .55s var(--ease); }
+.strip-item:hover { flex:2.8; }
+.strip-item img { width:100%; height:100%; object-fit:cover; object-position:center 35%; filter:brightness(.6) saturate(.65); transition:filter .4s; }
+.strip-item:hover img { filter:brightness(.92) saturate(1); }
+.strip-lbl { position:absolute; bottom:0; left:0; right:0; padding:6px 10px; background:linear-gradient(to top,rgba(26,20,16,.85) 0%,transparent 100%); font-size:.42rem; letter-spacing:.18em; text-transform:uppercase; color:rgba(184,137,42,.7); opacity:0; transition:opacity .3s; }
+.strip-item:hover .strip-lbl { opacity:1; }
+
+/* ═══ CLASSES PANEL ═══ */
+.cp-wrap { position:absolute; right:clamp(24px,4vw,52px); top:50%; transform:translateY(-50%); width:min(320px,30vw); z-index:20; display:flex; flex-direction:column; gap:10px; }
+.cp-kicker { font-size:.46rem; letter-spacing:.32em; text-transform:uppercase; color:var(--gold); margin-bottom:4px; display:flex; align-items:center; gap:12px; }
+.cp-kicker::before { content:''; display:block; width:16px; height:1px; background:var(--gold); }
+.cp-card { background:rgba(26,20,16,.75); border:1px solid rgba(184,137,42,.15); padding:16px 18px; backdrop-filter:blur(8px); }
+.cp-title { font-family:var(--serif); font-style:italic; font-size:1rem; color:rgba(242,237,227,.72); margin-bottom:5px; }
+.cp-meta { font-size:.68rem; line-height:1.6; color:rgba(242,237,227,.28); }
+.cp-btn { padding:11px 0; text-align:center; background:var(--sienna); color:var(--plaster); font-size:.5rem; letter-spacing:.22em; text-transform:uppercase; text-decoration:none; display:block; cursor:none; transition:background .3s; }
+.cp-btn:hover { background:#7a3418; }
+
+/* ═══ MOBILE ═══ */
+@media(max-width:900px) {
+  .nav-links,.nav-cta { display:none; }
+  .ba-panel { display:none; }
+  .view-all { right:16px; bottom:140px; }
+  .cp-wrap { width:92vw; right:4vw; top:auto; bottom:130px; transform:none; }
+  .fh-name { color:rgba(184,137,42,.75); }
+  .fh-num { color:rgba(242,237,227,.4); }
+  #minimap { display:none; }
+}
+
+/* ════════════════════════════════════
+   MOBILE EXPERIENCE
+   Full-screen swipe through surfaces
+════════════════════════════════════ */
+@media(max-width:900px) {
+  /* Hide desktop house entirely on mobile */
+  body.is-mobile #house,
+  body.is-mobile #minimap,
+  body.is-mobile #cursor,
+  body.is-mobile #cursor-label { display:none !important; }
+
+  body.is-mobile { overflow:hidden; height:100%; cursor:auto; }
+
+  /* Mobile stack */
+  #mstack {
+    position:fixed; inset:0;
+    display:none;
+  }
+  body.is-mobile #mstack { display:block; }
+
+  /* Each surface */
+  .ms {
+    position:absolute; inset:0;
+    transition:transform .55s cubic-bezier(.16,1,.3,1), opacity .55s cubic-bezier(.16,1,.3,1);
+    overflow:hidden;
+  }
+  .ms.active  { transform:translateY(0);    opacity:1; z-index:10; }
+  .ms.below   { transform:translateY(100%); opacity:0; z-index:8; }
+  .ms.above   { transform:translateY(-100%);opacity:0; z-index:9; }
+  .ms.drag    { transition:none; }
+
+  /* Background */
+  .ms-bg {
+    position:absolute; inset:0;
+    width:100%; height:110%;
+    object-fit:cover; object-position:center 30%;
+    transform:scale(1.04);
+    filter:brightness(.6) saturate(.82);
+    transition:transform 18s linear;
+  }
+  .ms.active .ms-bg { transform:scale(1); }
+  .ms-overlay {
+    position:absolute; inset:0;
+    background:linear-gradient(to top,rgba(26,20,16,.95) 0%,rgba(26,20,16,.45) 30%,rgba(26,20,16,.1) 65%,transparent 100%);
+  }
+  .ms-topfade {
+    position:absolute; top:0; left:0; right:0; height:120px;
+    background:linear-gradient(to bottom,rgba(26,20,16,.6) 0%,transparent 100%);
+  }
+
+  /* Top bar */
+  .ms-topbar {
+    position:absolute; top:0; left:0; right:0;
+    padding:max(env(safe-area-inset-top),16px) 22px 0;
+    display:flex; justify-content:space-between; align-items:center;
+    z-index:20;
+  }
+  .ms-logo {
+    font-family:var(--serif); font-style:italic; font-weight:300;
+    font-size:.95rem; color:rgba(242,237,227,.65); letter-spacing:.04em;
+  }
+  .ms-menu-btn {
+    display:flex; flex-direction:column; gap:5px;
+    background:none; border:none; cursor:pointer; padding:4px;
+  }
+  .ms-menu-btn span {
+    display:block; height:1px; background:rgba(242,237,227,.5);
+    transition:width .3s;
+  }
+  .ms-menu-btn span:nth-child(1) { width:20px; }
+  .ms-menu-btn span:nth-child(2) { width:13px; }
+
+  /* Body content */
+  .ms-body {
+    position:absolute; bottom:0; left:0; right:0;
+    padding:0 26px max(32px,env(safe-area-inset-bottom));
+    z-index:20;
+  }
+  .ms-kicker {
+    font-size:.5rem; letter-spacing:.34em; text-transform:uppercase;
+    color:rgba(184,137,42,.75);
+    display:flex; align-items:center; gap:10px; margin-bottom:10px;
+  }
+  .ms-kicker::before { content:''; display:block; width:14px; height:1px; background:rgba(184,137,42,.75); }
+  .ms-title {
+    font-family:var(--serif); font-style:italic; font-weight:300;
+    font-size:clamp(2.6rem,11vw,4rem);
+    color:rgba(242,237,227,.92); line-height:.88; letter-spacing:-.03em; margin-bottom:12px;
+  }
+  .ms-quote {
+    font-family:var(--serif); font-style:italic; font-weight:300;
+    font-size:clamp(.9rem,4vw,1.1rem);
+    color:rgba(242,237,227,.32); line-height:1.6; margin-bottom:20px; max-width:30ch;
+  }
+  .ms-ba-trig {
+    display:flex; align-items:center; gap:12px; margin-bottom:16px; cursor:pointer;
+  }
+  .ms-ba-track {
+    flex:1; height:2px; background:rgba(242,237,227,.14); border-radius:1px;
+    position:relative; overflow:hidden;
+  }
+  .ms-ba-fill {
+    position:absolute; top:0; left:0; bottom:0;
+    width:50%; background:var(--gold); border-radius:1px;
+  }
+  .ms-ba-trig.animating .ms-ba-fill {
+    animation:trigAnim 1.4s cubic-bezier(.16,1,.3,1) .2s both;
+  }
+  @keyframes trigAnim { 0%{width:0} 100%{width:72%} }
+  .ms-ba-lbl {
+    font-size:.44rem; letter-spacing:.2em; text-transform:uppercase;
+    color:rgba(184,137,42,.6); white-space:nowrap;
+  }
+  .ms-actions { display:flex; gap:10px; }
+  .ms-view {
+    flex:1; padding:11px 0; text-align:center;
+    background:rgba(242,237,227,.08); border:1px solid rgba(242,237,227,.14);
+    font-size:.5rem; letter-spacing:.2em; text-transform:uppercase;
+    color:rgba(242,237,227,.6); text-decoration:none; transition:.3s;
+  }
+  .ms-view:active { background:rgba(242,237,227,.18); }
+  .ms-inq {
+    flex:1; padding:11px 0; text-align:center;
+    background:var(--sienna); color:var(--plaster);
+    font-size:.5rem; letter-spacing:.2em; text-transform:uppercase;
+    text-decoration:none; border:none; cursor:pointer; display:block;
+  }
+  .ms-inq:active { background:#7a3418; }
+
+  /* Mobile intro surface */
+  .ms-intro-center {
+    position:absolute; inset:0;
+    display:flex; flex-direction:column;
+    align-items:center; justify-content:center;
+    padding:0 32px; text-align:center; z-index:20;
+  }
+  .ms-intro-name {
+    font-family:var(--serif); font-style:italic; font-weight:300;
+    font-size:clamp(3.2rem,15vw,5.5rem);
+    color:rgba(242,237,227,.88); line-height:.86; letter-spacing:-.04em; margin-bottom:18px;
+  }
+  .ms-intro-name small {
+    display:block; font-style:normal; font-weight:300;
+    font-size:.28em; letter-spacing:.2em; color:rgba(242,237,227,.3); margin-bottom:6px;
+  }
+  .ms-intro-stroke { display:block; margin:0 auto 14px; width:min(160px,60%); }
+  .ms-intro-tag {
+    font-size:.52rem; letter-spacing:.26em; text-transform:uppercase;
+    color:rgba(184,137,42,.6); margin-bottom:20px;
+  }
+  .ms-intro-sub {
+    font-family:var(--serif); font-style:italic; font-weight:300;
+    font-size:.95rem; color:rgba(242,237,227,.28);
+    line-height:1.6; max-width:26ch; margin-bottom:36px;
+  }
+  .ms-enter-btn {
+    display:flex; align-items:center; gap:12px;
+    font-family:var(--serif); font-style:italic; font-weight:300;
+    font-size:1rem; color:rgba(184,137,42,.8);
+    background:none; border:none; cursor:pointer; padding:0;
+  }
+  .ms-enter-ring {
+    width:40px; height:40px; border-radius:50%;
+    border:1px solid rgba(184,137,42,.4);
+    display:flex; align-items:center; justify-content:center;
+    font-size:.7rem; font-style:normal;
+  }
+  .swipe-hint {
+    position:absolute; bottom:80px; left:50%;
+    transform:translateX(-50%);
+    display:flex; flex-direction:column; align-items:center; gap:8px;
+    animation:shint 3.5s ease 2.5s both; z-index:20;
+    pointer-events:none;
+  }
+  @keyframes shint { 0%{opacity:0;transform:translateX(-50%) translateY(8px)} 20%{opacity:1;transform:translateX(-50%) translateY(0)} 80%{opacity:1} 100%{opacity:0} }
+  .sh-arrow {
+    width:28px; height:28px; border-radius:50%;
+    border:1px solid rgba(184,137,42,.35);
+    display:flex; align-items:center; justify-content:center;
+    font-size:.75rem; color:rgba(184,137,42,.55);
+    animation:bouncea 1.2s ease infinite;
+  }
+  @keyframes bouncea { 0%,100%{transform:translateY(0)} 50%{transform:translateY(-5px)} }
+  .sh-txt { font-size:.42rem; letter-spacing:.2em; text-transform:uppercase; color:rgba(242,237,227,.22); }
+
+  /* Contact surface */
+  .ms-contact-body {
+    position:absolute; bottom:0; left:0; right:0;
+    padding:0 26px max(36px,env(safe-area-inset-bottom));
+    z-index:20;
+  }
+  .ms-contact-kicker {
+    font-size:.48rem; letter-spacing:.32em; text-transform:uppercase;
+    color:rgba(184,137,42,.7); margin-bottom:12px;
+    display:flex; align-items:center; gap:10px;
+  }
+  .ms-contact-kicker::before { content:''; display:block; width:14px; height:1px; background:rgba(184,137,42,.7); }
+  .ms-contact-title {
+    font-family:var(--serif); font-style:italic; font-weight:300;
+    font-size:clamp(2.6rem,11vw,3.8rem);
+    color:rgba(242,237,227,.9); line-height:.88; letter-spacing:-.04em; margin-bottom:22px;
+  }
+  .ms-crow { display:flex; gap:14px; padding:12px 0; border-bottom:1px solid rgba(255,255,255,.06); }
+  .ms-crl { font-size:.44rem; letter-spacing:.2em; text-transform:uppercase; color:rgba(184,137,42,.55); min-width:48px; padding-top:2px; }
+  .ms-crv { font-size:.8rem; color:rgba(242,237,227,.32); line-height:1.7; }
+  .ms-crv a { color:inherit; text-decoration:none; }
+  .ms-cbtns { display:flex; gap:10px; margin-top:18px; }
+  .ms-call  { flex:1; padding:12px 0; text-align:center; background:var(--sienna); color:var(--plaster); font-size:.5rem; letter-spacing:.2em; text-transform:uppercase; text-decoration:none; display:block; }
+  .ms-email { flex:1; padding:11px 0; text-align:center; border:1px solid rgba(242,237,227,.18); color:rgba(242,237,227,.55); font-size:.5rem; letter-spacing:.2em; text-transform:uppercase; text-decoration:none; display:block; }
+
+  /* Progress dots */
+  #mprog {
+    position:fixed; right:14px; top:50%; transform:translateY(-50%);
+    z-index:100; display:none; flex-direction:column; gap:7px;
+  }
+  body.is-mobile #mprog { display:flex; }
+  .mpd {
+    width:4px; height:4px; border-radius:50%;
+    background:rgba(242,237,227,.18);
+    transition:background .3s, height .4s cubic-bezier(.16,1,.3,1), border-radius .4s;
+    cursor:pointer;
+  }
+  .mpd.cur { background:var(--gold); height:16px; border-radius:2px; }
+  .mpd.vis { background:rgba(184,137,42,.35); }
+
+  /* Mobile BA overlay */
+  #mba {
+    position:fixed; inset:0; z-index:500;
+    background:var(--umber); opacity:0; pointer-events:none;
+    transition:opacity .4s cubic-bezier(.16,1,.3,1);
+  }
+  #mba.open { opacity:1; pointer-events:all; }
+  #mba-close {
+    position:absolute; top:max(16px,env(safe-area-inset-top)); right:20px;
+    z-index:10; background:none; border:none; cursor:pointer;
+    font-size:1.4rem; color:rgba(242,237,227,.35); padding:8px;
+  }
+  #mba-head {
+    position:absolute; top:max(52px,calc(env(safe-area-inset-top)+36px)); left:24px; z-index:10;
+  }
+  #mba-disc { font-size:.46rem; letter-spacing:.32em; text-transform:uppercase; color:rgba(184,137,42,.7); margin-bottom:5px; }
+  #mba-hl { font-family:var(--serif); font-style:italic; font-weight:300; font-size:1.5rem; color:rgba(242,237,227,.78); line-height:1; }
+  #mba-slider { position:absolute; inset:0; touch-action:none; }
+  #mba-after { position:absolute; inset:0; width:100%; height:100%; object-fit:cover; filter:brightness(.85) saturate(.85); }
+  #mba-before-wrap { position:absolute; inset:0; overflow:hidden; width:50%; }
+  #mba-before { position:absolute; inset:0; width:100vw; height:100%; object-fit:cover; filter:brightness(.6) saturate(.4); }
+  #mba-line { position:absolute; top:0; bottom:0; left:50%; width:2px; background:rgba(255,255,255,.85); transform:translateX(-50%); z-index:5; }
+  #mba-grip { position:absolute; top:50%; left:50%; transform:translate(-50%,-50%); width:42px; height:42px; border-radius:50%; background:var(--plaster); display:flex; align-items:center; justify-content:center; font-size:.62rem; color:var(--umber); box-shadow:0 2px 14px rgba(0,0,0,.3); }
+  .mba-sl { position:absolute; top:50%; z-index:6; font-size:.44rem; letter-spacing:.2em; text-transform:uppercase; padding:4px 10px; background:rgba(26,20,16,.65); transform:translateY(-50%); pointer-events:none; }
+  #mba-bl { left:14px; color:rgba(242,237,227,.6); }
+  #mba-al { right:14px; color:rgba(184,137,42,.8); }
+  #mba-foot { position:absolute; bottom:max(24px,env(safe-area-inset-bottom)); left:0; right:0; text-align:center; font-size:.44rem; letter-spacing:.2em; text-transform:uppercase; color:rgba(242,237,227,.18); z-index:10; }
+
+  /* Mobile menu */
+  #mmenu {
+    position:fixed; inset:0; z-index:600;
+    background:var(--umber);
+    transform:translateX(100%);
+    transition:transform .5s cubic-bezier(.16,1,.3,1);
+    display:flex; flex-direction:column; justify-content:center; padding:0 36px;
+  }
+  #mmenu::before { content:''; position:absolute; inset:0; background:radial-gradient(ellipse 80% 60% at 80% 30%,rgba(30,45,66,.35) 0%,transparent 70%); }
+  #mmenu.open { transform:translateX(0); }
+  #mmenu-close { position:absolute; top:max(16px,env(safe-area-inset-top)); right:20px; background:none; border:none; cursor:pointer; font-size:1.3rem; color:rgba(242,237,227,.3); padding:8px; }
+  .mm-ml {
+    position:relative; z-index:1;
+    font-family:var(--serif); font-style:italic; font-weight:300;
+    font-size:clamp(1.9rem,8vw,3rem);
+    color:rgba(242,237,227,.48); text-decoration:none;
+    padding:9px 0; letter-spacing:-.02em;
+    display:flex; justify-content:space-between; align-items:center;
+    border-bottom:1px solid rgba(255,255,255,.05);
+    transition:color .25s;
+  }
+  .mm-ml:active { color:var(--gold); }
+  .mm-mn { font-style:normal; font-size:.55em; color:rgba(184,137,42,.28); font-family:var(--sans); font-weight:200; letter-spacing:.04em; }
+  .mm-mc { position:relative; z-index:1; margin-top:22px; font-size:.5rem; letter-spacing:.22em; text-transform:uppercase; text-decoration:none; color:var(--gold); border:1px solid rgba(184,137,42,.28); padding:11px 0; display:block; text-align:center; }
+}
+
+</style>
+</head>
+<body>
+
+<div id="cursor"></div>
+<div id="cursor-label"></div>
+<div id="veil"></div>
+
+<div id="loading">
+  <div class="ld-name">Connie Harris</div>
+  <div class="ld-bar"><div class="ld-fill"></div></div>
+  <div class="ld-sub">Entering the house</div>
+</div>
+
+<nav id="nav">
+  <a href="#" class="nav-logo" data-goto="exterior">Connie Harris</a>
+  <ul class="nav-links">
+    <li><a href="#" data-goto="room-walls">Wall Finishes</a></li>
+    <li><a href="#" data-goto="room-murals">Murals</a></li>
+    <li><a href="#" data-goto="room-relief">Bas Relief</a></li>
+    <li><a href="#" data-goto="room-cabinets">Cabinets</a></li>
+    <li><a href="#" data-goto="room-ceilings">Ceilings</a></li>
+    <li><a href="#" data-goto="room-classes">Classes</a></li>
+  </ul>
+  <a href="mailto:connieharrisart@gmail.com" class="nav-cta">Commission a Work</a>
+</nav>
+
+<div id="minimap">
+  <div class="mmdot cur"  data-scene="exterior"></div>
+  <div class="mmdot"      data-scene="door"></div>
+  <div class="mmdot"      data-scene="foyer"></div>
+  <div class="mmdot"      data-scene="room-walls"></div>
+  <div class="mmdot"      data-scene="room-murals"></div>
+  <div class="mmdot"      data-scene="room-cabinets"></div>
+  <div class="mmdot"      data-scene="room-ceilings"></div>
+  <div class="mmdot"      data-scene="room-relief"></div>
+  <div class="mmdot"      data-scene="room-classes"></div>
+</div>
+
+<div id="house">
+
+  <!-- EXTERIOR -->
+  <div class="scene active" id="exterior">
+    <img class="sbg" src="images/exterior.jpg" alt="Louisiana estate at twilight"/>
+    <div class="sovl"></div><div class="stop"></div>
+    <div class="ext-content">
+      <div class="ext-name"><small>Connie</small>Harris</div>
+      <svg class="ext-stroke" viewBox="0 0 260 14" fill="none">
+        <path d="M3 9C46 4 110 12 160 7C198 3 240 11 257 7" stroke="#b8892a" stroke-width="1.3" stroke-linecap="round" opacity=".5"/>
+      </svg>
+      <div class="ext-tag">Decorative Arts &middot; Louisiana &middot; Est. 1984</div>
+      <div class="ext-tagline">She doesn&rsquo;t see what&rsquo;s there. She sees what it could become.</div>
+      <button class="ext-enter" data-goto="door">
+        <div class="ext-enter-ring">&rarr;</div>
+        Enter the house
+      </button>
+    </div>
+    <div class="sfooter">
+      <div class="sfooter-loc">St. Gabriel, Louisiana</div>
+      <div class="sfooter-hint">Click to enter</div>
+    </div>
+  </div>
+
+  <!-- FRONT DOOR -->
+  <div class="scene" id="door">
+    <img class="sbg" src="images/front-door.jpg" alt="Front door"/>
+    <div class="sovl"></div><div class="stop"></div>
+    <div class="door-content">
+      <div class="door-label">The light is warm inside.</div>
+      <button class="door-btn" data-goto="foyer">
+        <div class="door-btn-ring">&rarr;</div>
+        Step inside
+      </button>
+    </div>
+    <div class="sfooter">
+      <div class="sfooter-loc">The entrance</div>
+      <div class="sfooter-hint">Click to enter</div>
+    </div>
+  </div>
+
+  <!-- FOYER -->
+  <div class="scene" id="foyer">
+    <img class="sbg" src="images/foyer.jpg" alt="Grand foyer"/>
+    <div class="sovl"></div><div class="stop"></div>
+    <div class="foyer-hotspots">
+      <div class="fh" data-goto="room-walls">
+        <div class="fh-ring">&rarr;</div>
+        <div class="fh-name">Wall Finishes</div>
+        <div class="fh-num">Discipline I</div>
+      </div>
+      <div class="fh" data-goto="room-murals">
+        <div class="fh-ring">&rarr;</div>
+        <div class="fh-name">Murals</div>
+        <div class="fh-num">Discipline II</div>
+      </div>
+      <div class="fh" data-goto="room-cabinets">
+        <div class="fh-ring">&rarr;</div>
+        <div class="fh-name">Cabinets</div>
+        <div class="fh-num">Discipline IV</div>
+      </div>
+      <div class="fh" data-goto="room-ceilings">
+        <div class="fh-ring">&rarr;</div>
+        <div class="fh-name">Ceilings</div>
+        <div class="fh-num">Discipline V</div>
+      </div>
+      <div class="fh" data-goto="room-relief">
+        <div class="fh-ring">&rarr;</div>
+        <div class="fh-name">Bas Relief</div>
+        <div class="fh-num">Discipline III</div>
+      </div>
+    </div>
+    <div class="foyer-prompt">
+      <div class="fp-text">Where would you like to go?</div>
+    </div>
+    <div class="sfooter">
+      <div class="sfooter-loc">The foyer</div>
+      <div class="sfooter-hint">Hover a doorway to enter</div>
+    </div>
+  </div>
+
+  <!-- WALL FINISHES -->
+  <div class="scene" id="room-walls">
+    <img class="sbg" src="images/walls.jpg" alt="Wall Finishes"/>
+    <div class="sovl"></div><div class="stop"></div>
+    <div class="room-plate">
+      <div class="rp-kicker">Discipline No. I</div>
+      <h1 class="rp-title">Wall<br/>Finishes</h1>
+      <p class="rp-desc">Every wall is a canvas waiting. Venetian plaster, marbling, gilding — she sees the finish before she picks up the brush.</p>
+      <a href="#" class="rp-back" data-goto="foyer">Back to the foyer</a>
+    </div>
+    <div class="ba-panel">
+      <div class="ba-top">Before &amp; After</div>
+      <div class="ba-slider" data-slider>
+        <img class="ba-after"  src="images/walls.jpg" alt="After"/>
+        <div class="ba-before-wrap ba-hint">
+          <img class="ba-before" src="images/foyer.jpg" alt="Before"/>
+        </div>
+        <div class="ba-handle"><div class="ba-grip">&#8596;</div></div>
+      </div>
+      <div class="ba-tags"><span class="ba-tag">Plain wall</span><span class="ba-tag">Connie&rsquo;s finish</span></div>
+    </div>
+    <a href="wall-finishes.html" class="view-all">View full gallery &rarr;</a>
+    <div class="img-strip">
+      <div class="strip-item"><img src="images/walls.jpg"    alt=""/><div class="strip-lbl">Venetian Plaster</div></div>
+      <div class="strip-item"><img src="images/relief.jpg"   alt=""/><div class="strip-lbl">Gold Detail</div></div>
+      <div class="strip-item"><img src="images/foyer.jpg"    alt=""/><div class="strip-lbl">Full Room</div></div>
+      <div class="strip-item"><img src="images/ceilings.jpg" alt=""/><div class="strip-lbl">Ceiling Work</div></div>
+    </div>
+    <div class="sfooter"><div class="sfooter-loc">Wall Finishes — Room I</div></div>
+  </div>
+
+  <!-- MURALS -->
+  <div class="scene" id="room-murals">
+    <img class="sbg" src="images/murals.jpg" alt="Murals"/>
+    <div class="sovl"></div><div class="stop"></div>
+    <div class="room-plate">
+      <div class="rp-kicker">Discipline No. II</div>
+      <h1 class="rp-title">Murals</h1>
+      <p class="rp-desc">She paints what she imagines, not what is there. Chinoiserie, trompe-l&rsquo;&oelig;il, botanical — brush to surface.</p>
+      <a href="#" class="rp-back" data-goto="foyer">Back to the foyer</a>
+    </div>
+    <div class="ba-panel">
+      <div class="ba-top">Before &amp; After</div>
+      <div class="ba-slider" data-slider>
+        <img class="ba-after"  src="images/murals.jpg" alt="After"/>
+        <div class="ba-before-wrap ba-hint">
+          <img class="ba-before" src="images/walls.jpg" alt="Before"/>
+        </div>
+        <div class="ba-handle"><div class="ba-grip">&#8596;</div></div>
+      </div>
+      <div class="ba-tags"><span class="ba-tag">Bare wall</span><span class="ba-tag">After Connie</span></div>
+    </div>
+    <a href="murals.html" class="view-all">View full gallery &rarr;</a>
+    <div class="img-strip">
+      <div class="strip-item"><img src="images/murals.jpg"   alt=""/><div class="strip-lbl">Chinoiserie</div></div>
+      <div class="strip-item"><img src="images/foyer.jpg"    alt=""/><div class="strip-lbl">Landscape Mural</div></div>
+      <div class="strip-item"><img src="images/walls.jpg"    alt=""/><div class="strip-lbl">Botanical</div></div>
+      <div class="strip-item"><img src="images/ceilings.jpg" alt=""/><div class="strip-lbl">Ceiling Mural</div></div>
+    </div>
+    <div class="sfooter"><div class="sfooter-loc">Murals — Room II</div></div>
+  </div>
+
+  <!-- BAS RELIEF -->
+  <div class="scene" id="room-relief">
+    <img class="sbg" src="images/relief.jpg" alt="Bas Relief"/>
+    <div class="sovl"></div><div class="stop"></div>
+    <div class="room-plate">
+      <div class="rp-kicker">Discipline No. III</div>
+      <h1 class="rp-title">Bas Relief<br/>Sculpture</h1>
+      <p class="rp-desc">The only finish you can feel with your eyes. Three-dimensional work built directly into walls — no molds, no prefab.</p>
+      <a href="#" class="rp-back" data-goto="foyer">Back to the foyer</a>
+    </div>
+    <div class="ba-panel">
+      <div class="ba-top">Before &amp; After</div>
+      <div class="ba-slider" data-slider>
+        <img class="ba-after"  src="images/relief.jpg" alt="After"/>
+        <div class="ba-before-wrap ba-hint">
+          <img class="ba-before" src="images/walls.jpg" alt="Before"/>
+        </div>
+        <div class="ba-handle"><div class="ba-grip">&#8596;</div></div>
+      </div>
+      <div class="ba-tags"><span class="ba-tag">Flat surface</span><span class="ba-tag">After sculpting</span></div>
+    </div>
+    <a href="bas-relief.html" class="view-all">View full gallery &rarr;</a>
+    <div class="img-strip">
+      <div class="strip-item"><img src="images/relief.jpg"   alt=""/><div class="strip-lbl">Acanthus Scroll</div></div>
+      <div class="strip-item"><img src="images/ceilings.jpg" alt=""/><div class="strip-lbl">Ceiling Medallion</div></div>
+      <div class="strip-item"><img src="images/walls.jpg"    alt=""/><div class="strip-lbl">Wall Panel</div></div>
+      <div class="strip-item"><img src="images/foyer.jpg"    alt=""/><div class="strip-lbl">Cornice Detail</div></div>
+    </div>
+    <div class="sfooter"><div class="sfooter-loc">Bas Relief — Room III</div></div>
+  </div>
+
+  <!-- CABINETS -->
+  <div class="scene" id="room-cabinets">
+    <img class="sbg" src="images/cabinets.jpg" alt="Cabinet Finishes"/>
+    <div class="sovl"></div><div class="stop"></div>
+    <div class="room-plate">
+      <div class="rp-kicker">Discipline No. IV</div>
+      <h1 class="rp-title">Cabinet<br/>Finishes</h1>
+      <p class="rp-desc">The surface you touch every single day. Hand-painted to a standard no factory can match.</p>
+      <a href="#" class="rp-back" data-goto="foyer">Back to the foyer</a>
+    </div>
+    <div class="ba-panel">
+      <div class="ba-top">Before &amp; After</div>
+      <div class="ba-slider" data-slider>
+        <img class="ba-after"  src="images/cabinets.jpg" alt="After"/>
+        <div class="ba-before-wrap ba-hint">
+          <img class="ba-before" src="images/walls.jpg" alt="Before"/>
+        </div>
+        <div class="ba-handle"><div class="ba-grip">&#8596;</div></div>
+      </div>
+      <div class="ba-tags"><span class="ba-tag">Stock finish</span><span class="ba-tag">Connie&rsquo;s finish</span></div>
+    </div>
+    <a href="cabinet-finishes.html" class="view-all">View full gallery &rarr;</a>
+    <div class="img-strip">
+      <div class="strip-item"><img src="images/cabinets.jpg" alt=""/><div class="strip-lbl">Gold Motifs</div></div>
+      <div class="strip-item"><img src="images/walls.jpg"    alt=""/><div class="strip-lbl">French Gray</div></div>
+      <div class="strip-item"><img src="images/relief.jpg"   alt=""/><div class="strip-lbl">Gilded Detail</div></div>
+      <div class="strip-item"><img src="images/foyer.jpg"    alt=""/><div class="strip-lbl">Full Kitchen</div></div>
+    </div>
+    <div class="sfooter"><div class="sfooter-loc">Cabinet Finishes — Room IV</div></div>
+  </div>
+
+  <!-- CEILINGS -->
+  <div class="scene" id="room-ceilings">
+    <img class="sbg" src="images/ceilings.jpg" alt="Ceilings &amp; Floors"/>
+    <div class="sovl"></div><div class="stop"></div>
+    <div class="room-plate">
+      <div class="rp-kicker">Discipline No. V</div>
+      <h1 class="rp-title">Ceilings<br/>&amp; Floors</h1>
+      <p class="rp-desc">Most people forget to look up. She never does. The fifth wall — her most dramatic canvas.</p>
+      <a href="#" class="rp-back" data-goto="foyer">Back to the foyer</a>
+    </div>
+    <div class="ba-panel">
+      <div class="ba-top">Before &amp; After</div>
+      <div class="ba-slider" data-slider>
+        <img class="ba-after"  src="images/ceilings.jpg" alt="After"/>
+        <div class="ba-before-wrap ba-hint">
+          <img class="ba-before" src="images/walls.jpg" alt="Before"/>
+        </div>
+        <div class="ba-handle"><div class="ba-grip">&#8596;</div></div>
+      </div>
+      <div class="ba-tags"><span class="ba-tag">Plain ceiling</span><span class="ba-tag">After Connie</span></div>
+    </div>
+    <a href="ceilings-floors.html" class="view-all">View full gallery &rarr;</a>
+    <div class="img-strip">
+      <div class="strip-item"><img src="images/ceilings.jpg" alt=""/><div class="strip-lbl">Gold Coffer</div></div>
+      <div class="strip-item"><img src="images/murals.jpg"   alt=""/><div class="strip-lbl">Painted Panel</div></div>
+      <div class="strip-item"><img src="images/relief.jpg"   alt=""/><div class="strip-lbl">Bas Relief Ceiling</div></div>
+      <div class="strip-item"><img src="images/foyer.jpg"    alt=""/><div class="strip-lbl">Grand Chandelier</div></div>
+    </div>
+    <div class="sfooter"><div class="sfooter-loc">Ceilings &amp; Floors — Room V</div></div>
+  </div>
+
+  <!-- CLASSES -->
+  <div class="scene" id="room-classes">
+    <img class="sbg" src="images/foyer.jpg" alt="Studio"/>
+    <div class="sovl"></div><div class="stop"></div>
+    <div class="room-plate">
+      <div class="rp-kicker">St. Gabriel, Louisiana</div>
+      <h1 class="rp-title">The Studio</h1>
+      <p class="rp-desc">Connie has spent 40 years learning this craft. Now she teaches it — hands-on, brush in hand from the first hour.</p>
+      <a href="classes.html" style="display:inline-flex;align-items:center;gap:10px;margin-top:16px;font-size:.48rem;letter-spacing:.22em;text-transform:uppercase;text-decoration:none;color:rgba(184,137,42,.65);border:1px solid rgba(184,137,42,.2);padding:9px 16px;cursor:none;transition:.3s">View all workshops &rarr;</a>
+      <br/>
+      <a href="#" class="rp-back" data-goto="foyer">Back to the foyer</a>
+    </div>
+    <div class="cp-wrap">
+      <div class="cp-kicker">Current Workshops</div>
+      <div class="cp-card"><div class="cp-title">The Art of Chinoiserie</div><div class="cp-meta">2 days &middot; All levels &middot; 8 take-home panels</div></div>
+      <div class="cp-card"><div class="cp-title">Faux Finishing Fundamentals</div><div class="cp-meta">2 days &middot; Beginner friendly &middot; Materials included</div></div>
+      <div class="cp-card"><div class="cp-title">Resin Pour &amp; Mixed Media</div><div class="cp-meta">1 day &middot; All levels &middot; 2 completed pieces</div></div>
+      <a href="mailto:connieharrisart@gmail.com?subject=Workshop Inquiry" class="cp-btn">Inquire About a Workshop</a>
+    </div>
+    <div class="sfooter"><div class="sfooter-loc">The Studio — St. Gabriel, Louisiana</div></div>
+  </div>
+
+</div>
+
+<script>
+/* ════════════════════════
+   NAVIGATION
+════════════════════════ */
+const veil     = document.getElementById('veil');
+const cursor   = document.getElementById('cursor');
+const curLabel = document.getElementById('cursor-label');
+const mmDots   = document.querySelectorAll('.mmdot');
+let   current  = 'exterior';
+const visited  = new Set(['exterior']);
+const order    = ['exterior','door','foyer','room-walls','room-murals','room-relief','room-cabinets','room-ceilings','room-classes'];
+
+function goTo(id) {
+  if (id === current) return;
+  veil.classList.add('dark');
+  setTimeout(() => {
+    document.getElementById(current).classList.remove('active');
+    const next = document.getElementById(id);
+    if (next) { next.classList.add('active'); current = id; visited.add(id); updateMap(); }
+    veil.classList.remove('dark');
+    initSliders();
+  }, 500);
+}
+
+document.addEventListener('click', e => {
+  const el = e.target.closest('[data-goto]');
+  if (el) { e.preventDefault(); goTo(el.dataset.goto); }
+});
+
+function updateMap() {
+  mmDots.forEach(d => {
+    d.classList.toggle('cur', d.dataset.scene === current);
+    d.classList.toggle('vis', visited.has(d.dataset.scene) && d.dataset.scene !== current);
+  });
+}
+mmDots.forEach(d => d.addEventListener('click', () => goTo(d.dataset.scene)));
+
+document.addEventListener('keydown', e => {
+  const i = order.indexOf(current);
+  if (e.key === 'ArrowRight' && i < order.length-1) goTo(order[i+1]);
+  if (e.key === 'ArrowLeft'  && i > 0)              goTo(order[i-1]);
+  if (e.key === 'Escape')                            goTo('exterior');
+});
+
+/* ════════════════════════
+   CURSOR
+════════════════════════ */
+document.body.style.cursor = 'none';
+document.addEventListener('mousemove', e => {
+  cursor.style.left = e.clientX + 'px';
+  cursor.style.top  = e.clientY + 'px';
+  curLabel.style.left = e.clientX + 'px';
+  curLabel.style.top  = e.clientY + 'px';
+});
+document.addEventListener('mouseover', e => {
+  const hot = e.target.closest('[data-goto],[data-slider],[href],.strip-item,.mmdot,.cp-btn,.view-all,.fh');
+  const fh  = e.target.closest('.fh');
+  if (hot) {
+    cursor.classList.add('big');
+    if (fh) {
+      curLabel.textContent = 'Enter ' + (fh.querySelector('.fh-name')?.textContent || '');
+      curLabel.classList.add('show');
+    } else {
+      curLabel.classList.remove('show');
+    }
+  } else {
+    cursor.classList.remove('big');
+    curLabel.classList.remove('show');
+  }
+});
+
+/* ════════════════════════
+   BEFORE/AFTER SLIDERS
+════════════════════════ */
+function initSliders() {
+  document.querySelectorAll('.scene.active [data-slider]').forEach(sl => {
+    if (sl._init) return; sl._init = true;
+    const wrap = sl.querySelector('.ba-before-wrap');
+    const hdl  = sl.querySelector('.ba-handle');
+    let drag = false;
+    function sp(x) {
+      const r = sl.getBoundingClientRect();
+      const p = Math.max(4, Math.min(96, (x-r.left)/r.width*100));
+      wrap.style.width = p + '%';
+      hdl.style.left   = p + '%';
+      wrap.classList.remove('ba-hint');
+    }
+    sl.addEventListener('mousedown', e => { drag=true; sp(e.clientX); e.preventDefault(); });
+    window.addEventListener('mousemove', e => { if(drag) sp(e.clientX); });
+    window.addEventListener('mouseup', () => { drag=false; });
+    sl.addEventListener('touchstart', e => { drag=true; sp(e.touches[0].clientX); }, {passive:true});
+    window.addEventListener('touchmove', e => { if(drag) sp(e.touches[0].clientX); }, {passive:true});
+    window.addEventListener('touchend', () => { drag=false; });
+  });
+}
+
+/* ════════════════════════
+   LOADING
+════════════════════════ */
+window.addEventListener('load', () => {
+  setTimeout(() => {
+    const ld = document.getElementById('loading');
+    ld.classList.add('done');
+    setTimeout(() => ld.remove(), 800);
+    initSliders();
+  }, 2000);
+});
+
+/* nav solid */
+window.addEventListener('scroll', () => {
+  document.getElementById('nav').classList.toggle('solid', window.scrollY > 20);
+}, {passive:true});
+</script>
+
+<!-- ════════════════════════════════════
+     MOBILE EXPERIENCE
+════════════════════════════════════ -->
+
+<!-- Mobile BA overlay -->
+<div id="mba">
+  <button id="mba-close">&times;</button>
+  <div id="mba-head"><div id="mba-disc"></div><div id="mba-hl">Before &amp; After</div></div>
+  <div id="mba-slider">
+    <img id="mba-after" src="" alt="After"/>
+    <div id="mba-before-wrap"><img id="mba-before" src="" alt="Before"/></div>
+    <div id="mba-line"><div id="mba-grip">&#8596;</div></div>
+    <div class="mba-sl" id="mba-bl">Before</div>
+    <div class="mba-sl" id="mba-al">After</div>
+  </div>
+  <div id="mba-foot">Drag to reveal</div>
+</div>
+
+<!-- Mobile menu -->
+<div id="mmenu">
+  <button id="mmenu-close">&times;</button>
+  <a href="#" class="mm-ml" data-mgo="0">Home <span class="mm-mn">00</span></a>
+  <a href="#" class="mm-ml" data-mgo="1">Wall Finishes <span class="mm-mn">01</span></a>
+  <a href="#" class="mm-ml" data-mgo="2">Murals <span class="mm-mn">02</span></a>
+  <a href="#" class="mm-ml" data-mgo="3">Bas Relief <span class="mm-mn">03</span></a>
+  <a href="#" class="mm-ml" data-mgo="4">Cabinets <span class="mm-mn">04</span></a>
+  <a href="#" class="mm-ml" data-mgo="5">Ceilings <span class="mm-mn">05</span></a>
+  <a href="#" class="mm-ml" data-mgo="6">Contact <span class="mm-mn">06</span></a>
+  <a href="mailto:connieharrisart@gmail.com" class="mm-mc">Commission a Work</a>
+</div>
+
+<!-- Mobile progress dots -->
+<div id="mprog">
+  <div class="mpd cur" data-mi="0"></div>
+  <div class="mpd" data-mi="1"></div>
+  <div class="mpd" data-mi="2"></div>
+  <div class="mpd" data-mi="3"></div>
+  <div class="mpd" data-mi="4"></div>
+  <div class="mpd" data-mi="5"></div>
+  <div class="mpd" data-mi="6"></div>
+</div>
+
+<!-- Mobile surface stack -->
+<div id="mstack">
+
+  <!-- INTRO -->
+  <div class="ms active" id="ms-0">
+    <img class="ms-bg" src="images/exterior.jpg" alt=""/>
+    <div class="ms-overlay"></div><div class="ms-topfade"></div>
+    <div class="ms-topbar">
+      <div class="ms-logo">Connie Harris</div>
+      <button class="ms-menu-btn"><span></span><span></span></button>
+    </div>
+    <div class="ms-intro-center">
+      <div class="ms-intro-name"><small>Connie</small>Harris</div>
+      <svg class="ms-intro-stroke" viewBox="0 0 160 12" fill="none">
+        <path d="M3 8C32 4 76 11 110 6C133 3 150 9 157 6" stroke="#b8892a" stroke-width="1.2" stroke-linecap="round" opacity=".5"/>
+      </svg>
+      <div class="ms-intro-tag">Decorative Arts &middot; Louisiana</div>
+      <div class="ms-intro-sub">She doesn&rsquo;t see what&rsquo;s there. She sees what it could become.</div>
+      <button class="ms-enter-btn" id="ms-enter">
+        <div class="ms-enter-ring">&#8595;</div>
+        Swipe to enter
+      </button>
+    </div>
+    <div class="swipe-hint">
+      <div class="sh-arrow">&#8593;</div>
+      <div class="sh-txt">Swipe up</div>
+    </div>
+  </div>
+
+  <!-- WALL FINISHES -->
+  <div class="ms below" id="ms-1"
+       data-title="Wall Finishes"
+       data-ba-after="images/walls.jpg"
+       data-ba-before="images/foyer.jpg"
+       data-ba-al="Connie&rsquo;s finish"
+       data-ba-bl="Plain wall">
+    <img class="ms-bg" src="images/walls.jpg" alt=""/>
+    <div class="ms-overlay"></div><div class="ms-topfade"></div>
+    <div class="ms-topbar">
+      <div class="ms-logo">Connie Harris</div>
+      <button class="ms-menu-btn"><span></span><span></span></button>
+    </div>
+    <div class="ms-body">
+      <div class="ms-kicker">Discipline No. I</div>
+      <h2 class="ms-title">Wall<br/>Finishes</h2>
+      <p class="ms-quote">&ldquo;A wall is never just a wall. It is the first thing you see when you wake up.&rdquo;</p>
+      <div class="ms-ba-trig" data-open-ba>
+        <div class="ms-ba-track"><div class="ms-ba-fill"></div></div>
+        <span class="ms-ba-lbl">Drag to reveal &rarr;</span>
+      </div>
+      <div class="ms-actions">
+        <a href="wall-finishes.html" class="ms-view">View gallery</a>
+        <a href="mailto:connieharrisart@gmail.com?subject=Wall Finishes Inquiry" class="ms-inq">Inquire</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- MURALS -->
+  <div class="ms below" id="ms-2"
+       data-title="Murals"
+       data-ba-after="images/murals.jpg"
+       data-ba-before="images/walls.jpg"
+       data-ba-al="After Connie"
+       data-ba-bl="Bare wall">
+    <img class="ms-bg" src="images/murals.jpg" alt=""/>
+    <div class="ms-overlay"></div><div class="ms-topfade"></div>
+    <div class="ms-topbar">
+      <div class="ms-logo">Connie Harris</div>
+      <button class="ms-menu-btn"><span></span><span></span></button>
+    </div>
+    <div class="ms-body">
+      <div class="ms-kicker">Discipline No. II</div>
+      <h2 class="ms-title">Murals</h2>
+      <p class="ms-quote">&ldquo;She paints what she imagines, not what is there.&rdquo;</p>
+      <div class="ms-ba-trig" data-open-ba>
+        <div class="ms-ba-track"><div class="ms-ba-fill"></div></div>
+        <span class="ms-ba-lbl">Drag to reveal &rarr;</span>
+      </div>
+      <div class="ms-actions">
+        <a href="murals.html" class="ms-view">View gallery</a>
+        <a href="mailto:connieharrisart@gmail.com?subject=Mural Inquiry" class="ms-inq">Inquire</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- BAS RELIEF -->
+  <div class="ms below" id="ms-3"
+       data-title="Bas Relief"
+       data-ba-after="images/relief.jpg"
+       data-ba-before="images/walls.jpg"
+       data-ba-al="After sculpting"
+       data-ba-bl="Flat surface">
+    <img class="ms-bg" src="images/relief.jpg" alt=""/>
+    <div class="ms-overlay"></div><div class="ms-topfade"></div>
+    <div class="ms-topbar">
+      <div class="ms-logo">Connie Harris</div>
+      <button class="ms-menu-btn"><span></span><span></span></button>
+    </div>
+    <div class="ms-body">
+      <div class="ms-kicker">Discipline No. III</div>
+      <h2 class="ms-title">Bas Relief<br/>Sculpture</h2>
+      <p class="ms-quote">&ldquo;The only finish you can feel with your eyes.&rdquo;</p>
+      <div class="ms-ba-trig" data-open-ba>
+        <div class="ms-ba-track"><div class="ms-ba-fill"></div></div>
+        <span class="ms-ba-lbl">Drag to reveal &rarr;</span>
+      </div>
+      <div class="ms-actions">
+        <a href="bas-relief.html" class="ms-view">View gallery</a>
+        <a href="mailto:connieharrisart@gmail.com?subject=Bas Relief Inquiry" class="ms-inq">Inquire</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- CABINETS -->
+  <div class="ms below" id="ms-4"
+       data-title="Cabinet Finishes"
+       data-ba-after="images/cabinets.jpg"
+       data-ba-before="images/walls.jpg"
+       data-ba-al="Connie&rsquo;s finish"
+       data-ba-bl="Stock finish">
+    <img class="ms-bg" src="images/cabinets.jpg" alt=""/>
+    <div class="ms-overlay"></div><div class="ms-topfade"></div>
+    <div class="ms-topbar">
+      <div class="ms-logo">Connie Harris</div>
+      <button class="ms-menu-btn"><span></span><span></span></button>
+    </div>
+    <div class="ms-body">
+      <div class="ms-kicker">Discipline No. IV</div>
+      <h2 class="ms-title">Cabinet<br/>Finishes</h2>
+      <p class="ms-quote">&ldquo;The surface you touch every single day.&rdquo;</p>
+      <div class="ms-ba-trig" data-open-ba>
+        <div class="ms-ba-track"><div class="ms-ba-fill"></div></div>
+        <span class="ms-ba-lbl">Drag to reveal &rarr;</span>
+      </div>
+      <div class="ms-actions">
+        <a href="cabinet-finishes.html" class="ms-view">View gallery</a>
+        <a href="mailto:connieharrisart@gmail.com?subject=Cabinet Finish Inquiry" class="ms-inq">Inquire</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- CEILINGS -->
+  <div class="ms below" id="ms-5"
+       data-title="Ceilings &amp; Floors"
+       data-ba-after="images/ceilings.jpg"
+       data-ba-before="images/walls.jpg"
+       data-ba-al="After Connie"
+       data-ba-bl="Plain ceiling">
+    <img class="ms-bg" src="images/ceilings.jpg" alt=""/>
+    <div class="ms-overlay"></div><div class="ms-topfade"></div>
+    <div class="ms-topbar">
+      <div class="ms-logo">Connie Harris</div>
+      <button class="ms-menu-btn"><span></span><span></span></button>
+    </div>
+    <div class="ms-body">
+      <div class="ms-kicker">Discipline No. V</div>
+      <h2 class="ms-title">Ceilings<br/>&amp; Floors</h2>
+      <p class="ms-quote">&ldquo;Most people forget to look up. She never does.&rdquo;</p>
+      <div class="ms-ba-trig" data-open-ba>
+        <div class="ms-ba-track"><div class="ms-ba-fill"></div></div>
+        <span class="ms-ba-lbl">Drag to reveal &rarr;</span>
+      </div>
+      <div class="ms-actions">
+        <a href="ceilings-floors.html" class="ms-view">View gallery</a>
+        <a href="mailto:connieharrisart@gmail.com?subject=Ceilings Inquiry" class="ms-inq">Inquire</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- CONTACT -->
+  <div class="ms below" id="ms-6">
+    <img class="ms-bg" src="images/foyer.jpg" alt=""/>
+    <div class="ms-overlay"></div><div class="ms-topfade"></div>
+    <div class="ms-topbar">
+      <div class="ms-logo">Connie Harris</div>
+      <button class="ms-menu-btn"><span></span><span></span></button>
+    </div>
+    <div class="ms-contact-body">
+      <div class="ms-contact-kicker">Commission a Work</div>
+      <h2 class="ms-contact-title">Ready to talk<br/>about your space?</h2>
+      <div class="ms-crow"><span class="ms-crl">Phone</span><span class="ms-crv"><a href="tel:2252665037">(225) 266-5037</a></span></div>
+      <div class="ms-crow"><span class="ms-crl">Email</span><span class="ms-crv"><a href="mailto:connieharrisart@gmail.com">connieharrisart@gmail.com</a></span></div>
+      <div class="ms-crow"><span class="ms-crl">Studio</span><span class="ms-crv">5755 Highway 74<br/>St. Gabriel, LA 70776</span></div>
+      <div class="ms-cbtns">
+        <a href="tel:2252665037" class="ms-call">Call Connie</a>
+        <a href="mailto:connieharrisart@gmail.com" class="ms-email">Send Email</a>
+      </div>
+    </div>
+  </div>
+
+</div><!-- end #mstack -->
+
+</body>
+</html>
