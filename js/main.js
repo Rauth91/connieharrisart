@@ -51,6 +51,8 @@ function initGalleryPage({ meta }) {
   let i = 0;
   let timer;
   let lightboxIndex = 0;
+  let touchStartX = 0;
+  let touchStartY = 0;
 
   function go(x) {
     clearTimeout(timer);
@@ -98,6 +100,29 @@ function initGalleryPage({ meta }) {
     lightbox.classList.remove("show");
     lightbox.setAttribute("aria-hidden", "true");
     lightboxImage.src = "";
+  }
+
+  function onTouchStart(e) {
+    const touch = e.changedTouches?.[0];
+    if (!touch) return;
+    touchStartX = touch.clientX;
+    touchStartY = touch.clientY;
+  }
+
+  function onTouchEnd(e) {
+    const touch = e.changedTouches?.[0];
+    if (!touch) return;
+    const dx = touch.clientX - touchStartX;
+    const dy = touch.clientY - touchStartY;
+    if (Math.abs(dx) < 45 || Math.abs(dx) < Math.abs(dy)) return;
+    if (lightbox?.classList.contains("show")) {
+      if (dx < 0) renderLightbox(lightboxIndex + 1);
+      if (dx > 0) renderLightbox(lightboxIndex - 1);
+      return;
+    }
+    if (galleryOverlay?.classList.contains("show") || baOverlay?.classList.contains("show")) return;
+    if (dx < 0) go(i + 1);
+    if (dx > 0) go(i - 1);
   }
 
   if (galleryOpen && galleryOverlay) {
@@ -176,6 +201,9 @@ function initGalleryPage({ meta }) {
     if (e.key === "ArrowRight") go(i + 1);
     if (e.key === "ArrowLeft") go(i - 1);
   });
+
+  document.addEventListener("touchstart", onTouchStart, { passive: true });
+  document.addEventListener("touchend", onTouchEnd, { passive: true });
 
   updateBeforeAfter(50);
   go(0);
