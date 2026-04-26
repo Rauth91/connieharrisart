@@ -1,0 +1,41 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Cabinet Finishes | Connie Harris</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,200;0,300;0,400;0,500;1,200;1,300&family=Inter:wght@300;400;500&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="css/style.css" />
+<style>
+html,body{width:100%;height:100%;overflow:hidden;background:#241e18}
+body.gallery-page{color:var(--white)}
+.gallery-page .links{display:flex;gap:1rem;flex-wrap:wrap}
+.gallery-page .links a.active{opacity:1;color:var(--gold)}
+@media(max-width:900px){.gallery-page .links{display:none}.gallery-page .left{max-width:82vw}}
+@media(max-width:640px){.gallery-page .gallery-grid{grid-template-columns:1fr}}
+</style>
+</head>
+<body class="gallery-page">
+<header class="nav"><a class="brand" href="index.html">Connie Harris</a><nav class="links"><a href="index.html">Home</a><a href="bas-relief.html">Bas Relief</a><a href="faux-finishes.html">Wall Finishes</a><a href="cabinet-finishes.html" class="active">Cabinets</a><a href="ceilings-floors.html">Ceilings & Floors</a><a href="murals.html">Murals</a><a href="classes.html">Classes</a><a href="contact.html">Contact</a></nav></header>
+<a class="back" href="index.html">← All work</a>
+<section class="slide active"><img src="https://images.unsplash.com/photo-1616046229478-9901c5536a45?auto=format&fit=crop&w=2200&q=74" alt="Cabinet finish piece 01" /></section>
+<section class="slide"><img src="https://images.unsplash.com/photo-1556911220-bff31c812dba?auto=format&fit=crop&w=2200&q=74" alt="Cabinet finish piece 02" /></section>
+<section class="slide"><img src="https://images.unsplash.com/photo-1560185008-a33f5c7cf15a?auto=format&fit=crop&w=2200&q=74" alt="Cabinet finish piece 03" /></section>
+<section class="slide"><img src="https://images.unsplash.com/photo-1556912172-45b7abe8b7e1?auto=format&fit=crop&w=2200&q=74" alt="Cabinet finish piece 04" /></section>
+<div class="left"><p class="eyebrow" id="k">Work 01 of 04 · Cabinet Finishes</p><h1 class="title" id="t">Aged<br>Cabinetry</h1><p class="desc" id="d">A painted cabinet outlasts a trend. Connie's finishes are built for longevity — customized to the wood, the room, and the light it lives in.</p><div class="cta-row"><a class="cta" href="contact.html">Commission this work</a><a class="demo-btn" href="#" id="gallery-open">View Gallery</a><a class="demo-btn" href="#" id="ba-open">View Before / After</a></div></div>
+<div class="right"><div><strong id="n">01</strong> / 04</div><div class="dots" id="dots"></div></div>
+<div class="gallery-overlay" id="gallery-overlay" aria-hidden="true"><div class="gallery-panel"><div class="gallery-head"><strong>Cabinet Finishes Gallery</strong><button class="gallery-close" id="gallery-close" type="button">Close</button></div><p class="gallery-note">Featured slideshow shows top 4 pieces. Explore more below.</p><div class="gallery-grid"><article class="gallery-item"><img src="https://images.unsplash.com/photo-1616046229478-9901c5536a45?auto=format&fit=crop&w=1200&q=74" alt="Cabinet finish piece 01" /><span>Piece 01</span></article><article class="gallery-item"><img src="https://images.unsplash.com/photo-1556911220-bff31c812dba?auto=format&fit=crop&w=1200&q=74" alt="Cabinet finish piece 02" /><span>Piece 02</span></article><article class="gallery-item"><img src="https://images.unsplash.com/photo-1560185008-a33f5c7cf15a?auto=format&fit=crop&w=1200&q=74" alt="Cabinet finish piece 03" /><span>Piece 03</span></article><article class="gallery-item"><img src="https://images.unsplash.com/photo-1556912172-45b7abe8b7e1?auto=format&fit=crop&w=1200&q=74" alt="Cabinet finish piece 04" /><span>Piece 04</span></article><article class="gallery-item"><img src="https://images.unsplash.com/photo-1556912167-f556f1f39fdf?auto=format&fit=crop&w=1200&q=74" alt="Cabinet finish piece 05" /><span>Piece 05</span></article><article class="gallery-item"><img src="https://images.unsplash.com/photo-1556911261-6bd341186b2f?auto=format&fit=crop&w=1200&q=74" alt="Cabinet finish piece 06" /><span>Piece 06</span></article></div></div></div>
+<div class="ba-overlay" id="ba-overlay" aria-hidden="true"><div class="ba-panel"><div class="ba-head"><strong>Cabinet Transformation Demo</strong><button class="ba-close" id="ba-close" type="button">Close</button></div><div class="ba-wrap"><img src="https://images.unsplash.com/photo-1556911220-bff31c812dba?auto=format&fit=crop&w=1800&q=74" alt="Before cabinet finish treatment" /><img class="ba-after" id="ba-after" src="https://images.unsplash.com/photo-1616046229478-9901c5536a45?auto=format&fit=crop&w=1800&q=74" alt="After cabinet finish treatment" /><div class="ba-divider" id="ba-divider"></div><div class="ba-handle" id="ba-handle">↔</div><div class="ba-label left">Before</div><div class="ba-label right">After</div><input class="ba-range" id="ba-range" type="range" min="0" max="100" value="50" aria-label="Before and after slider" /></div></div></div>
+<div class="lightbox" id="lightbox" aria-hidden="true"><button class="lightbox-nav lightbox-prev" id="lightbox-prev" type="button" aria-label="Previous image">←</button><button class="lightbox-nav lightbox-next" id="lightbox-next" type="button" aria-label="Next image">→</button><button class="lightbox-close" id="lightbox-close" type="button">Close</button><img id="lightbox-image" src="" alt="Expanded gallery artwork" /><div class="lightbox-meta"><div class="lightbox-count" id="lightbox-count">01 / 06</div><span class="lightbox-caption" id="lightbox-caption">Piece 01</span></div></div>
+<footer class="footer"><span>Connie Harris Art</span><span>St. Gabriel, Louisiana</span><nav class="footer-social"><a href="https://www.instagram.com/connieaharrisart/" target="_blank" rel="noopener">Instagram</a><a href="https://www.facebook.com/connieharrisart/" target="_blank" rel="noopener">Facebook</a><a href="https://www.pinterest.com/connieharrisart/" target="_blank" rel="noopener">Pinterest</a></nav><span>© 2026</span></footer>
+<script src="https://cdn.jsdelivr.net/npm/gsap@3.12.7/dist/gsap.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/gsap@3.12.7/dist/ScrollTrigger.min.js"></script>
+<script src="js/main.js"></script>
+<script>
+const meta=[["Work 01 of 04 · Cabinet Finishes","Aged<br>Cabinetry","A painted cabinet outlasts a trend. Connie's finishes are built for longevity — customized to the wood, the room, and the light it lives in."],["Work 02 of 04 · Cabinet Finishes","Paint +<br>Patina","Subtle aging techniques that maintain clarity and sophistication."],["Work 03 of 04 · Cabinet Finishes","Glazed<br>Detail","Glaze layering designed to highlight panel profiles and millwork."],["Work 04 of 04 · Cabinet Finishes","Protected<br>Finish","Topcoat systems selected for long-term beauty in active rooms."]];
+initGalleryPage({meta});
+</script>
+</body>
+</html>
