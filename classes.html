@@ -1,0 +1,291 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Classes | Connie Harris</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,200;0,300;0,400;0,500;1,200;1,300&family=Inter:wght@300;400;500&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="css/style.css" />
+<style>
+:root{
+  --paper:#f5eee4;
+  --ink:#241e18;
+  --gold:#a77b45;
+  --soft:#756858;
+  --line:rgba(36,30,24,.16);
+  --white:#fff7ea;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{background:var(--paper)}
+body{
+  font-family:Inter,system-ui,sans-serif;
+  color:var(--ink);
+  overflow-x:hidden;
+  background:
+    radial-gradient(circle at 12% 18%, rgba(167,123,69,.18), transparent 32rem),
+    radial-gradient(circle at 88% 42%, rgba(111,77,53,.13), transparent 26rem),
+    linear-gradient(180deg,#f8f1e8 0%,#f1e5d6 52%,#f7efe4 100%);
+}
+a{color:inherit;text-decoration:none}
+.topbar{position:fixed;top:0;left:0;right:0;z-index:50;height:66px;padding:0 clamp(1rem,3vw,2.4rem);display:flex;align-items:center;justify-content:space-between;background:linear-gradient(to bottom,rgba(24,19,14,.72),rgba(24,19,14,0))}
+.brand{font-family:"Cormorant Garamond",serif;font-size:clamp(1.3rem,2vw,1.8rem);letter-spacing:.02em}
+.nav{display:flex;gap:1rem;align-items:center;flex-wrap:wrap}
+.nav a{font-size:.6rem;letter-spacing:.2em;text-transform:uppercase;font-weight:400;opacity:.76}
+.nav a:hover,.nav a.active{opacity:1;color:#e9c995}
+.hero{min-height:92svh;position:relative;display:grid;align-items:end;padding:clamp(6rem,10vw,9rem) clamp(1.2rem,5vw,5rem) clamp(3rem,7vw,6rem)}
+.hero img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;z-index:-2;filter:brightness(.58) saturate(.76)}
+.hero:after{content:"";position:absolute;inset:0;z-index:-1;background:linear-gradient(90deg,rgba(24,18,14,.9),rgba(24,18,14,.25) 52%,rgba(24,18,14,.72)),linear-gradient(to top,rgba(24,18,14,.82),transparent 45%)}
+.hero-copy{max-width:44rem}
+.eyebrow{font-family:Inter,system-ui,sans-serif;font-size:.58rem;font-weight:500;letter-spacing:.26em;text-transform:uppercase;color:var(--gold)}
+h1{font-family:"Cormorant Garamond",serif;font-weight:300;font-size:clamp(3.4rem,10vw,9.5rem);line-height:.85;letter-spacing:-.045em;max-width:10ch;margin-top:.8rem}
+h1.shimmer{background:linear-gradient(100deg,rgba(255,247,234,.75) 0%,rgba(255,236,201,.98) 42%,rgba(167,123,69,.92) 50%,rgba(255,236,201,.98) 58%,rgba(255,247,234,.75) 100%);background-size:260% 100%;-webkit-background-clip:text;background-clip:text;color:transparent;animation:shine .95s ease-out}
+@keyframes shine{from{background-position:120% 0}to{background-position:0 0}}
+.hero p{max-width:40rem;margin-top:1rem;font-size:clamp(1rem,1.35vw,1.15rem);font-weight:300;line-height:1.9;letter-spacing:.01em;color:rgba(255,247,234,.85)}
+.hero-actions{display:flex;gap:.8rem;flex-wrap:wrap;margin-top:1.45rem}
+.btn{display:inline-flex;align-items:center;justify-content:center;padding:.82rem 1rem;border-radius:999px;border:1px solid rgba(255,247,234,.4);text-transform:uppercase;letter-spacing:.16em;font-size:.6rem;background:rgba(255,255,255,.08);transition:border-color .25s ease,background .25s ease,color .25s ease}
+.btn:hover{border-color:rgba(233,201,149,.72);background:rgba(255,255,255,.13)}
+.btn.dark{background:#fff4e6;color:#241e18;border-color:#fff4e6}
+.page{padding:clamp(2.3rem,6vw,5rem) clamp(1.2rem,6vw,6rem) 4rem;max-width:1220px;margin:0 auto}
+h2.section-title{font-family:"Cormorant Garamond",serif;font-weight:300;font-size:clamp(2.4rem,5.5vw,5.5rem);line-height:.88;letter-spacing:-.035em}
+.intro{margin-top:.5rem;padding:clamp(1.8rem,4vw,2.6rem) 0 0;border-top:1px solid var(--line)}
+.intro p{margin-top:.9rem;color:var(--soft);font-size:clamp(1rem,1.35vw,1.15rem);font-weight:300;line-height:1.9;letter-spacing:.01em;max-width:44rem}
+.signature{margin-top:2rem;position:relative;min-height:340px;border:1px solid var(--line);overflow:hidden}
+.signature img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;filter:brightness(.63) saturate(.74)}
+.signature:after{content:"";position:absolute;inset:0;background:linear-gradient(90deg,rgba(18,14,10,.76),rgba(18,14,10,.26) 54%,rgba(18,14,10,.7))}
+.signature-copy{position:relative;z-index:2;max-width:30rem;padding:clamp(1.2rem,4vw,2.3rem)}
+.signature-copy p{margin-top:.7rem;color:var(--soft);line-height:1.85}
+.offerings{margin-top:2.8rem}
+.offerings-head{display:flex;justify-content:space-between;align-items:flex-end;gap:1rem;flex-wrap:wrap}
+.offerings-note{font-size:.55rem;letter-spacing:.22em;text-transform:uppercase;color:#d8b47f}
+.offerings-grid{margin-top:1.2rem;display:grid;grid-template-columns:repeat(2,1fr);gap:1rem}
+.offering{border:1px solid var(--line);padding:1.1rem .9rem;background:rgba(255,255,255,.36);color:var(--ink);text-align:left;cursor:pointer;transition:border-color .25s ease,background .25s ease,transform .28s ease;position:relative}
+.offering:hover{border-color:rgba(167,123,69,.42);background:rgba(255,255,255,.54)}
+.offering:focus-visible{outline:1px solid rgba(167,123,69,.55);outline-offset:6px}
+.offering p{font-size:.55rem;letter-spacing:.22em;text-transform:uppercase;color:#d8b47f}
+.offering strong{display:block;margin-top:.5rem;font-family:"Cormorant Garamond",serif;font-weight:300;font-size:clamp(1.3rem,2.3vw,2rem);line-height:1}
+.offering em{display:block;margin-top:.55rem;font-style:normal;color:var(--soft);line-height:1.8}
+.offering span{display:inline-block;margin-top:.7rem;font-size:.5rem;letter-spacing:.2em;text-transform:uppercase;color:#6f4d35}
+.cta-band{margin-top:2.8rem;display:grid;grid-template-columns:1fr auto;gap:1.1rem;align-items:end;border-top:1px solid var(--line);padding-top:1.4rem}
+.cta-band p{max-width:32rem;color:var(--soft);line-height:1.8;margin-top:.6rem}
+.class-modal{position:fixed;inset:0;z-index:90;background:rgba(12,10,8,.82);display:none;align-items:center;justify-content:center;padding:1.2rem}
+.class-modal.show{display:flex}
+.class-panel{width:min(760px,100%);max-height:90vh;overflow:auto;background:linear-gradient(180deg,#f7efe4,#f1e5d6);border:1px solid var(--line);padding:1.2rem;box-shadow:0 24px 80px rgba(0,0,0,.28);color:var(--ink)}
+.class-head{display:flex;justify-content:space-between;gap:.9rem;align-items:start}
+.class-label{font-size:.52rem;letter-spacing:.22em;text-transform:uppercase;color:#d8b47f}
+.class-title{margin-top:.5rem;font-family:"Cormorant Garamond",serif;font-weight:300;font-size:clamp(2rem,4.2vw,3.2rem);line-height:.9}
+.class-close{border:1px solid rgba(36,30,24,.28);background:transparent;color:var(--ink);padding:.35rem .58rem;font-size:.52rem;letter-spacing:.16em;text-transform:uppercase;cursor:pointer}
+.class-summary{margin-top:1rem;color:var(--soft);line-height:1.85}
+.class-section{margin-top:1.1rem;border-top:1px solid var(--line);padding-top:.8rem}
+.class-section p{font-size:.52rem;letter-spacing:.2em;text-transform:uppercase;color:#d8b47f}
+.class-section ul{margin-top:.55rem;padding-left:1rem;color:var(--soft);line-height:1.85}
+.class-section li+li{margin-top:.35rem}
+.class-foot{margin-top:1.2rem;display:flex;justify-content:space-between;gap:.8rem;flex-wrap:wrap;align-items:center;border-top:1px solid var(--line);padding-top:.9rem}
+.class-foot small{font-size:.62rem;color:var(--soft)}
+.footer{padding:2rem clamp(1.2rem,4vw,4rem);display:flex;justify-content:space-between;gap:1rem;flex-wrap:wrap;color:var(--soft);font-size:.65rem;letter-spacing:.14em;text-transform:uppercase}
+.footer-social{display:flex;gap:1.2rem}
+.footer-social a{font-size:.6rem;letter-spacing:.18em;text-transform:uppercase;text-decoration:none;color:var(--soft);transition:color .2s ease}
+.footer-social a:hover{color:var(--gold)}
+@media(max-width:980px){.nav{display:none}.offerings-grid{grid-template-columns:1fr}.cta-band{grid-template-columns:1fr}.signature{min-height:280px}}
+</style>
+</head>
+<body>
+<header class="topbar">
+  <a class="brand" href="index.html">Connie Harris</a>
+  <nav class="nav">
+    <a href="index.html">Home</a>
+    <a href="murals.html">Murals</a>
+    <a href="faux-finishes.html">Wall Finishes</a>
+    <a href="bas-relief.html">Bas Relief</a>
+    <a href="cabinet-finishes.html">Cabinets</a>
+    <a href="ceilings-floors.html">Ceilings & Floors</a>
+    <a href="classes.html" class="active">Classes</a>
+    <a href="contact.html">Contact</a>
+  </nav>
+</header>
+
+<section class="hero">
+  <img src="https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?auto=format&fit=crop&w=2200&q=74" alt="Studio class session" />
+  <div class="hero-copy">
+    <p class="eyebrow">Private studio education</p>
+    <h1 id="hero-title">Learn the craft from the source.</h1>
+    <p>A quieter, higher-touch class experience for artists and designers who want real process, elevated finishes, and hands-on mentoring with Connie.</p>
+    <div class="hero-actions">
+      <a class="btn dark" href="contact.html">Request Dates</a>
+      <a class="btn" href="#tracks">View Tracks</a>
+    </div>
+  </div>
+</section>
+
+<main class="page">
+  <section class="intro">
+    <p class="eyebrow">Class experience</p>
+    <h2 class="section-title">Small classes. Real technique.</h2>
+    <p>Connie teaches from her studio at Chatsworth Plantation in St. Gabriel. Classes are kept intentionally small — a handful of students, focused instruction, and the kind of hands-on detail you can't get from a video.</p>
+  </section>
+
+  <section class="signature">
+    <img src="https://images.unsplash.com/photo-1522202176988-66273c2fd55f?auto=format&fit=crop&w=2200&q=74" alt="Studio class moment" />
+    <div class="signature-copy">
+      <p class="eyebrow">Studio atmosphere</p>
+      <h2 class="section-title">Craft in real time.</h2>
+      <p>Observe, practice, refine. Every session is built around technique you can actually use in finished spaces.</p>
+    </div>
+  </section>
+
+  <section class="offerings">
+    <div class="offerings-head">
+      <div>
+        <p class="eyebrow">Now enrolling</p>
+        <h2 class="section-title">Currently Offered Classes</h2>
+      </div>
+      <p class="offerings-note"><span id="class-count">0</span> classes open now</p>
+    </div>
+    <div class="offerings-grid" id="offerings-grid"></div>
+  </section>
+
+  <section class="cta-band">
+    <div>
+      <p class="eyebrow">Limited enrollment</p>
+      <h2 class="section-title">Reserve your class inquiry.</h2>
+      <p>Share your schedule and background. Connie will recommend the best track and available dates.</p>
+    </div>
+    <a class="btn dark" href="contact.html">Request Dates</a>
+  </section>
+</main>
+
+<footer class="footer">
+  <span>Connie Harris Art</span>
+  <span>St. Gabriel, Louisiana</span>
+  <nav class="footer-social">
+    <a href="https://www.instagram.com/connieaharrisart/" target="_blank" rel="noopener">Instagram</a>
+    <a href="https://www.facebook.com/connieharrisart/" target="_blank" rel="noopener">Facebook</a>
+    <a href="https://www.pinterest.com/connieharrisart/" target="_blank" rel="noopener">Pinterest</a>
+  </nav>
+  <span>© 2026</span>
+</footer>
+
+<div class="class-modal" id="class-modal" aria-hidden="true">
+  <article class="class-panel">
+    <div class="class-head">
+      <div>
+        <p class="class-label" id="class-modal-code">Class</p>
+        <h3 class="class-title" id="class-modal-title">Class title</h3>
+      </div>
+      <button class="class-close" id="class-modal-close" type="button">Close</button>
+    </div>
+    <p class="class-summary" id="class-modal-summary"></p>
+    <section class="class-section">
+      <p>What to expect</p>
+      <ul id="class-modal-expect"></ul>
+    </section>
+    <section class="class-section">
+      <p>Good fit for</p>
+      <ul id="class-modal-fit"></ul>
+    </section>
+    <div class="class-foot">
+      <small id="class-modal-details"></small>
+      <a class="btn dark" href="contact.html">Request Dates</a>
+    </div>
+  </article>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/gsap@3.12.7/dist/gsap.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/gsap@3.12.7/dist/ScrollTrigger.min.js"></script>
+<script src="js/main.js"></script>
+<script>
+const heroTitle=document.getElementById('hero-title');
+if(heroTitle){
+  setTimeout(()=>heroTitle.classList.add('shimmer'),500);
+  setInterval(()=>{heroTitle.classList.remove('shimmer');void heroTitle.offsetWidth;heroTitle.classList.add('shimmer');},7000);
+}
+
+const classOfferings=[
+  {
+    code:"June 2026",
+    title:"Finish Foundations Intensive",
+    details:"2-day studio course · Beginner friendly · 8 seats",
+    summary:"Build a strong technical base in Connie's decorative finish process from prep through final seal.",
+    expect:["Live demonstrations and coached repetition","Color and glaze layering practice","Take-home sample panels + workflow notes"],
+    fit:["Beginners starting decorative finishes","Artists refining consistency","Career pivots entering finish work"]
+  },
+  {
+    code:"July 2026",
+    title:"Texture + Patina Masterclass",
+    details:"2-day studio course · Intermediate · 6 seats",
+    summary:"Learn advanced depth-building for textured, time-worn, and architectural patina effects.",
+    expect:["Material sequencing for depth","Controlled distressing techniques","Critique rounds on your practice boards"],
+    fit:["Painters with basic finish experience","Designers wanting richer surface language","Professionals expanding premium offerings"]
+  },
+  {
+    code:"Monthly",
+    title:"Private Coaching Session",
+    details:"Custom 1:1 training dates · By application",
+    summary:"Personalized coaching focused on your project challenges, portfolio growth, or business goals.",
+    expect:["Custom lesson plan per inquiry","Direct troubleshooting on real work","Clear next-step action plan"],
+    fit:["Working artists with specific goals","Clients preparing a live project","Small business owners scaling services"]
+  },
+  {
+    code:"Quarterly",
+    title:"Designer Team Workshop",
+    details:"Private small-group format for firms and studios",
+    summary:"Studio workshop built for teams that want stronger decorative finish literacy and execution confidence.",
+    expect:["Shared vocabulary + finish strategy","Team-based technique exercises","Recommendations for future specs"],
+    fit:["Interior design firms","Boutique studios","Hospitality and residential project teams"]
+  }
+];
+
+const offeringsGrid=document.getElementById('offerings-grid');
+const classModal=document.getElementById('class-modal');
+const classModalClose=document.getElementById('class-modal-close');
+const classModalCode=document.getElementById('class-modal-code');
+const classModalTitle=document.getElementById('class-modal-title');
+const classModalSummary=document.getElementById('class-modal-summary');
+const classModalExpect=document.getElementById('class-modal-expect');
+const classModalFit=document.getElementById('class-modal-fit');
+const classModalDetails=document.getElementById('class-modal-details');
+const classCount=document.getElementById('class-count');
+
+function openClassModal(item){
+  if(!classModal) return;
+  classModalCode.textContent=item.code;
+  classModalTitle.textContent=item.title;
+  classModalSummary.textContent=item.summary||"";
+  classModalDetails.textContent=item.details||"";
+  classModalExpect.innerHTML=(item.expect||[]).map((line)=>`<li>${line}</li>`).join('');
+  classModalFit.innerHTML=(item.fit||[]).map((line)=>`<li>${line}</li>`).join('');
+  classModal.classList.add('show');
+  classModal.setAttribute('aria-hidden','false');
+}
+
+function closeClassModal(){
+  if(!classModal) return;
+  classModal.classList.remove('show');
+  classModal.setAttribute('aria-hidden','true');
+}
+
+if(offeringsGrid){
+  if(classCount) classCount.textContent=String(classOfferings.length);
+  offeringsGrid.innerHTML=classOfferings.map((item,idx)=>`
+    <button class="offering" type="button" data-class-index="${idx}">
+      <p>${item.code}</p>
+      <strong>${item.title}</strong>
+      <em>${item.details}</em>
+      <span>View class details →</span>
+    </button>
+  `).join('');
+
+  offeringsGrid.querySelectorAll('.offering').forEach((button)=>{
+    button.addEventListener('click',()=>{
+      const index=Number(button.getAttribute('data-class-index'));
+      openClassModal(classOfferings[index]);
+    });
+  });
+}
+
+if(classModalClose) classModalClose.addEventListener('click',closeClassModal);
+if(classModal) classModal.addEventListener('click',(event)=>{if(event.target===classModal) closeClassModal();});
+document.addEventListener('keydown',(event)=>{if(event.key==='Escape'&&classModal&&classModal.classList.contains('show')) closeClassModal();});
+</script>
+</body>
+</html>
