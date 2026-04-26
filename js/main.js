@@ -53,6 +53,7 @@ function initGalleryPage({ meta }) {
   let lightboxIndex = 0;
   let touchStartX = 0;
   let touchStartY = 0;
+  let pointerTracking = false;
 
   function go(x) {
     clearTimeout(timer);
@@ -102,6 +103,18 @@ function initGalleryPage({ meta }) {
     lightboxImage.src = "";
   }
 
+  function handleSwipe(dx, dy) {
+    if (Math.abs(dx) < 45 || Math.abs(dx) < Math.abs(dy)) return;
+    if (lightbox?.classList.contains("show")) {
+      if (dx < 0) renderLightbox(lightboxIndex + 1);
+      if (dx > 0) renderLightbox(lightboxIndex - 1);
+      return;
+    }
+    if (galleryOverlay?.classList.contains("show") || baOverlay?.classList.contains("show")) return;
+    if (dx < 0) go(i + 1);
+    if (dx > 0) go(i - 1);
+  }
+
   function onTouchStart(e) {
     const touch = e.changedTouches?.[0];
     if (!touch) return;
@@ -112,17 +125,20 @@ function initGalleryPage({ meta }) {
   function onTouchEnd(e) {
     const touch = e.changedTouches?.[0];
     if (!touch) return;
-    const dx = touch.clientX - touchStartX;
-    const dy = touch.clientY - touchStartY;
-    if (Math.abs(dx) < 45 || Math.abs(dx) < Math.abs(dy)) return;
-    if (lightbox?.classList.contains("show")) {
-      if (dx < 0) renderLightbox(lightboxIndex + 1);
-      if (dx > 0) renderLightbox(lightboxIndex - 1);
-      return;
-    }
-    if (galleryOverlay?.classList.contains("show") || baOverlay?.classList.contains("show")) return;
-    if (dx < 0) go(i + 1);
-    if (dx > 0) go(i - 1);
+    handleSwipe(touch.clientX - touchStartX, touch.clientY - touchStartY);
+  }
+
+  function onPointerDown(e) {
+    if (e.pointerType !== "touch") return;
+    pointerTracking = true;
+    touchStartX = e.clientX;
+    touchStartY = e.clientY;
+  }
+
+  function onPointerUp(e) {
+    if (!pointerTracking || e.pointerType !== "touch") return;
+    pointerTracking = false;
+    handleSwipe(e.clientX - touchStartX, e.clientY - touchStartY);
   }
 
   if (galleryOpen && galleryOverlay) {
@@ -202,8 +218,11 @@ function initGalleryPage({ meta }) {
     if (e.key === "ArrowLeft") go(i - 1);
   });
 
-  document.addEventListener("touchstart", onTouchStart, { passive: true });
-  document.addEventListener("touchend", onTouchEnd, { passive: true });
+  const swipeSurface = document.body;
+  swipeSurface.addEventListener("touchstart", onTouchStart, { passive: true });
+  swipeSurface.addEventListener("touchend", onTouchEnd, { passive: true });
+  swipeSurface.addEventListener("pointerdown", onPointerDown, { passive: true });
+  swipeSurface.addEventListener("pointerup", onPointerUp, { passive: true });
 
   updateBeforeAfter(50);
   go(0);
