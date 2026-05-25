@@ -1,0 +1,5 @@
+html,body{width:100%;height:100%;overflow:hidden;background:#241e18}
+body.gallery-page{color:var(--white)}
+.gallery-page .links{display:flex;gap:1rem;flex-wrap:wrap}
+.gallery-page .links a.active{opacity:1;color:var(--gold)}
+@media(max-width:1000px){.gallery-page .left{max-width:82vw}}

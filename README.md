@@ -1,5 +1,19 @@
 # Connie Harris Art — Site Launch Guide
 
+This folder is the **only** copy of the site. It matches https://rauth91.github.io/connieharrisart/
+
+## Structure
+```
+index.html, *.html     — pages
+css/style.css          — shared design system
+css/home.css           — home page layout
+css/classes.css        — classes page
+css/contact.css        — contact page
+css/gallery-page.css   — gallery slideshow pages
+js/main.js             — menu, gallery, animations
+js/photo-config.js     — image path map
+```
+
 ## Live preview
 - GitHub Pages: https://rauth91.github.io/connieharrisart/
 - Local: open `index.html` in this folder
