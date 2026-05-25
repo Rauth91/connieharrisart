@@ -3,6 +3,16 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
+<meta name="description" content="Hand-painted custom murals by Connie Harris, designed to fit architecture, light, and the story of each room." />
+<meta property="og:type" content="website" />
+<meta property="og:title" content="Murals | Connie Harris" />
+<meta property="og:description" content="Hand-painted custom murals by Connie Harris, designed to fit architecture, light, and the story of each room." />
+<meta property="og:url" content="https://rauth91.github.io/connieharrisart/murals.html" />
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:title" content="Murals | Connie Harris" />
+<meta name="twitter:description" content="Hand-painted custom murals by Connie Harris, designed to fit architecture, light, and the story of each room." />
+<meta name="theme-color" content="#241e18" />
+<link rel="icon" type="image/svg+xml" href="images/favicon.svg" />
 <title>Murals | Connie Harris</title>
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -13,18 +23,27 @@ html,body{width:100%;height:100%;overflow:hidden;background:#241e18}
 body.gallery-page{color:var(--white)}
 .gallery-page .links{display:flex;gap:1rem;flex-wrap:wrap}
 .gallery-page .links a.active{opacity:1;color:var(--gold)}
-@media(max-width:900px){.gallery-page .links{display:none}.gallery-page .left{max-width:82vw}}
-@media(max-width:640px){.gallery-page .gallery-grid{grid-template-columns:1fr}}
+@media(max-width:1000px){.gallery-page .left{max-width:82vw}}
 </style>
 </head>
 <body class="gallery-page">
-<header class="nav"><a class="brand" href="index.html">Connie Harris</a><nav class="links"><a href="index.html">Home</a><a href="bas-relief.html">Bas Relief</a><a href="faux-finishes.html">Wall Finishes</a><a href="cabinet-finishes.html">Cabinets</a><a href="ceilings-floors.html">Ceilings & Floors</a><a href="murals.html" class="active">Murals</a><a href="classes.html">Classes</a><a href="contact.html">Contact</a></nav></header>
+<header class="nav"><a class="brand" href="index.html">Connie Harris</a><nav class="links"><a href="index.html">Home</a><a href="bas-relief.html">Bas Relief</a><a href="faux-finishes.html">Wall Finishes</a><a href="cabinet-finishes.html">Cabinets</a><a href="ceilings-floors.html">Ceilings & Floors</a><a href="murals.html" class="active">Murals</a><a href="classes.html">Classes</a><a href="contact.html">Contact</a></nav><button class="menu-btn" id="menu-btn" type="button" aria-label="Toggle menu">Menu</button></header>
+<div class="mobile-menu" id="mobile-menu">
+  <a href="index.html">Home</a>
+  <a href="murals.html">Murals</a>
+  <a href="faux-finishes.html">Wall Finishes</a>
+  <a href="bas-relief.html">Bas Relief</a>
+  <a href="cabinet-finishes.html">Cabinets</a>
+  <a href="ceilings-floors.html">Ceilings & Floors</a>
+  <a href="classes.html">Classes</a>
+  <a href="contact.html">Contact</a>
+</div>
 <a class="back" href="index.html">← All work</a>
 <section class="slide active"><img src="https://images.unsplash.com/photo-1618221469555-7f3ad97540d6?auto=format&fit=crop&w=2200&q=74" alt="Mural project" /></section>
 <section class="slide"><img src="https://images.unsplash.com/photo-1505693416388-ac5ce068fe85?auto=format&fit=crop&w=2200&q=74" alt="Mural concept" /></section>
 <section class="slide"><img src="https://images.unsplash.com/photo-1493666438817-866a91353ca9?auto=format&fit=crop&w=2200&q=74" alt="Mural interior" /></section>
 <section class="slide"><img src="https://images.unsplash.com/photo-1616594039964-3f4b7f53f0c6?auto=format&fit=crop&w=2200&q=74" alt="Mural detail" /></section>
-<div class="left"><p class="eyebrow" id="k">Work 01 of 04 · Murals</p><h1 class="title" id="t">Painted<br>Architecture</h1><p class="desc" id="d">Murals are Connie's favorite form — painting a poem in color across a surface too large to ignore. She freehands directly onto prepared walls, from Louisiana landscapes to nursery stories to sweeping architectural scenes.</p><div class="cta-row"><a class="cta" href="contact.html">Commission this work</a><a class="demo-btn" href="#" id="gallery-open">View Gallery</a><a class="demo-btn" href="#" id="ba-open">View Before / After</a></div></div>
+<div class="left"><p class="eyebrow" id="k">Work 01 of 04 · Murals</p><h1 class="title" id="t">Painted<br>Architecture</h1><p class="desc" id="d">Murals are Connie's favorite form — painting in color across surfaces too large to ignore. She freehands directly onto prepared walls, from Louisiana landscapes to nursery stories to architectural scenes.</p><div class="cta-row"><a class="cta" href="contact.html">Commission this work</a><a class="demo-btn" href="#" id="gallery-open">View Gallery</a><a class="demo-btn" href="#" id="ba-open">View Before / After</a></div></div>
 <div class="right"><div><strong id="n">01</strong> / 04</div><div class="dots" id="dots"></div></div>
 <div class="gallery-overlay" id="gallery-overlay" aria-hidden="true"><div class="gallery-panel"><div class="gallery-head"><strong>Murals Gallery</strong><button class="gallery-close" id="gallery-close" type="button">Close</button></div><p class="gallery-note">Featured slideshow shows top 4 pieces. Explore more below.</p><div class="gallery-grid">
 <article class="gallery-item"><img src="https://images.unsplash.com/photo-1618221469555-7f3ad97540d6?auto=format&fit=crop&w=1200&q=74" alt="Mural piece 01" /><span>Piece 01</span></article>
@@ -41,7 +60,7 @@ body.gallery-page{color:var(--white)}
 <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.7/dist/ScrollTrigger.min.js"></script>
 <script src="js/main.js"></script>
 <script>
-const meta=[["Work 01 of 04 · Murals","Painted<br>Architecture","Murals are Connie's favorite form — painting a poem in color across a surface too large to ignore. She freehands directly onto prepared walls, from Louisiana landscapes to nursery stories to sweeping architectural scenes."],["Work 02 of 04 · Murals","Concept<br>to Scale","Every mural starts with spatial planning and color studies."],["Work 03 of 04 · Murals","Room<br>Integration","Final work feels built into architecture and furnishings."],["Work 04 of 04 · Murals","Layered<br>Finish","Brushwork and glazes build atmosphere and depth."]];
+const meta=[["Work 01 of 04 · Murals","Painted<br>Architecture","Murals are Connie's favorite form — painting in color across surfaces too large to ignore. She freehands directly onto prepared walls, from Louisiana landscapes to nursery stories to architectural scenes."],["Work 02 of 04 · Murals","Concept<br>to Scale","Every mural starts with spatial planning and color studies."],["Work 03 of 04 · Murals","Room<br>Integration","Final work feels built into architecture and furnishings."],["Work 04 of 04 · Murals","Layered<br>Finish","Brushwork and glazes build atmosphere and depth."]];
 initGalleryPage({meta});
 </script>
 </body>

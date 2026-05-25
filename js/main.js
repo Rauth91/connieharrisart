@@ -51,6 +51,14 @@ function initGalleryPage({ meta }) {
   let i = 0;
   let timer;
   let lightboxIndex = 0;
+  let touchStartX = 0;
+  let touchStartY = 0;
+  let pointerTracking = false;
+
+  function scheduleAdvance() {
+    clearTimeout(timer);
+    timer = setTimeout(() => go(i + 1), 6500);
+  }
 
   function go(x) {
     clearTimeout(timer);
@@ -64,7 +72,7 @@ function initGalleryPage({ meta }) {
     t.classList.remove("shimmer");
     void t.offsetWidth;
     t.classList.add("shimmer");
-    timer = setTimeout(() => go(i + 1), 6500);
+    scheduleAdvance();
   }
 
   slides.forEach((_, x) => {
@@ -98,6 +106,50 @@ function initGalleryPage({ meta }) {
     lightbox.classList.remove("show");
     lightbox.setAttribute("aria-hidden", "true");
     lightboxImage.src = "";
+  }
+
+  function handleSwipe(dx, dy) {
+    if (Math.abs(dx) < 45 || Math.abs(dx) < Math.abs(dy)) return;
+    if (lightbox?.classList.contains("show")) {
+      if (dx < 0) renderLightbox(lightboxIndex + 1);
+      if (dx > 0) renderLightbox(lightboxIndex - 1);
+      return;
+    }
+    if (galleryOverlay?.classList.contains("show") || baOverlay?.classList.contains("show")) return;
+    if (dx < 0) go(i + 1);
+    if (dx > 0) go(i - 1);
+  }
+
+  function capturePoint(clientX, clientY) {
+    touchStartX = clientX;
+    touchStartY = clientY;
+    clearTimeout(timer);
+  }
+
+  function onTouchStart(e) {
+    const touch = e.changedTouches?.[0] || e.touches?.[0];
+    if (!touch) return;
+    capturePoint(touch.clientX, touch.clientY);
+  }
+
+  function onTouchEnd(e) {
+    const touch = e.changedTouches?.[0];
+    if (!touch) return;
+    handleSwipe(touch.clientX - touchStartX, touch.clientY - touchStartY);
+    scheduleAdvance();
+  }
+
+  function onPointerDown(e) {
+    if (e.pointerType !== "touch") return;
+    pointerTracking = true;
+    capturePoint(e.clientX, e.clientY);
+  }
+
+  function onPointerUp(e) {
+    if (!pointerTracking || e.pointerType !== "touch") return;
+    pointerTracking = false;
+    handleSwipe(e.clientX - touchStartX, e.clientY - touchStartY);
+    scheduleAdvance();
   }
 
   if (galleryOpen && galleryOverlay) {
@@ -175,6 +227,30 @@ function initGalleryPage({ meta }) {
     }
     if (e.key === "ArrowRight") go(i + 1);
     if (e.key === "ArrowLeft") go(i - 1);
+  });
+
+  const leftPanel = document.querySelector(".gallery-page .left");
+  if (leftPanel && !leftPanel.querySelector(".swipe-hint")) {
+    const hint = document.createElement("p");
+    hint.className = "swipe-hint";
+    hint.textContent = "Swipe the image area to browse";
+    leftPanel.appendChild(hint);
+  }
+
+  let swipeZone = document.querySelector(".gallery-page .swipe-zone");
+  if (!swipeZone) {
+    swipeZone = document.createElement("div");
+    swipeZone.className = "swipe-zone";
+    swipeZone.setAttribute("aria-hidden", "true");
+    document.body.appendChild(swipeZone);
+  }
+
+  const swipeTargets = [swipeZone, ...slides];
+  swipeTargets.forEach((surface) => {
+    surface.addEventListener("touchstart", onTouchStart, { passive: true });
+    surface.addEventListener("touchend", onTouchEnd, { passive: true });
+    surface.addEventListener("pointerdown", onPointerDown, { passive: true });
+    surface.addEventListener("pointerup", onPointerUp, { passive: true });
   });
 
   updateBeforeAfter(50);
