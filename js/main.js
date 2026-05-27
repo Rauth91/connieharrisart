@@ -337,11 +337,42 @@ function initGalleryPage({ meta }) {
   });
 
   const leftPanel = document.querySelector(".gallery-page .left");
-  if (leftPanel && !leftPanel.querySelector(".swipe-hint")) {
-    const hint = document.createElement("p");
-    hint.className = "swipe-hint";
-    hint.textContent = "Swipe the image area to browse";
-    leftPanel.appendChild(hint);
+  const rightPanel = document.querySelector(".gallery-page .right");
+  const galleryBtn = document.getElementById("gallery-open");
+  const baBtn = document.getElementById("ba-open");
+  const commissionBtn = leftPanel?.querySelector(".cta");
+
+  if (window.matchMedia("(max-width: 640px)").matches) {
+    if (galleryBtn) galleryBtn.textContent = "Gallery";
+    if (baBtn) baBtn.textContent = "Compare";
+    if (commissionBtn) commissionBtn.textContent = "Inquire";
+
+    if (leftPanel && !leftPanel.querySelector(".info-toggle")) {
+      const toggle = document.createElement("button");
+      toggle.type = "button";
+      toggle.className = "info-toggle";
+      toggle.textContent = "More";
+      toggle.setAttribute("aria-expanded", "false");
+      toggle.addEventListener("click", () => {
+        const open = leftPanel.classList.toggle("details-open");
+        toggle.setAttribute("aria-expanded", String(open));
+        toggle.textContent = open ? "Less" : "More";
+      });
+      leftPanel.querySelector(".cta-row")?.appendChild(toggle);
+    }
+
+    if (dots && !document.querySelector(".slide-progress")) {
+      const progress = document.createElement("div");
+      progress.className = "slide-progress";
+      progress.setAttribute("aria-hidden", "true");
+      document.body.appendChild(progress);
+      meta.forEach((_, idx) => {
+        const dot = document.createElement("div");
+        dot.className = "dot" + (idx === 0 ? " active" : "");
+        dot.addEventListener("click", () => go(idx));
+        progress.appendChild(dot);
+      });
+    }
   }
 
   let swipeZone = document.querySelector(".gallery-page .swipe-zone");

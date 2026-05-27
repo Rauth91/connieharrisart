@@ -180,8 +180,9 @@ blockquote,.pullquote{
 .gallery-page .back{position:fixed;top:66px;left:50%;transform:translateX(-50%);padding:.6rem 0;z-index:21;font-size:.48rem;letter-spacing:.24em;text-transform:uppercase;color:rgba(255,247,234,.45);text-decoration:none}
 .gallery-page .slide{position:absolute;inset:0;opacity:0;transition:opacity 1s}
 .gallery-page .slide.active{opacity:1}
-.gallery-page .slide img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;filter:saturate(.8) brightness(.62)}
-.gallery-page .slide:after{content:"";position:absolute;inset:0;background:linear-gradient(to right,rgba(36,30,24,.8),rgba(36,30,24,0) 58%),linear-gradient(to top,rgba(36,30,24,.82),rgba(36,30,24,0) 42%)}
+.gallery-page .slide img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;filter:saturate(.84) brightness(.68)}
+.gallery-page .slide:after{content:"";position:absolute;inset:0;background:linear-gradient(to right,rgba(36,30,24,.72),rgba(36,30,24,0) 58%),linear-gradient(to top,rgba(36,30,24,.72),rgba(36,30,24,0) 38%)}
+.gallery-page .info-toggle{display:none}
 .gallery-page .slide,
 .gallery-page .lightbox img{touch-action:pan-y}
 .gallery-page .gallery-overlay{position:fixed;inset:0;z-index:130;background:rgba(20,15,12,.9);display:none;align-items:center;justify-content:center;padding:2rem}
@@ -228,15 +229,44 @@ blockquote,.pullquote{
   .gallery-page .footer{display:none}
 }
 @media(max-width:640px){
-  .gallery-page .left{left:0;right:0;bottom:0;max-width:100%;padding:.8rem .95rem calc(5.2rem + env(safe-area-inset-bottom));background:linear-gradient(to top,rgba(22,17,13,.97) 66%,transparent)}
-  .gallery-page .right{display:none}
-  .gallery-page .dots{flex-direction:row;align-items:center;margin-top:.45rem;gap:.35rem}
-  .gallery-page .dot{width:20px;height:1px}
-  .gallery-page .dot.active{width:38px;height:1px}
-  .gallery-page .title{font-size:clamp(1.95rem,8.7vw,2.85rem);margin-top:.35rem;line-height:.92}
-  .gallery-page .desc{font-size:.86rem;line-height:1.48;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
-  .gallery-page .cta-row{flex-direction:row;flex-wrap:wrap;gap:.42rem;margin-top:.58rem}
-  .gallery-page .cta,.gallery-page .demo-btn{margin-top:0;font-size:.5rem;letter-spacing:.16em;padding:.45rem .58rem}
+  .gallery-page .slide img{filter:saturate(.9) brightness(.82)}
+  .gallery-page .slide:after{background:linear-gradient(to top,rgba(22,17,13,.82) 0%,rgba(22,17,13,.28) 32%,transparent 58%)}
+  .gallery-page .left{
+    left:0;right:0;bottom:0;max-width:100%;
+    padding:.55rem .75rem calc(.7rem + env(safe-area-inset-bottom));
+    background:linear-gradient(to top,rgba(22,17,13,.88) 0%,rgba(22,17,13,.35) 45%,transparent);
+    pointer-events:none;
+  }
+  .gallery-page .left > *{pointer-events:auto}
+  .gallery-page .left .eyebrow{font-size:.46rem;letter-spacing:.2em;margin:0;opacity:.9}
+  .gallery-page .title{font-size:clamp(1.45rem,6.8vw,2rem);margin-top:.15rem;line-height:.95;max-width:72%}
+  .gallery-page .desc{display:none;margin-top:.55rem;font-size:.84rem;line-height:1.5;color:rgba(255,247,234,.82);max-width:100%}
+  .gallery-page .left.details-open .desc{display:block}
+  .gallery-page .left.details-open{background:linear-gradient(to top,rgba(22,17,13,.94) 0%,rgba(22,17,13,.55) 55%,transparent)}
+  .gallery-page .cta-row{display:flex;flex-wrap:nowrap;gap:.35rem;margin-top:.5rem;align-items:center}
+  .gallery-page .cta,.gallery-page .demo-btn,.gallery-page .info-toggle{
+    margin-top:0;font-size:.46rem;letter-spacing:.14em;padding:.42rem .5rem;
+    border-radius:999px;border:1px solid rgba(255,244,230,.32);
+    background:rgba(20,15,12,.42);backdrop-filter:blur(6px);
+    white-space:nowrap;
+  }
+  .gallery-page .cta{color:#e6c390;border-color:rgba(230,195,144,.45)}
+  .gallery-page .info-toggle{display:inline-flex;align-items:center;justify-content:center;cursor:pointer;color:rgba(255,247,234,.9);font-family:Inter,sans-serif}
+  .gallery-page .info-toggle[aria-expanded="true"]{background:rgba(167,123,69,.28);border-color:rgba(230,195,144,.5)}
+  .gallery-page .right{
+    display:block;position:fixed;top:calc(64px + env(safe-area-inset-top));right:.65rem;bottom:auto;left:auto;
+    z-index:22;text-align:center;background:rgba(20,15,13,.42);padding:.28rem .48rem;border-radius:999px;
+    backdrop-filter:blur(8px);border:1px solid rgba(255,244,230,.14);
+  }
+  .gallery-page .right strong{font-size:.82rem;font-weight:400;letter-spacing:.08em}
+  .gallery-page .right .dots{display:none}
+  .gallery-page .slide-progress{
+    position:fixed;top:calc(64px + env(safe-area-inset-top));left:.65rem;right:3.6rem;z-index:22;
+    display:flex;gap:.22rem;height:2px;
+  }
+  .gallery-page .slide-progress .dot{flex:1;height:2px;width:auto;border-radius:999px;background:rgba(255,247,234,.22);cursor:pointer}
+  .gallery-page .slide-progress .dot.active{background:var(--gold);height:2px;width:auto}
+  .gallery-page .dots{display:none}
   .gallery-page .gallery-panel{width:100%;max-height:95vh;border-radius:0}
   .gallery-page .gallery-grid{grid-template-columns:repeat(2,1fr);gap:.4rem}
   .gallery-page .gallery-item img{height:160px}
@@ -252,9 +282,9 @@ blockquote,.pullquote{
   .gallery-page .lightbox-close{top:max(.7rem,env(safe-area-inset-top));right:.5rem}
   .gallery-page .lightbox-meta{bottom:max(.75rem,env(safe-area-inset-bottom));width:min(90vw,420px)}
   .gallery-page .footer{padding:.55rem .8rem calc(.65rem + env(safe-area-inset-bottom));font-size:.53rem;line-height:1.25}
-  .gallery-page .back{top:64px;font-size:.5rem;padding:.4rem 0}
-  .gallery-page .swipe-hint{display:block}
-  .gallery-page .swipe-zone{bottom:52%}
+  .gallery-page .back{top:64px;font-size:.46rem;opacity:.55;padding:.25rem 0}
+  .gallery-page .swipe-hint{display:none}
+  .gallery-page .swipe-zone{bottom:22%}
 }
 
 @media(max-width:430px){
@@ -270,9 +300,8 @@ blockquote,.pullquote{
 
 @media(max-height:740px) and (max-width:640px){
   .mobile-menu{max-height:calc(100svh - 68px)}
-  .gallery-page .left{padding:.65rem .85rem calc(4.6rem + env(safe-area-inset-bottom))}
-  .gallery-page .title{font-size:clamp(1.7rem,7.4vw,2.35rem)}
-  .gallery-page .desc{-webkit-line-clamp:1}
+  .gallery-page .title{font-size:clamp(1.3rem,6.5vw,1.75rem)}
+  .gallery-page .swipe-zone{bottom:26%}
 }
 
 /* Smooth scrolling on iOS for overlay panels */
