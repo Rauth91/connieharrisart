@@ -24,7 +24,7 @@
 .footer-social{display:flex;gap:1.2rem}
 .footer-social a{font-size:.6rem;letter-spacing:.18em;text-transform:uppercase;text-decoration:none;color:var(--soft);transition:color .2s ease}
 .footer-social a:hover{color:var(--gold)}
-@media(max-width:980px){.topbar > .nav{display:none}.menu-btn{display:inline-flex}.form-flow,.details{grid-template-columns:1fr}.commission{border-radius:52px 0 52px 0}}
+@media(max-width:980px){.form-flow,.details{grid-template-columns:1fr}.commission{border-radius:52px 0 52px 0}}
 @media(max-width:640px){
   .wrap{padding-top:64px}
   .hero{padding:4.9rem 1rem 1.1rem}

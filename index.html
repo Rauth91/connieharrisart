@@ -18,35 +18,12 @@
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,200;0,300;0,400;0,500;1,200;1,300&family=Inter:wght@300;400;500&display=swap" rel="stylesheet" />
-<link rel="stylesheet" href="css/style.css?v=20260527" />
-<link rel="stylesheet" href="css/home.css?v=20260527" />
+<link rel="stylesheet" href="css/style.css?v=20260528" />
+<link rel="stylesheet" href="css/home.css?v=20260528" />
 </head>
 <body class="home-page">
-<header class="topbar">
-  <a class="brand" href="index.html">Connie Harris</a>
-  <button class="menu-btn" id="menu-btn" type="button" aria-label="Toggle menu">Menu</button>
-  <nav class="nav">
-    <a href="index.html" class="active">Home</a>
-    <a href="murals.html">Murals</a>
-    <a href="faux-finishes.html">Wall Finishes</a>
-    <a href="bas-relief.html">Bas Relief</a>
-    <a href="cabinet-finishes.html">Cabinets</a>
-    <a href="ceilings-floors.html">Ceilings & Floors</a>
-    <a href="classes.html">Classes</a>
-    <a href="contact.html">Contact</a>
-  </nav>
-</header>
-<div class="mobile-menu" id="mobile-menu">
-  <a href="index.html">Home</a>
-  <a href="murals.html">Murals</a>
-  <a href="faux-finishes.html">Wall Finishes</a>
-  <a href="bas-relief.html">Bas Relief</a>
-  <a href="cabinet-finishes.html">Cabinets</a>
-  <a href="ceilings-floors.html">Ceilings & Floors</a>
-  <a href="classes.html">Classes</a>
-  <a href="contact.html">Contact</a>
-</div>
-
+<header class="topbar" id="site-header"></header>
+<div class="mobile-menu" id="mobile-menu"></div>
 <section class="hero">
   <div class="hero-art"><img src="https://images.unsplash.com/photo-1545239351-1141bd82e8a6?auto=format&fit=crop&w=2200&q=74" alt="Decorative interior" /></div>
   <div class="hero-mark">C</div>
@@ -173,7 +150,8 @@
 </footer>
 <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.7/dist/gsap.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.7/dist/ScrollTrigger.min.js"></script>
-<script src="js/main.js?v=20260527"></script>
+<script src="js/site-nav.js?v=20260528"></script>
+<script src="js/main.js?v=20260528"></script>
 <script>
 gsap.to('.hero-art img',{scale:1.12,duration:24,ease:'none',repeat:-1,yoyo:true});
 gsap.utils.toArray('.work-card').forEach((card,i)=>{

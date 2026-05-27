@@ -11,9 +11,11 @@ if (typeof gsap !== "undefined" && typeof ScrollTrigger !== "undefined") {
   });
 }
 
-const menuBtn = document.getElementById("menu-btn");
-const mobileMenu = document.getElementById("mobile-menu");
-if (menuBtn && mobileMenu) {
+function initMobileMenu() {
+  const menuBtn = document.getElementById("menu-btn");
+  const mobileMenu = document.getElementById("mobile-menu");
+  if (!menuBtn || !mobileMenu) return;
+
   menuBtn.addEventListener("click", () => {
     const isOpen = mobileMenu.classList.toggle("show");
     document.body.classList.toggle("menu-open", isOpen);
@@ -52,6 +54,8 @@ if (menuBtn && mobileMenu) {
     }
   });
 }
+
+initMobileMenu();
 
 const topbar = document.querySelector(".topbar");
 const handleScrollHeader = () => {
