@@ -54,11 +54,9 @@ if (menuBtn && mobileMenu) {
 }
 
 const topbar = document.querySelector(".topbar");
-const galleryHeader = document.querySelector(".gallery-page .nav");
 const handleScrollHeader = () => {
   const scrolled = window.scrollY > 24;
   if (topbar) topbar.classList.toggle("scrolled", scrolled);
-  if (galleryHeader) galleryHeader.classList.toggle("scrolled", scrolled);
 };
 window.addEventListener("scroll", handleScrollHeader, { passive: true });
 handleScrollHeader();

@@ -46,10 +46,12 @@ img{display:block;max-width:100%}
   transition:background .25s ease,border-color .25s ease,box-shadow .25s ease;
 }
 .topbar.scrolled{background:rgba(30,23,18,.92);border-bottom-color:rgba(255,244,230,.2);box-shadow:0 10px 30px rgba(12,9,7,.2)}
+.topbar{color:#fff4e6}
+.topbar .brand{color:#fff7ea}
 .brand{font-family:"Cormorant Garamond",serif;font-size:clamp(1.3rem,2vw,1.8rem);text-decoration:none;letter-spacing:.02em}
 .menu-btn{display:none;border:1px solid rgba(255,244,230,.38);background:rgba(36,30,24,.55);color:#fff4e6;padding:.45rem .75rem;font-size:.55rem;letter-spacing:.13em;text-transform:uppercase;border-radius:999px}
 .nav{display:flex;gap:.25rem;align-items:center;flex-wrap:wrap;padding:.28rem .35rem;border:1px solid rgba(255,244,230,.18);border-radius:999px;background:rgba(20,15,12,.24)}
-.nav a{font-size:.58rem;letter-spacing:.16em;text-transform:uppercase;font-weight:500;text-decoration:none;opacity:.86;padding:.4rem .62rem;border-radius:999px;transition:background .2s ease,color .2s ease,opacity .2s ease}
+.nav a{font-size:.58rem;letter-spacing:.16em;text-transform:uppercase;font-weight:500;text-decoration:none;color:#fff7ea;opacity:.92;padding:.4rem .62rem;border-radius:999px;transition:background .2s ease,color .2s ease,opacity .2s ease}
 .nav a:hover,.nav a.active{opacity:1;color:#f2cd91;background:rgba(242,205,145,.12)}
 
 .mobile-menu{display:block;position:fixed;top:72px;left:.7rem;right:.7rem;z-index:49;background:rgba(22,17,13,.98);padding:.6rem .75rem;border:1px solid rgba(255,244,230,.12);border-radius:20px;transform:translateY(-12px);opacity:0;pointer-events:none;max-height:calc(100svh - 92px);overflow:auto;transition:transform .2s ease,opacity .2s ease}
@@ -142,7 +144,6 @@ blockquote,.pullquote{
 
 @media(max-width:980px){
   .topbar > .nav{display:none}
-  .gallery-page .links{display:none}
   .menu-btn{display:inline-flex}
 }
 @media(max-width:620px){.topbar{height:64px;padding:0 .85rem}.mobile-menu{top:64px;left:.45rem;right:.45rem}.footer{display:grid}}
@@ -158,14 +159,9 @@ blockquote,.pullquote{
 
 /* Shared gallery page system */
 .gallery-page{font-family:Inter,system-ui,sans-serif;color:var(--white)}
-.gallery-page .nav,
-.gallery-page .gallery-header{position:fixed;top:0;left:0;right:0;z-index:20;height:66px;padding:0 clamp(1rem,3vw,2.4rem);display:flex;justify-content:space-between;align-items:center;background:linear-gradient(to bottom,rgba(35,28,22,.54),rgba(35,28,22,0))}
-.gallery-page .nav{backdrop-filter:blur(10px) saturate(120%);-webkit-backdrop-filter:blur(10px) saturate(120%);border-bottom:1px solid rgba(255,244,230,.12);transition:background .25s ease,border-color .25s ease}
-.gallery-page .nav.scrolled{background:rgba(30,23,18,.9);border-bottom-color:rgba(255,244,230,.2)}
-.gallery-page .swipe-zone{position:fixed;top:66px;left:0;right:0;bottom:42%;z-index:11;touch-action:pan-y}
+.gallery-page .topbar{z-index:50}
+.gallery-page .swipe-zone{position:fixed;top:72px;left:0;right:0;bottom:42%;z-index:11;touch-action:pan-y}
 .gallery-page .swipe-hint{display:none;margin-top:.65rem;font-size:.5rem;letter-spacing:.2em;text-transform:uppercase;color:rgba(255,247,234,.5)}
-.gallery-page .brand{color:var(--white)}
-.gallery-page .links a{font-size:.6rem;letter-spacing:.2em;text-transform:uppercase;font-weight:400;color:var(--white);opacity:.8;text-decoration:none}
 .gallery-page .left{position:fixed;left:2.2rem;bottom:3rem;z-index:12;max-width:38vw}
 .gallery-page .title{margin-top:.9rem;font-family:"Cormorant Garamond",serif;font-style:italic;font-weight:300;font-size:clamp(3.4rem,10vw,9.5rem);line-height:.85;letter-spacing:-.045em;position:relative;color:rgba(255,247,234,.98)}
 .gallery-page .desc{margin-top:1rem;font-size:clamp(1rem,1.35vw,1.15rem);font-weight:300;line-height:1.9;letter-spacing:.01em;color:rgba(255,247,234,.75);max-width:36rem}
@@ -177,7 +173,7 @@ blockquote,.pullquote{
 .gallery-page .dots{display:flex;flex-direction:column;gap:.5rem;margin-top:.8rem;align-items:flex-end}
 .gallery-page .dot{width:1px;height:20px;background:rgba(255,247,234,.25);cursor:pointer}
 .gallery-page .dot.active{height:38px;background:var(--gold)}
-.gallery-page .back{position:fixed;top:66px;left:50%;transform:translateX(-50%);padding:.6rem 0;z-index:21;font-size:.48rem;letter-spacing:.24em;text-transform:uppercase;color:rgba(255,247,234,.45);text-decoration:none}
+.gallery-page .back{position:fixed;top:72px;left:50%;transform:translateX(-50%);padding:.6rem 0;z-index:21;font-size:.48rem;letter-spacing:.24em;text-transform:uppercase;color:rgba(255,247,234,.65);text-decoration:none}
 .gallery-page .slide{position:absolute;inset:0;opacity:0;transition:opacity 1s}
 .gallery-page .slide.active{opacity:1}
 .gallery-page .slide img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;filter:saturate(.84) brightness(.68)}
@@ -339,8 +335,8 @@ blockquote,.pullquote{
   .menu-btn{font-size:.5rem;letter-spacing:.12em;padding:.4rem .62rem}
   .mobile-menu{top:60px;left:.35rem;right:.35rem;padding:.5rem .6rem;border-radius:16px;max-height:calc(100svh - 74px)}
   .mobile-menu a{padding:.68rem .55rem;font-size:.58rem}
-  .gallery-page .nav{height:60px;padding:0 .72rem}
- .gallery-page .back{top:60px}
+  .gallery-page .topbar{height:60px;padding:0 .72rem}
+  .gallery-page .back{top:60px}
   .gallery-page .swipe-zone{top:60px}
 }
 
