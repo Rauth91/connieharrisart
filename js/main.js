@@ -337,29 +337,29 @@ function initGalleryPage({ meta }) {
   });
 
   const leftPanel = document.querySelector(".gallery-page .left");
-  const rightPanel = document.querySelector(".gallery-page .right");
   const galleryBtn = document.getElementById("gallery-open");
   const baBtn = document.getElementById("ba-open");
   const commissionBtn = leftPanel?.querySelector(".cta");
+  const isMobileGallery = window.matchMedia("(max-width: 640px)").matches;
 
-  if (window.matchMedia("(max-width: 640px)").matches) {
+  if (leftPanel && !leftPanel.querySelector(".info-toggle")) {
+    const toggle = document.createElement("button");
+    toggle.type = "button";
+    toggle.className = "info-toggle";
+    toggle.textContent = "More";
+    toggle.setAttribute("aria-expanded", "false");
+    toggle.addEventListener("click", () => {
+      const open = leftPanel.classList.toggle("details-open");
+      toggle.setAttribute("aria-expanded", String(open));
+      toggle.textContent = open ? "Less" : "More";
+    });
+    leftPanel.querySelector(".cta-row")?.appendChild(toggle);
+  }
+
+  if (isMobileGallery) {
     if (galleryBtn) galleryBtn.textContent = "Gallery";
     if (baBtn) baBtn.textContent = "Compare";
     if (commissionBtn) commissionBtn.textContent = "Inquire";
-
-    if (leftPanel && !leftPanel.querySelector(".info-toggle")) {
-      const toggle = document.createElement("button");
-      toggle.type = "button";
-      toggle.className = "info-toggle";
-      toggle.textContent = "More";
-      toggle.setAttribute("aria-expanded", "false");
-      toggle.addEventListener("click", () => {
-        const open = leftPanel.classList.toggle("details-open");
-        toggle.setAttribute("aria-expanded", String(open));
-        toggle.textContent = open ? "Less" : "More";
-      });
-      leftPanel.querySelector(".cta-row")?.appendChild(toggle);
-    }
 
     if (dots && !document.querySelector(".slide-progress")) {
       const progress = document.createElement("div");
