@@ -27,9 +27,37 @@
 .footer-social a:hover{color:var(--gold)}
 @media(max-width:980px){.topbar > .nav{display:none}.menu-btn{display:inline-flex}.form-flow,.details{grid-template-columns:1fr}.commission{border-radius:52px 0 52px 0}}
 @media(max-width:640px){
-  .commission{border-radius:32px 0 32px 0;margin:0 .5rem;padding:2.5rem 1.2rem;min-height:auto}
-  .field,.message,.select{padding:1rem .75rem;font-size:1rem}
-  .submit{width:100%;padding:1rem;font-size:.65rem}
-  .details{padding:1.2rem 1rem 1.5rem;gap:.75rem}
-  .note{padding:0 1rem 1.5rem}
+  .wrap{padding-top:64px}
+  .hero{padding:4.9rem 1rem 1.1rem}
+  .hero h1{font-size:clamp(2.45rem,11.4vw,4rem)}
+  .hero p{font-size:.98rem;line-height:1.62;margin-top:.75rem}
+  .commission{border-radius:24px 0 24px 0;margin:0 .45rem;padding:1.8rem 1rem;min-height:auto}
+  .commission .section-title{font-size:clamp(1.95rem,10vw,2.7rem)}
+  .commission p{line-height:1.62}
+  .form-shell{margin-top:1rem;padding:.7rem}
+  .form-flow{gap:.62rem}
+  .field,.message,.select{padding:.9rem .68rem;font-size:.98rem}
+  .message{min-height:110px}
+  .submit{width:100%;padding:.92rem;font-size:.62rem}
+  .status{font-size:.64rem}
+  .details{padding:1rem .95rem 1.2rem;gap:.7rem}
+  .card strong{font-size:1.18rem}
+  .note{padding:0 .95rem 1.3rem}
+}
+
+@media(max-width:430px){
+  .hero{padding:4.5rem .82rem .95rem}
+  .hero h1{font-size:clamp(2.12rem,10.6vw,3rem)}
+  .hero p{font-size:.93rem;line-height:1.55}
+  .commission{margin:0 .35rem;padding:1.5rem .82rem}
+  .form-shell{padding:.58rem}
+  .field,.message,.select{font-size:.93rem}
+  .details{padding:.85rem .8rem 1.05rem}
+  .card strong{font-size:1.06rem}
+  .note{padding:0 .8rem 1.1rem}
+}
+
+@media(max-height:740px) and (max-width:640px){
+  .hero{padding-bottom:.75rem}
+  .commission{padding-top:1.35rem}
 }

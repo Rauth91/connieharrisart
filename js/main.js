@@ -14,11 +14,54 @@ if (typeof gsap !== "undefined" && typeof ScrollTrigger !== "undefined") {
 const menuBtn = document.getElementById("menu-btn");
 const mobileMenu = document.getElementById("mobile-menu");
 if (menuBtn && mobileMenu) {
-  menuBtn.addEventListener("click", () => mobileMenu.classList.toggle("show"));
+  menuBtn.addEventListener("click", () => {
+    const isOpen = mobileMenu.classList.toggle("show");
+    document.body.classList.toggle("menu-open", isOpen);
+    menuBtn.setAttribute("aria-expanded", String(isOpen));
+  });
   mobileMenu.querySelectorAll("a").forEach((a) =>
-    a.addEventListener("click", () => mobileMenu.classList.remove("show"))
+    a.addEventListener("click", () => {
+      mobileMenu.classList.remove("show");
+      document.body.classList.remove("menu-open");
+      menuBtn.setAttribute("aria-expanded", "false");
+    })
   );
+
+  document.addEventListener("click", (e) => {
+    if (!mobileMenu.classList.contains("show")) return;
+    const insideMenu = mobileMenu.contains(e.target);
+    const clickedBtn = menuBtn.contains(e.target);
+    if (insideMenu || clickedBtn) return;
+    mobileMenu.classList.remove("show");
+    document.body.classList.remove("menu-open");
+    menuBtn.setAttribute("aria-expanded", "false");
+  });
+
+  document.addEventListener("keydown", (e) => {
+    if (e.key !== "Escape" || !mobileMenu.classList.contains("show")) return;
+    mobileMenu.classList.remove("show");
+    document.body.classList.remove("menu-open");
+    menuBtn.setAttribute("aria-expanded", "false");
+  });
+
+  window.addEventListener("resize", () => {
+    if (window.innerWidth > 980 && mobileMenu.classList.contains("show")) {
+      mobileMenu.classList.remove("show");
+      document.body.classList.remove("menu-open");
+      menuBtn.setAttribute("aria-expanded", "false");
+    }
+  });
 }
+
+const topbar = document.querySelector(".topbar");
+const galleryHeader = document.querySelector(".gallery-page .nav");
+const handleScrollHeader = () => {
+  const scrolled = window.scrollY > 24;
+  if (topbar) topbar.classList.toggle("scrolled", scrolled);
+  if (galleryHeader) galleryHeader.classList.toggle("scrolled", scrolled);
+};
+window.addEventListener("scroll", handleScrollHeader, { passive: true });
+handleScrollHeader();
 
 function initGalleryPage({ meta }) {
   const slides = document.querySelectorAll(".slide");
