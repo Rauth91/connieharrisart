@@ -1,7 +1,6 @@
 html,body{width:100%;height:100%;overflow:hidden;background:#241e18}
 body.gallery-page{color:var(--white)}
-.gallery-page .links{display:flex;gap:.25rem;flex-wrap:nowrap;align-items:center}
-.gallery-page .links a{white-space:nowrap}
+.gallery-page .links{display:none !important}
 .gallery-page .links a.active{opacity:1;color:var(--gold)}
-@media(max-width:980px){.gallery-page .links{display:none !important}.gallery-page .menu-btn{display:inline-flex}}
+.gallery-page .menu-btn{display:inline-flex !important}
 @media(max-width:1000px){.gallery-page .left{max-width:82vw}}

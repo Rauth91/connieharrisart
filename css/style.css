@@ -247,7 +247,7 @@ blockquote,.pullquote{
   .gallery-page .lightbox-close{top:max(.7rem,env(safe-area-inset-top));right:.5rem}
   .gallery-page .lightbox-meta{bottom:max(.75rem,env(safe-area-inset-bottom));width:min(90vw,420px)}
   .gallery-page .footer{padding:.55rem .8rem calc(.65rem + env(safe-area-inset-bottom));font-size:.53rem;line-height:1.25}
-  .gallery-page .back{font-size:.55rem}
+  .gallery-page .back{top:64px;font-size:.5rem;padding:.4rem 0}
   .gallery-page .swipe-hint{display:block}
   .gallery-page .swipe-zone{bottom:52%}
 }
@@ -259,7 +259,7 @@ blockquote,.pullquote{
   .mobile-menu{top:60px;left:.35rem;right:.35rem;padding:.5rem .6rem;border-radius:16px;max-height:calc(100svh - 74px)}
   .mobile-menu a{padding:.68rem .55rem;font-size:.58rem}
   .gallery-page .nav{height:60px;padding:0 .72rem}
-  .gallery-page .back{top:60px}
+ .gallery-page .back{top:60px}
   .gallery-page .swipe-zone{top:60px}
 }
 
