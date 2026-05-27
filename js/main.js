@@ -79,9 +79,11 @@ function initGalleryPage({ meta }) {
   const baOverlay = document.getElementById("ba-overlay");
   const baClose = document.getElementById("ba-close");
   const baRange = document.getElementById("ba-range");
+  const baWrap = document.querySelector(".ba-wrap");
   const baAfter = document.getElementById("ba-after");
   const baDivider = document.getElementById("ba-divider");
   const baHandle = document.getElementById("ba-handle");
+  const baPanel = baOverlay?.querySelector(".ba-panel");
   const galleryImages = document.querySelectorAll(".gallery-item img");
   const lightbox = document.getElementById("lightbox");
   const lightboxImage = document.getElementById("lightbox-image");
@@ -131,6 +133,54 @@ function initGalleryPage({ meta }) {
     baAfter.style.clipPath = `inset(0 0 0 ${pct}%)`;
     baDivider.style.left = `${pct}%`;
     baHandle.style.left = `${pct}%`;
+    if (baRange) baRange.value = String(Math.round(pct));
+  }
+
+  function setBeforeAfterFromClientX(clientX) {
+    if (!baWrap) return;
+    const rect = baWrap.getBoundingClientRect();
+    if (!rect.width) return;
+    const pct = ((clientX - rect.left) / rect.width) * 100;
+    updateBeforeAfter(pct);
+  }
+
+  let baDragging = false;
+  if (baWrap) {
+    baWrap.addEventListener(
+      "pointerdown",
+      (e) => {
+        if (!baOverlay?.classList.contains("show")) return;
+        baDragging = true;
+        baWrap.setPointerCapture(e.pointerId);
+        setBeforeAfterFromClientX(e.clientX);
+        e.preventDefault();
+        e.stopPropagation();
+      },
+      { passive: false }
+    );
+    baWrap.addEventListener(
+      "pointermove",
+      (e) => {
+        if (!baDragging) return;
+        setBeforeAfterFromClientX(e.clientX);
+        e.preventDefault();
+      },
+      { passive: false }
+    );
+    const endBaDrag = (e) => {
+      if (!baDragging) return;
+      baDragging = false;
+      try {
+        baWrap.releasePointerCapture(e.pointerId);
+      } catch {
+        /* pointer may already be released */
+      }
+    };
+    baWrap.addEventListener("pointerup", endBaDrag);
+    baWrap.addEventListener("pointercancel", endBaDrag);
+    baWrap.addEventListener("lostpointercapture", () => {
+      baDragging = false;
+    });
   }
 
   function renderLightbox(index) {
@@ -220,6 +270,7 @@ function initGalleryPage({ meta }) {
       e.preventDefault();
       baOverlay.classList.add("show");
       baOverlay.setAttribute("aria-hidden", "false");
+      updateBeforeAfter(50);
     });
     baOverlay.addEventListener("click", (e) => {
       if (e.target === baOverlay) {
@@ -236,6 +287,19 @@ function initGalleryPage({ meta }) {
   }
   if (baRange) {
     baRange.addEventListener("input", (e) => updateBeforeAfter(e.target.value));
+    baRange.addEventListener("change", (e) => updateBeforeAfter(e.target.value));
+    ["touchstart", "touchmove", "touchend"].forEach((evt) => {
+      baRange.addEventListener(evt, (e) => e.stopPropagation());
+    });
+  }
+  if (baPanel) {
+    baPanel.addEventListener("click", (e) => e.stopPropagation());
+    if (!baPanel.querySelector(".ba-hint")) {
+      const baHint = document.createElement("p");
+      baHint.className = "ba-hint";
+      baHint.textContent = "Drag on the image to compare before and after";
+      baPanel.appendChild(baHint);
+    }
   }
 
   galleryImages.forEach((img, idx) =>
