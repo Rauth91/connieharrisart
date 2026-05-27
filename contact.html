@@ -17,8 +17,8 @@
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,200;0,300;0,400;0,500;1,200;1,300&family=Inter:wght@300;400;500&display=swap" rel="stylesheet" />
-<link rel="stylesheet" href="css/style.css" />
-<link rel="stylesheet" href="css/contact.css" />
+<link rel="stylesheet" href="css/style.css?v=20260527" />
+<link rel="stylesheet" href="css/contact.css?v=20260527" />
 </head>
 <body class="contact-page">
 <header class="topbar">
@@ -63,7 +63,7 @@
 </footer>
 <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.7/dist/gsap.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.7/dist/ScrollTrigger.min.js"></script>
-<script src="js/main.js"></script>
+<script src="js/main.js?v=20260527"></script>
 <script>const form=document.getElementById('contact-form');const status=document.getElementById('form-status');form.addEventListener('submit',async(e)=>{e.preventDefault();const btn=form.querySelector('.submit');const text=btn.textContent;btn.textContent='Sending...';if(status)status.textContent='Submitting your inquiry...';try{const res=await fetch(form.action,{method:'POST',body:new FormData(form),headers:{Accept:'application/json'}});btn.textContent=res.ok?'Message Sent':'Try Again';if(status)status.textContent=res.ok?'Thank you. Connie will follow up soon.':'Something went wrong. Please try again.';if(res.ok)form.reset();}catch{btn.textContent='Try Again';if(status)status.textContent='Connection issue. Please try again.';}setTimeout(()=>btn.textContent=text,2200);});</script>
 </body>
 </html>

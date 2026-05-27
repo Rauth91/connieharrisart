@@ -159,7 +159,19 @@ blockquote,.pullquote{
 
 /* Shared gallery page system */
 .gallery-page{font-family:Inter,system-ui,sans-serif;color:var(--white)}
-.gallery-page .topbar{z-index:50}
+.gallery-page .topbar{
+  z-index:50;
+  background:linear-gradient(to bottom,rgba(30,23,18,.94),rgba(30,23,18,.72));
+}
+.gallery-page .topbar .nav{
+  background:rgba(22,17,13,.72);
+  border-color:rgba(255,244,230,.32);
+  box-shadow:0 8px 24px rgba(0,0,0,.25);
+}
+.gallery-page .topbar .nav a{
+  opacity:1;
+  text-shadow:0 1px 3px rgba(0,0,0,.45);
+}
 .gallery-page .swipe-zone{position:fixed;top:72px;left:0;right:0;bottom:42%;z-index:11;touch-action:pan-y}
 .gallery-page .swipe-hint{display:none;margin-top:.65rem;font-size:.5rem;letter-spacing:.2em;text-transform:uppercase;color:rgba(255,247,234,.5)}
 .gallery-page .left{position:fixed;left:2.2rem;bottom:3rem;z-index:12;max-width:38vw}
