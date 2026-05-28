@@ -5,7 +5,7 @@ const SITE_PRACTICES = [
   { href: "bas-relief.html", label: "Bas Relief", slug: "bas-relief" },
   { href: "cabinet-finishes.html", label: "Cabinets", slug: "cabinet-finishes" },
   { href: "ceilings-floors.html", label: "Ceilings & Floors", slug: "ceilings-floors" },
-  { href: "gilding.html", label: "Gilding", slug: "gilding" },
+  { href: "chinoiserie.html", label: "Chinoiserie", slug: "chinoiserie" },
 ];
 
 const SITE_NAV = [

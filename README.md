@@ -43,7 +43,7 @@ images/
     cabinet-finishes.jpg
     ceilings-floors.jpg
     murals.jpg
-    gilding.jpg
+    chinoiserie.jpg
   gallery/
     murals/
       slide-01.jpg ... slide-04.jpg
@@ -54,7 +54,7 @@ images/
     bas-relief/ ...
     cabinet-finishes/ ...
     ceilings-floors/ ...
-    gilding/ ...
+    chinoiserie/ ...
   classes/
     hero.jpg
     signature.jpg

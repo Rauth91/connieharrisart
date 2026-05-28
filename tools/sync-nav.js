@@ -9,6 +9,9 @@ const path = require("path");
 const ROOT = path.join(__dirname, "..");
 const { SITE_NAV } = require(path.join(ROOT, "js", "site-config.js"));
 
+const HEAD_SCRIPTS =
+  '  <script src="js/site-config.js?v=20260531"></script>\n  <script src="js/site-nav.js?v=20260531" defer></script>\n';
+
 function navBlock(activeHref) {
   const links = SITE_NAV.map(({ href, label }) => {
     const active = href === activeHref ? ' class="active"' : "";
@@ -37,31 +40,29 @@ function syncFile(filePath) {
   if (!active) return false;
 
   let text = fs.readFileSync(filePath, "utf8");
-  const block = navBlock(active);
 
-  const updated = text.replace(
-    /<header class="topbar">[\s\S]*?<\/div>\s*(?=<)/,
-    block + "\n"
-  );
+  text = text.replace(/\s*<script src="js\/site-config\.js[^"]*"><\/script>\s*/g, "");
+  text = text.replace(/\s*<script src="js\/site-nav\.js[^"]*"><\/script>\s*/g, "");
+  text = text.replace(/<header class="topbar">[\s\S]*?<\/header>\s*/g, "");
+  text = text.replace(/<div class="mobile-menu" id="mobile-menu">[\s\S]*?<\/div>\s*/g, "");
 
-  if (updated === text) {
-    console.log(`✗ no nav block: ${name}`);
+  const bodyMatch = text.match(/<body[^>]*>/);
+  if (!bodyMatch) {
+    console.log(`✗ no body tag: ${name}`);
     return false;
   }
 
-  const headScripts =
-    '  <script src="js/site-config.js?v=20260530"></script>\n  <script src="js/site-nav.js?v=20260530" defer></script>\n';
-  let out = updated.replace(
-    /\s*<script src="js\/site-config\.js[^"]*"><\/script>\s*/g,
-    ""
-  );
-  out = out.replace(/\s*<script src="js\/site-nav\.js[^"]*"><\/script>\s*/g, "");
-  out = out.replace("</head>", headScripts + "</head>");
+  const insertAt = bodyMatch.index + bodyMatch[0].length;
+  const block = navBlock(active);
+  text = text.slice(0, insertAt) + "\n" + block + "\n" + text.slice(insertAt);
 
-  fs.writeFileSync(filePath, out);
+  text = text.replace("</head>", HEAD_SCRIPTS + "</head>");
+
+  fs.writeFileSync(filePath, text);
   console.log(`✓ ${name}`);
   return true;
 }
 
-const htmlFiles = fs.readdirSync(ROOT).filter((f) => f.endsWith(".html"));
-htmlFiles.forEach((f) => syncFile(path.join(ROOT, f)));
+fs.readdirSync(ROOT)
+  .filter((f) => f.endsWith(".html"))
+  .forEach((f) => syncFile(path.join(ROOT, f)));
