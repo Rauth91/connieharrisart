@@ -9,6 +9,7 @@ const SITE_PHOTOS = {
       cabinetFinishes: "images/work/cabinet-finishes.jpg",
       ceilingsFloors: "images/work/ceilings-floors.jpg",
       murals: "images/work/murals.jpg",
+      gilding: "images/work/gilding.jpg",
     },
     videos: {
       studio: "images/videos/studio-process.jpg",
@@ -122,6 +123,26 @@ const SITE_PHOTOS = {
       beforeAfter: {
         before: "images/gallery/ceilings-floors/before.jpg",
         after: "images/gallery/ceilings-floors/after.jpg",
+      },
+    },
+    gilding: {
+      slides: [
+        "images/gallery/gilding/slide-01.jpg",
+        "images/gallery/gilding/slide-02.jpg",
+        "images/gallery/gilding/slide-03.jpg",
+        "images/gallery/gilding/slide-04.jpg",
+      ],
+      gallery: [
+        "images/gallery/gilding/gallery-01.jpg",
+        "images/gallery/gilding/gallery-02.jpg",
+        "images/gallery/gilding/gallery-03.jpg",
+        "images/gallery/gilding/gallery-04.jpg",
+        "images/gallery/gilding/gallery-05.jpg",
+        "images/gallery/gilding/gallery-06.jpg",
+      ],
+      beforeAfter: {
+        before: "images/gallery/gilding/before.jpg",
+        after: "images/gallery/gilding/after.jpg",
       },
     },
   },

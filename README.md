@@ -12,6 +12,8 @@ css/contact.css        — contact page
 css/gallery-page.css   — gallery slideshow pages
 js/main.js             — menu, gallery, animations
 js/photo-config.js     — image path map
+js/site-config.js      — nav + practice list (edit here, then run sync)
+tools/sync-nav.js      — updates nav on all pages from site-config.js
 ```
 
 ## Live preview
@@ -41,6 +43,7 @@ images/
     cabinet-finishes.jpg
     ceilings-floors.jpg
     murals.jpg
+    gilding.jpg
   gallery/
     murals/
       slide-01.jpg ... slide-04.jpg
@@ -51,6 +54,7 @@ images/
     bas-relief/ ...
     cabinet-finishes/ ...
     ceilings-floors/ ...
+    gilding/ ...
   classes/
     hero.jpg
     signature.jpg
