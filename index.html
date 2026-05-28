@@ -19,7 +19,7 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,200;0,300;0,400;0,500;1,200;1,300&family=Inter:wght@300;400;500&display=swap" rel="stylesheet" />
 <link rel="stylesheet" href="css/style.css?v=20260531" />
-<link rel="stylesheet" href="css/home.css?v=20260603" />
+<link rel="stylesheet" href="css/home.css?v=20260604" />
   <script src="js/site-nav.js?v=20260531" defer></script><script src="js/site-nav.js?v=20260531" defer></script><script src="js/site-nav.js?v=20260531" defer></script>
   <script src="js/site-config.js?v=20260531"></script>
   <script src="js/site-nav.js?v=20260531" defer></script>
@@ -186,9 +186,6 @@
 <script src="js/main.js?v=20260531"></script>
 <script>
 gsap.to('.hero-art img',{scale:1.12,duration:24,ease:'none',repeat:-1,yoyo:true});
-gsap.utils.toArray('.work-card').forEach((card,i)=>{
-  gsap.to(card,{y:i%2===0?-34:28,ease:'none',scrollTrigger:{trigger:'.work-drift',start:'top bottom',end:'bottom top',scrub:true}});
-});
 gsap.to('.portrait-sample',{y:-70,ease:'none',scrollTrigger:{trigger:'.about-flow',start:'top bottom',end:'bottom top',scrub:true}});
 const heroTitle=document.querySelector('.hero-copy h1');
 if(heroTitle){
