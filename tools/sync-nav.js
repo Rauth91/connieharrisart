@@ -7,10 +7,11 @@ const fs = require("fs");
 const path = require("path");
 
 const ROOT = path.join(__dirname, "..");
-const { SITE_NAV } = require(path.join(ROOT, "js", "site-config.js"));
+const { SITE_NAV, SITE_VERSION } = require(path.join(ROOT, "js", "site-config.js"));
 
 const HEAD_SCRIPTS =
-  '  <script src="js/site-config.js?v=20260531"></script>\n  <script src="js/site-nav.js?v=20260531" defer></script>\n';
+  `  <script src="js/site-config.js?v=${SITE_VERSION}"></script>\n` +
+  `  <script src="js/site-nav.js?v=${SITE_VERSION}" defer></script>\n`;
 
 function navBlock(activeHref) {
   const links = SITE_NAV.map(({ href, label }) => {
@@ -34,17 +35,25 @@ ${links}
 
 const ACTIVE = Object.fromEntries(SITE_NAV.map((item) => [item.href, item.href]));
 
+function cleanMarkup(text) {
+  text = text.replace(/\s*<script src="js\/site-config\.js[^"]*"><\/script>\s*/g, "");
+  text = text.replace(/\s*<script src="js\/site-nav\.js[^"]*"><\/script>\s*/g, "");
+  text = text.replace(/<header class="topbar">[\s\S]*?<\/header>\s*/g, "");
+  text = text.replace(/<div class="mobile-menu" id="mobile-menu">[\s\S]*?<\/div>\s*/g, "");
+  text = text.replace(/\n<\/header>\s*\n<\/header>\s*/g, "\n");
+  text = text.replace(
+    /(<div class="mobile-menu" id="mobile-menu">[\s\S]*?<\/div>)\s*\n<\/header>\s*/g,
+    "$1\n"
+  );
+  return text;
+}
+
 function syncFile(filePath) {
   const name = path.basename(filePath);
   const active = ACTIVE[name];
   if (!active) return false;
 
-  let text = fs.readFileSync(filePath, "utf8");
-
-  text = text.replace(/\s*<script src="js\/site-config\.js[^"]*"><\/script>\s*/g, "");
-  text = text.replace(/\s*<script src="js\/site-nav\.js[^"]*"><\/script>\s*/g, "");
-  text = text.replace(/<header class="topbar">[\s\S]*?<\/header>\s*/g, "");
-  text = text.replace(/<div class="mobile-menu" id="mobile-menu">[\s\S]*?<\/div>\s*/g, "");
+  let text = cleanMarkup(fs.readFileSync(filePath, "utf8"));
 
   const bodyMatch = text.match(/<body[^>]*>/);
   if (!bodyMatch) {
@@ -53,9 +62,7 @@ function syncFile(filePath) {
   }
 
   const insertAt = bodyMatch.index + bodyMatch[0].length;
-  const block = navBlock(active);
-  text = text.slice(0, insertAt) + "\n" + block + "\n" + text.slice(insertAt);
-
+  text = text.slice(0, insertAt) + "\n" + navBlock(active) + "\n" + text.slice(insertAt);
   text = text.replace("</head>", HEAD_SCRIPTS + "</head>");
 
   fs.writeFileSync(filePath, text);

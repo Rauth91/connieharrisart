@@ -1,29 +1,23 @@
 <!doctype html>
-<html lang="en">
+<html lang="en" class="magazine-html">
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <meta name="description" content="Custom bas relief surfaces by Connie Harris, adding sculpted dimension and architectural depth to interiors." />
-<meta property="og:type" content="website" />
 <meta property="og:title" content="Bas Relief | Connie Harris" />
 <meta property="og:description" content="Custom bas relief surfaces by Connie Harris, adding sculpted dimension and architectural depth to interiors." />
-<meta property="og:url" content="https://rauth91.github.io/connieharrisart/bas-relief.html" />
-<meta name="twitter:card" content="summary_large_image" />
-<meta name="twitter:title" content="Bas Relief | Connie Harris" />
-<meta name="twitter:description" content="Custom bas relief surfaces by Connie Harris, adding sculpted dimension and architectural depth to interiors." />
-<meta name="theme-color" content="#241e18" />
+<meta name="theme-color" content="#12100d" />
 <link rel="icon" type="image/svg+xml" href="images/favicon.svg" />
 <title>Bas Relief | Connie Harris</title>
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,200;0,300;0,400;0,500;1,200;1,300&family=Inter:wght@300;400;500&display=swap" rel="stylesheet" />
-<link rel="stylesheet" href="css/style.css?v=20260531" />
-<link rel="stylesheet" href="css/gallery-page.css?v=20260531" />
-  <script src="js/site-nav.js?v=20260531" defer></script><script src="js/site-nav.js?v=20260531" defer></script><script src="js/site-nav.js?v=20260531" defer></script>
-  <script src="js/site-config.js?v=20260531"></script>
-  <script src="js/site-nav.js?v=20260531" defer></script>
+<link rel="stylesheet" href="css/style.css?v=20260530b" />
+<link rel="stylesheet" href="css/magazine.css?v=20260530b" />
+<script src="js/site-config.js?v=20260530b"></script>
+<script src="js/site-nav.js?v=20260530b" defer></script>
 </head>
-<body class="gallery-page">
+<body class="magazine-page">
 <header class="topbar">
   <a class="brand" href="index.html">Connie Harris</a>
   <div class="topbar-end">
@@ -53,90 +47,211 @@
     <a href="contact.html">Contact</a>
 </div>
 
-</header>
-</header>
-<section class="slide active"><img src="https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?auto=format&fit=crop&w=2200&q=74" alt="Bas relief interior" /></section>
-<section class="slide"><img src="https://images.unsplash.com/photo-1505693416388-ac5ce068fe85?auto=format&fit=crop&w=2200&q=74" alt="Bas relief concept wall" /></section>
-<section class="slide"><img src="https://images.unsplash.com/photo-1493666438817-866a91353ca9?auto=format&fit=crop&w=2200&q=74" alt="Decorative bas relief detail" /></section>
-<section class="slide"><img src="https://images.unsplash.com/photo-1519710164239-da123dc03ef4?auto=format&fit=crop&w=2200&q=74" alt="Architectural relief surface" /></section>
+<div class="magazine-grain" aria-hidden="true"></div>
+<div class="magazine-progress" aria-hidden="true"><div class="magazine-progress-fill" id="magazine-progress-fill"></div></div>
 
-<div class="left">
-  <p class="eyebrow" id="k">Work 01 of 04 · Bas Relief</p>
-  <h1 class="title" id="t">Dimensional<br>Relief</h1>
-  <p class="desc" id="d">Sculpted dimension, applied by hand and built layer by layer. Bas relief turns a flat wall into architecture — subtle to live with, striking to remember.</p>
-  <div class="cta-row">
-    <a class="cta" href="contact.html">Commission this work</a>
-    <a class="demo-btn" href="#" id="gallery-open">View Gallery</a>
-    <a class="demo-btn" href="#" id="ba-open">View Before / After</a>
+<nav class="magazine-nav" aria-label="Page navigation">
+  <button type="button" id="magazine-prev" aria-label="Previous page">←</button>
+  <button type="button" id="magazine-next" aria-label="Next page">→</button>
+</nav>
+<button type="button" class="magazine-tap-next" id="magazine-tap-next" aria-label="Next page"></button>
+<button type="button" class="magazine-tap-prev" id="magazine-tap-prev" aria-label="Previous page"></button>
+
+<div class="magazine-ui" aria-hidden="true">
+  <span class="magazine-page-num" id="magazine-page-num">01</span>
+  <span class="magazine-spread-label" id="magazine-spread-label"></span>
+  <span class="magazine-hint">Scroll to turn the page</span>
+</div>
+
+<nav class="magazine-rail" id="magazine-rail" aria-label="Spread index">
+<button type="button" class="magazine-rail-dot" data-spread-index="0" aria-label="Dimensional Relief"><span class="magazine-rail-tip">Dimensional Relief</span></button>
+<button type="button" class="magazine-rail-dot" data-spread-index="1" aria-label="Form in Plaster"><span class="magazine-rail-tip">Form in Plaster</span></button>
+<button type="button" class="magazine-rail-dot" data-spread-index="2" aria-label="Architectural Presence"><span class="magazine-rail-tip">Architectural Presence</span></button>
+<button type="button" class="magazine-rail-dot" data-spread-index="3" aria-label="Light & Shadow"><span class="magazine-rail-tip">Light & Shadow</span></button>
+<button type="button" class="magazine-rail-dot" data-spread-index="4" aria-label="Light & Shadow"><span class="magazine-rail-tip">Light & Shadow</span></button>
+<button type="button" class="magazine-rail-dot" data-spread-index="5" aria-label="Continue exploring"><span class="magazine-rail-tip">Continue exploring</span></button>
+</nav>
+
+<main class="magazine-book" id="magazine-book">
+
+  <section class="magazine-spread magazine-spread--cover magazine-spread--immersive is-active" data-page="cover" data-spread-label="Dimensional Relief">
+    <span class="magazine-watermark" aria-hidden="true">Bas Relief</span>
+    <div class="magazine-copy">
+      <div class="magazine-rule"><p class="eyebrow">Bas Relief</p></div>
+      <h2>Dimensional<br><span class="title-accent">Relief</span></h2>
+      <p>Sculpted dimension, applied by hand and built layer by layer. Bas relief turns a flat wall into architecture — subtle to live with, striking to remember.</p>
+      <div class="spread-actions">
+        <a class="btn dark" href="contact.html">Commission</a>
+        <a class="btn" href="index.html#work">All disciplines</a>
+      </div>
+    </div>
+    <figure class="magazine-photo magazine-photo--cover magazine-photo--immersive">
+      <img class="magazine-photo-ambient" src="images/gallery/bas-relief/slide-02.jpg" alt="" aria-hidden="true" loading="eager" decoding="async" style="object-position:center 35%" />
+      <div class="magazine-photo-inner">
+        <div class="magazine-art-frame">
+          <img class="magazine-photo-main" src="images/gallery/bas-relief/slide-02.jpg" alt="Bas Relief" loading="eager" decoding="async" data-focal="center 35%" />
+        </div>
+      </div>
+    </figure>
+  </section>
+
+  <section class="magazine-spread" data-page="1" data-spread-label="Form in Plaster">
+    <span class="magazine-watermark" aria-hidden="true">Bas Relief</span>
+    <div class="magazine-copy">
+      <div class="magazine-rule"><p class="eyebrow">Bas Relief · 01 / 03</p></div>
+      <h2>Form<br><span class="title-accent">in Plaster</span></h2>
+      <p>Relief is modeled in place, responding to light and the room's proportions.</p>
+    </div>
+    <figure class="magazine-photo">
+      <img class="magazine-photo-ambient" src="images/gallery/bas-relief/slide-01.jpg" alt="" aria-hidden="true" loading="eager" decoding="async" style="object-position:center 35%" />
+      <div class="magazine-photo-inner">
+        <div class="magazine-art-frame">
+          <img class="magazine-photo-main" src="images/gallery/bas-relief/slide-01.jpg" alt="Bas Relief — Slide 01" loading="eager" decoding="async" data-focal="center 35%" />
+        </div>
+      </div>
+    </figure>
+  </section>
+  <section class="magazine-spread" data-page="2" data-spread-label="Architectural Presence">
+    <span class="magazine-watermark" aria-hidden="true">Bas Relief</span>
+    <div class="magazine-copy">
+      <div class="magazine-rule"><p class="eyebrow">Bas Relief · 02 / 03</p></div>
+      <h2>Architectural<br><span class="title-accent">Presence</span></h2>
+      <p>Finished surfaces read as permanent — integral to the space.</p>
+    </div>
+    <figure class="magazine-photo">
+      <img class="magazine-photo-ambient" src="images/gallery/bas-relief/slide-03.jpg" alt="" aria-hidden="true" loading="lazy" decoding="async" style="object-position:center 35%" />
+      <div class="magazine-photo-inner">
+        <div class="magazine-art-frame">
+          <img class="magazine-photo-main" src="images/gallery/bas-relief/slide-03.jpg" alt="Bas Relief — Slide 03" loading="lazy" decoding="async" data-focal="center 35%" />
+        </div>
+      </div>
+    </figure>
+  </section>
+  <section class="magazine-spread" data-page="3" data-spread-label="Light & Shadow">
+    <span class="magazine-watermark" aria-hidden="true">Bas Relief</span>
+    <div class="magazine-copy">
+      <div class="magazine-rule"><p class="eyebrow">Bas Relief · 03 / 03</p></div>
+      <h2>Light<br><span class="title-accent">& Shadow</span></h2>
+      <p>Depth reveals itself as daylight moves across the relief.</p>
+    </div>
+    <figure class="magazine-photo">
+      <img class="magazine-photo-ambient" src="images/gallery/bas-relief/gallery-01.jpg" alt="" aria-hidden="true" loading="lazy" decoding="async" style="object-position:center 35%" />
+      <div class="magazine-photo-inner">
+        <div class="magazine-art-frame">
+          <img class="magazine-photo-main" src="images/gallery/bas-relief/gallery-01.jpg" alt="Bas Relief — Gallery 01" loading="lazy" decoding="async" data-focal="center 35%" />
+        </div>
+      </div>
+    </figure>
+  </section>
+
+  <section class="magazine-spread magazine-spread--gallery" data-page="gallery" id="gallery" data-spread-label="Light & Shadow">
+    <span class="magazine-watermark" aria-hidden="true">Bas Relief</span>
+    <div class="magazine-gallery-layout">
+      <header class="magazine-gallery-head">
+        <div class="magazine-rule"><p class="eyebrow">Bas Relief · Gallery</p></div>
+        <h2>Light<br><span class="title-accent">& Shadow</span></h2>
+        <p>Depth reveals itself as daylight moves across the relief.</p>
+        <p class="magazine-gallery-stat">7<span>Works in this collection</span></p>
+        <button type="button" class="magazine-gallery-cta" id="magazine-gallery-open">
+          <span>View full collection</span>
+          <span class="magazine-gallery-cta-arrow" aria-hidden="true">→</span>
+        </button>
+      </header>
+      <div class="magazine-gallery-preview" aria-label="Gallery preview">
+        
+      <button type="button" class="magazine-gallery-thumb" data-gallery-src="images/gallery/bas-relief/slide-01.jpg">
+        <img src="images/gallery/bas-relief/slide-01.jpg" alt="Bas Relief — Slide 01" loading="lazy" decoding="async" />
+        <span class="magazine-gallery-thumb-num">01</span>
+      </button>
+      <button type="button" class="magazine-gallery-thumb" data-gallery-src="images/gallery/bas-relief/slide-02.jpg">
+        <img src="images/gallery/bas-relief/slide-02.jpg" alt="Bas Relief — Slide 02" loading="lazy" decoding="async" />
+        <span class="magazine-gallery-thumb-num">02</span>
+      </button>
+      <button type="button" class="magazine-gallery-thumb" data-gallery-src="images/gallery/bas-relief/slide-03.jpg">
+        <img src="images/gallery/bas-relief/slide-03.jpg" alt="Bas Relief — Slide 03" loading="lazy" decoding="async" />
+        <span class="magazine-gallery-thumb-num">03</span>
+      </button>
+      <button type="button" class="magazine-gallery-thumb" data-gallery-src="images/gallery/bas-relief/gallery-01.jpg">
+        <img src="images/gallery/bas-relief/gallery-01.jpg" alt="Bas Relief — Gallery 01" loading="lazy" decoding="async" />
+        <span class="magazine-gallery-thumb-num">04</span>
+      </button>
+      <button type="button" class="magazine-gallery-thumb" data-gallery-src="images/gallery/bas-relief/gallery-02.jpg">
+        <img src="images/gallery/bas-relief/gallery-02.jpg" alt="Bas Relief — Gallery 02" loading="lazy" decoding="async" />
+        <span class="magazine-gallery-thumb-num">05</span>
+      </button>
+      <button type="button" class="magazine-gallery-thumb" data-gallery-src="images/gallery/bas-relief/slide-04.jpg">
+        <img src="images/gallery/bas-relief/slide-04.jpg" alt="Bas Relief — Slide 04" loading="lazy" decoding="async" />
+        <span class="magazine-gallery-thumb-num">06</span>
+      </button>
+      </div>
+    </div>
+  </section>
+
+  <section class="magazine-spread magazine-spread--outro" data-spread-label="Continue exploring">
+    <span class="magazine-watermark" aria-hidden="true">Studio</span>
+    <div class="magazine-copy">
+      <div class="magazine-rule"><p class="eyebrow">Continue exploring</p></div>
+      <h2>More from<br><span class="title-accent">the studio</span></h2>
+      <p>Each discipline is a room in Connie's practice — murals, wall finishes, bas relief, cabinetry, ceilings, floors, and chinoiserie.</p>
+      <div class="practice-links">
+        <a href="murals.html">Murals</a>
+<a href="faux-finishes.html">Wall Finishes</a>
+<a href="cabinet-finishes.html">Cabinets</a>
+<a href="ceilings-floors.html">Ceilings & Floors</a>
+<a href="chinoiserie.html">Chinoiserie</a>
+      </div>
+      <div class="spread-actions">
+        <a class="btn dark" href="contact.html">Contact Connie</a>
+        <a class="btn" href="index.html">Home</a>
+      </div>
+    </div>
+  </section>
+</main>
+
+<div class="magazine-gallery-panel" id="magazine-gallery-panel" aria-hidden="true">
+  <header class="magazine-gallery-panel-head">
+    <div>
+      <p class="eyebrow">Bas Relief · Gallery</p>
+      <p class="magazine-gallery-panel-count">7 works</p>
+    </div>
+    <button type="button" class="magazine-gallery-close" id="magazine-gallery-close">Close</button>
+  </header>
+  <div class="magazine-gallery-grid" id="magazine-gallery-grid">
+    
+      <button type="button" class="magazine-gallery-item" data-gallery-src="images/gallery/bas-relief/slide-01.jpg">
+        <img src="images/gallery/bas-relief/slide-01.jpg" alt="Bas Relief — Slide 01" loading="lazy" decoding="async" />
+      </button>
+      <button type="button" class="magazine-gallery-item" data-gallery-src="images/gallery/bas-relief/slide-02.jpg">
+        <img src="images/gallery/bas-relief/slide-02.jpg" alt="Bas Relief — Slide 02" loading="lazy" decoding="async" />
+      </button>
+      <button type="button" class="magazine-gallery-item" data-gallery-src="images/gallery/bas-relief/slide-03.jpg">
+        <img src="images/gallery/bas-relief/slide-03.jpg" alt="Bas Relief — Slide 03" loading="lazy" decoding="async" />
+      </button>
+      <button type="button" class="magazine-gallery-item" data-gallery-src="images/gallery/bas-relief/slide-04.jpg">
+        <img src="images/gallery/bas-relief/slide-04.jpg" alt="Bas Relief — Slide 04" loading="lazy" decoding="async" />
+      </button>
+      <button type="button" class="magazine-gallery-item" data-gallery-src="images/gallery/bas-relief/gallery-01.jpg">
+        <img src="images/gallery/bas-relief/gallery-01.jpg" alt="Bas Relief — Gallery 01" loading="lazy" decoding="async" />
+      </button>
+      <button type="button" class="magazine-gallery-item" data-gallery-src="images/gallery/bas-relief/gallery-02.jpg">
+        <img src="images/gallery/bas-relief/gallery-02.jpg" alt="Bas Relief — Gallery 02" loading="lazy" decoding="async" />
+      </button>
+      <button type="button" class="magazine-gallery-item" data-gallery-src="images/gallery/bas-relief/gallery-03.jpg">
+        <img src="images/gallery/bas-relief/gallery-03.jpg" alt="Bas Relief — Gallery 03" loading="lazy" decoding="async" />
+      </button>
   </div>
 </div>
-<div class="right">
-  <div><strong id="n">01</strong> / 04</div>
-  <div class="dots" id="dots"></div>
+
+<div class="magazine-lightbox" id="magazine-lightbox" aria-hidden="true">
+  <button type="button" class="magazine-lightbox-close" id="magazine-lightbox-close">Close</button>
+  <button type="button" class="magazine-lightbox-nav magazine-lightbox-prev" id="magazine-lightbox-prev" aria-label="Previous image">←</button>
+  <img id="magazine-lightbox-img" alt="" />
+  <button type="button" class="magazine-lightbox-nav magazine-lightbox-next" id="magazine-lightbox-next" aria-label="Next image">→</button>
+  <p class="magazine-lightbox-caption" id="magazine-lightbox-caption"></p>
+  <p class="magazine-lightbox-meta" id="magazine-lightbox-meta"></p>
 </div>
 
-<div class="gallery-overlay" id="gallery-overlay" aria-hidden="true">
-  <div class="gallery-panel">
-    <div class="gallery-head">
-      <strong>Bas Relief Gallery</strong>
-      <button class="gallery-close" id="gallery-close" type="button">Close</button>
-    </div>
-    <p class="gallery-note">Featured slideshow shows top 4 pieces. Explore more below.</p>
-    <div class="gallery-grid">
-      <article class="gallery-item"><img src="https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?auto=format&fit=crop&w=1200&q=74" alt="Bas relief panel one" /><span>Piece 01</span></article>
-      <article class="gallery-item"><img src="https://images.unsplash.com/photo-1505693416388-ac5ce068fe85?auto=format&fit=crop&w=1200&q=74" alt="Bas relief panel two" /><span>Piece 02</span></article>
-      <article class="gallery-item"><img src="https://images.unsplash.com/photo-1493666438817-866a91353ca9?auto=format&fit=crop&w=1200&q=74" alt="Bas relief panel three" /><span>Piece 03</span></article>
-      <article class="gallery-item"><img src="https://images.unsplash.com/photo-1519710164239-da123dc03ef4?auto=format&fit=crop&w=1200&q=74" alt="Bas relief panel four" /><span>Piece 04</span></article>
-      <article class="gallery-item"><img src="https://images.unsplash.com/photo-1519710884006-9f8b8f67f3a9?auto=format&fit=crop&w=1200&q=74" alt="Bas relief panel five" /><span>Piece 05</span></article>
-      <article class="gallery-item"><img src="https://images.unsplash.com/photo-1505691938895-1758d7feb511?auto=format&fit=crop&w=1200&q=74" alt="Bas relief panel six" /><span>Piece 06</span></article>
-      <article class="gallery-item"><img src="https://images.unsplash.com/photo-1516455590571-18256e5bb9ff?auto=format&fit=crop&w=1200&q=74" alt="Bas relief panel seven" /><span>Piece 07</span></article>
-      <article class="gallery-item"><img src="https://images.unsplash.com/photo-1505692794403-35fce6fc9ae4?auto=format&fit=crop&w=1200&q=74" alt="Bas relief panel eight" /><span>Piece 08</span></article>
-      <article class="gallery-item"><img src="https://images.unsplash.com/photo-1522708323590-d24dbb6b0267?auto=format&fit=crop&w=1200&q=74" alt="Bas relief panel nine" /><span>Piece 09</span></article>
-    </div>
-  </div>
-</div>
-
-<div class="ba-overlay" id="ba-overlay" aria-hidden="true">
-  <div class="ba-panel">
-    <div class="ba-head">
-      <strong>Bas Relief Transformation Demo</strong>
-      <button class="ba-close" id="ba-close" type="button">Close</button>
-    </div>
-    <div class="ba-wrap">
-      <img src="https://images.unsplash.com/photo-1560448204-e02f11c3d0e2?auto=format&fit=crop&w=1800&q=74" alt="Before decorative treatment" />
-      <img class="ba-after" id="ba-after" src="https://images.unsplash.com/photo-1600607687644-c7171b42498f?auto=format&fit=crop&w=1800&q=74" alt="After decorative treatment" />
-      <div class="ba-divider" id="ba-divider"></div>
-      <div class="ba-handle" id="ba-handle">↔</div>
-      <div class="ba-label left">Before</div>
-      <div class="ba-label right">After</div>
-      <input class="ba-range" id="ba-range" type="range" min="0" max="100" value="50" aria-label="Before and after slider" />
-    </div>
-  </div>
-</div>
-
-<div class="lightbox" id="lightbox" aria-hidden="true">
-  <button class="lightbox-nav lightbox-prev" id="lightbox-prev" type="button" aria-label="Previous image">←</button>
-  <button class="lightbox-nav lightbox-next" id="lightbox-next" type="button" aria-label="Next image">→</button>
-  <button class="lightbox-close" id="lightbox-close" type="button">Close</button>
-  <img id="lightbox-image" src="" alt="Expanded gallery artwork" />
-  <div class="lightbox-meta">
-    <div class="lightbox-count" id="lightbox-count">01 / 09</div>
-    <span class="lightbox-caption" id="lightbox-caption">Piece 01</span>
-  </div>
-</div>
-<footer class="footer"><span>Connie Harris Art</span><span>St. Gabriel, Louisiana</span><nav class="footer-social"><a href="https://www.instagram.com/connieaharrisart/" target="_blank" rel="noopener">Instagram</a><a href="https://www.facebook.com/connieharrisart/" target="_blank" rel="noopener">Facebook</a><a href="https://www.pinterest.com/connieharrisart/" target="_blank" rel="noopener">Pinterest</a></nav><span>© 2026</span></footer>
-
-<script src="https://cdn.jsdelivr.net/npm/gsap@3.12.7/dist/gsap.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/gsap@3.12.7/dist/ScrollTrigger.min.js"></script>
-<script src="js/main.js?v=20260531"></script>
-<script>
-const meta=[
-  ["Work 01 of 04 · Bas Relief","Dimensional<br>Relief","Sculpted dimension, applied by hand and built layer by layer. Bas relief turns a flat wall into architecture — subtle to live with, striking to remember."],
-  ["Work 02 of 04 · Bas Relief","Carved<br>In Place","Every relief is built for the specific wall, scale, and room proportions."],
-  ["Work 03 of 04 · Bas Relief","Plaster +<br>Pigment","Layered materials create depth, shadow, and age."],
-  ["Work 04 of 04 · Bas Relief","One Room.<br>One Surface.","Permanent custom art integrated directly into the space."]
-];
-initGalleryPage({meta});
-</script>
+<script src="js/main.js?v=20260530b"></script>
+<script src="js/magazine.js?v=20260530b"></script>
 </body>
 </html>

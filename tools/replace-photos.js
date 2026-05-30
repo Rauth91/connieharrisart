@@ -4,7 +4,7 @@
  * Usage: node tools/replace-photos.js
  *
  * Name files in client-photos/ to match destination filenames:
- * hero.jpg, slide-01.jpg, gallery-01.jpg, before.jpg, after.jpg, etc.
+ * hero.jpg, slide-01.jpg, gallery-01.jpg, etc.
  */
 const fs = require("fs");
 const path = require("path");

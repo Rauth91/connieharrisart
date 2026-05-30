@@ -1,8 +1,22 @@
 /* Classes page — extends css/style.css */
-.hero{min-height:92svh;position:relative;display:grid;align-items:end;padding:clamp(6rem,10vw,9rem) clamp(1.2rem,5vw,5rem) clamp(3rem,7vw,6rem)}
-.hero img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;z-index:-2;filter:brightness(.58) saturate(.76)}
-.hero:after{content:"";position:absolute;inset:0;z-index:-1;background:linear-gradient(90deg,rgba(24,18,14,.9),rgba(24,18,14,.25) 52%,rgba(24,18,14,.72)),linear-gradient(to top,rgba(24,18,14,.82),transparent 45%)}
-.hero-copy{max-width:44rem}
+.hero{
+  min-height:92svh;position:relative;
+  display:grid;grid-template-columns:1fr minmax(260px,40%);
+  align-items:end;padding:clamp(6rem,10vw,9rem) clamp(1.2rem,5vw,5rem) clamp(3rem,7vw,6rem);
+  background:#221c17;color:#fff7ea;
+}
+.hero img{
+  grid-column:2;grid-row:1;align-self:center;justify-self:end;
+  width:auto;height:auto;max-width:100%;
+  max-height:min(560px,78vh);object-fit:contain;object-position:center;
+  filter:brightness(.84) saturate(.92);
+}
+.hero:after{
+  content:"";position:absolute;inset:0;z-index:0;pointer-events:none;
+  background:linear-gradient(90deg,rgba(24,18,14,.92),rgba(24,18,14,.28) 52%,rgba(24,18,14,.55)),
+    linear-gradient(to top,rgba(24,18,14,.75),transparent 42%);
+}
+.hero-copy{max-width:44rem;position:relative;z-index:1;grid-column:1;grid-row:1}
 .eyebrow{font-family:Inter,system-ui,sans-serif;font-size:.58rem;font-weight:500;letter-spacing:.26em;text-transform:uppercase;color:var(--gold)}
 h1{font-family:"Cormorant Garamond",serif;font-weight:300;font-size:clamp(3.4rem,10vw,9.5rem);line-height:.85;letter-spacing:-.045em;max-width:10ch;margin-top:.8rem}
 h1.shimmer{background:linear-gradient(100deg,rgba(255,247,234,.75) 0%,rgba(255,236,201,.98) 42%,rgba(167,123,69,.92) 50%,rgba(255,236,201,.98) 58%,rgba(255,247,234,.75) 100%);background-size:260% 100%;-webkit-background-clip:text;background-clip:text;color:transparent;animation:shine .95s ease-out}
@@ -16,9 +30,20 @@ h1.shimmer{background:linear-gradient(100deg,rgba(255,247,234,.75) 0%,rgba(255,2
 h2.section-title{font-family:"Cormorant Garamond",serif;font-weight:300;font-size:clamp(2.4rem,5.5vw,5.5rem);line-height:.88;letter-spacing:-.035em}
 .intro{margin-top:.5rem;padding:clamp(1.8rem,4vw,2.6rem) 0 0;border-top:1px solid var(--line)}
 .intro p{margin-top:.9rem;color:var(--soft);font-size:clamp(1rem,1.35vw,1.15rem);font-weight:300;line-height:1.9;letter-spacing:.01em;max-width:44rem}
-.signature{margin-top:2rem;position:relative;min-height:340px;border:1px solid var(--line);overflow:hidden}
-.signature img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;filter:brightness(.63) saturate(.74)}
-.signature:after{content:"";position:absolute;inset:0;background:linear-gradient(90deg,rgba(18,14,10,.76),rgba(18,14,10,.26) 54%,rgba(18,14,10,.7))}
+.signature{
+  margin-top:2rem;position:relative;min-height:340px;border:1px solid var(--line);
+  overflow:hidden;display:grid;grid-template-columns:1fr minmax(220px,42%);
+  align-items:center;background:#221c17;
+}
+.signature img{
+  justify-self:end;width:auto;height:auto;max-width:100%;
+  max-height:min(400px,55vh);object-fit:contain;object-position:center;
+  filter:brightness(.84) saturate(.92);
+}
+.signature:after{
+  content:"";position:absolute;inset:0;pointer-events:none;
+  background:linear-gradient(90deg,rgba(18,14,10,.8),rgba(18,14,10,.22) 54%,rgba(18,14,10,.65));
+}
 .signature-copy{position:relative;z-index:2;max-width:30rem;padding:clamp(1.2rem,4vw,2.3rem)}
 .signature-copy p{margin-top:.7rem;color:var(--soft);line-height:1.85}
 .offerings{margin-top:2.8rem}
@@ -52,7 +77,14 @@ h2.section-title{font-family:"Cormorant Garamond",serif;font-weight:300;font-siz
 .footer-social{display:flex;gap:1.2rem}
 .footer-social a{font-size:.6rem;letter-spacing:.18em;text-transform:uppercase;text-decoration:none;color:var(--soft);transition:color .2s ease}
 .footer-social a:hover{color:var(--gold)}
-@media(max-width:980px){.hero{min-height:80svh}.offerings-grid{grid-template-columns:1fr}.cta-band{grid-template-columns:1fr}.signature{min-height:280px}}
+@media(max-width:980px){
+  .hero{min-height:80svh;grid-template-columns:1fr}
+  .hero img{grid-column:1;justify-self:center;max-height:min(360px,44vh);margin-bottom:1rem}
+  .offerings-grid{grid-template-columns:1fr}
+  .cta-band{grid-template-columns:1fr}
+  .signature{min-height:280px;grid-template-columns:1fr}
+  .signature img{justify-self:center;max-height:min(320px,42vh)}
+}
 @media(max-width:640px){
   .hero{padding:5.2rem 1rem 2.1rem}
   .hero p{font-size:.98rem;line-height:1.62}

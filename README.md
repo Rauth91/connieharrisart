@@ -1,75 +1,82 @@
-# Connie Harris Art — Site Launch Guide
+# Connie Harris Art
 
-This folder is the **only** copy of the site. It matches https://rauth91.github.io/connieharrisart/
+Static portfolio site for Connie Harris — decorative murals, finishes, bas relief, and studio classes.
+
+**Live:** https://rauth91.github.io/connieharrisart/
 
 ## Structure
+
 ```
-index.html, *.html     — pages
-css/style.css          — shared design system
-css/home.css           — home page layout
-css/classes.css        — classes page
-css/contact.css        — contact page
-css/gallery-page.css   — gallery slideshow pages
-js/main.js             — menu, gallery, animations
-js/photo-config.js     — image path map
-js/site-config.js      — nav + practice list (edit here, then run sync)
-tools/sync-nav.js      — updates nav on all pages from site-config.js
-```
+index.html              Home
+classes.html            Classes
+contact.html            Contact
+*.html                  Practice galleries (magazine layout)
 
-## Live preview
-- GitHub Pages: https://rauth91.github.io/connieharrisart/
-- Local: open `index.html` in this folder
+css/style.css           Shared design system
+css/home.css            Home page
+css/classes.css         Classes page
+css/contact.css         Contact page
+css/magazine.css        Practice gallery pages
 
-## Add your photos (fastest)
-1. Put your image files in `client-photos/` using the destination filenames (`hero.jpg`, `slide-01.jpg`, etc.).
-2. Run:
-   ```bash
-   node tools/replace-photos.js
-   ```
-3. Refresh the site.
+js/site-config.js       Nav, practice list, cache version (SITE_VERSION)
+js/site-nav.js          Active nav state
+js/main.js              Menu, scroll header, reveal animations
+js/home.js              Home page animations
+js/classes.js           Class offerings modal
+js/contact-form.js      Contact form handler
+js/magazine.js          Practice page spreads + gallery
+js/photo-config.js      Image paths (used by import tools)
+js/curated-pages.js     Hero/spread order (used by build tool)
 
-Photo paths are defined in `js/photo-config.js`.
-
-## Folder structure (recommended)
-```
-images/
-  home/
-    hero.jpg
-    about-main.jpg
-    about-sample.jpg
-  work/
-    bas-relief.jpg
-    faux-finishes.jpg
-    cabinet-finishes.jpg
-    ceilings-floors.jpg
-    murals.jpg
-    chinoiserie.jpg
-  gallery/
-    murals/
-      slide-01.jpg ... slide-04.jpg
-      gallery-01.jpg ... gallery-06.jpg
-      before.jpg
-      after.jpg
-    faux-finishes/ ...
-    bas-relief/ ...
-    cabinet-finishes/ ...
-    ceilings-floors/ ...
-    chinoiserie/ ...
-  classes/
-    hero.jpg
-    signature.jpg
-  videos/ (optional)
-  contact/
-    hero.jpg
+tools/build-portfolio-pages.js   Regenerate 6 practice HTML pages
+tools/import-edited-photos.js    Import photos from Desktop/website-ready
+tools/normalize-gallery-display.js Batch 3:4 crop on gallery images
+tools/replace-photos.js            Copy files from client-photos/ by filename
+tools/sync-nav.js                  Sync nav markup from site-config.js
 ```
 
-## Before client meeting checklist
-- [ ] Mobile menu works on every page
-- [ ] Gallery pages: swipe left/right on image area
-- [ ] Gallery + Before/After modals open correctly
-- [ ] Contact form submits (Formspree endpoint configured)
-- [ ] Replace placeholder images with Connie’s final photos
+## Local preview
 
-## Notes
-- Current placeholders are temporary Unsplash images until client assets are added.
-- Keep image filenames lowercase with hyphens for consistency.
+```bash
+cd connieharris
+python3 -m http.server 8765
+```
+
+Open http://localhost:8765 and hard refresh (Cmd+Shift+R).
+
+## Update photos
+
+Import from a prepared folder (default: `~/Desktop/website-ready`):
+
+```bash
+node tools/import-edited-photos.js
+node tools/build-portfolio-pages.js
+```
+
+Or drop named files into `client-photos/` and run:
+
+```bash
+node tools/replace-photos.js
+```
+
+Image paths live in `js/photo-config.js`.
+
+## Rebuild practice pages
+
+After editing `js/curated-pages.js` or toggling photos in the build script:
+
+```bash
+node tools/build-portfolio-pages.js
+```
+
+## Sync navigation
+
+After editing `js/site-config.js`:
+
+```bash
+node tools/sync-nav.js
+```
+
+## Cache busting
+
+All pages use `SITE_VERSION` in `js/site-config.js`. Bump it when CSS or JS changes ship.

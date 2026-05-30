@@ -1,4 +1,6 @@
-/** Single source for site navigation and practice galleries. */
+/** Site navigation, practice list, and asset cache version. */
+const SITE_VERSION = "20260530b";
+
 const SITE_PRACTICES = [
   { href: "murals.html", label: "Murals", slug: "murals" },
   { href: "faux-finishes.html", label: "Wall Finishes", slug: "faux-finishes" },
@@ -16,9 +18,10 @@ const SITE_NAV = [
 ];
 
 if (typeof window !== "undefined") {
+  window.SITE_VERSION = SITE_VERSION;
   window.SITE_PRACTICES = SITE_PRACTICES;
   window.SITE_NAV = SITE_NAV;
 }
 if (typeof module !== "undefined" && module.exports) {
-  module.exports = { SITE_PRACTICES, SITE_NAV };
+  module.exports = { SITE_VERSION, SITE_PRACTICES, SITE_NAV };
 }
