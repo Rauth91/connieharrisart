@@ -98,7 +98,8 @@ body.magazine-page::before{
 /* —— Copy panel (dark editorial) —— */
 .magazine-copy{
   position:relative;z-index:2;
-  display:flex;flex-direction:column;justify-content:flex-end;
+  display:flex;flex-direction:column;justify-content:center;align-items:center;
+  text-align:center;
   padding:clamp(2rem,4vw,3.5rem) clamp(1.75rem,3.5vw,3.25rem) clamp(2.5rem,7vh,5rem);
   background:
     linear-gradient(105deg,#1a1511 0%,#14110e 55%,rgba(20,17,14,.97) 100%);
@@ -159,7 +160,7 @@ body.magazine-page::before{
   font-size:clamp(.95rem,1.1vw,1.06rem);
 }
 .magazine-copy .spread-actions{
-  display:flex;flex-wrap:wrap;gap:.75rem;margin-top:2.2rem;
+  display:flex;flex-wrap:wrap;justify-content:center;gap:.75rem;margin-top:2.2rem;
 }
 .magazine-page .spread-actions .btn{
   background:rgba(255,255,255,.07);
