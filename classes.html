@@ -17,10 +17,10 @@
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,200;0,300;0,400;0,500;1,200;1,300&family=Inter:wght@300;400;500&display=swap" rel="stylesheet" />
-<link rel="stylesheet" href="css/style.css?v=20260601" />
-<link rel="stylesheet" href="css/classes.css?v=20260601" />
-<script src="js/site-config.js?v=20260601"></script>
-<script src="js/site-nav.js?v=20260601" defer></script>
+<link rel="stylesheet" href="css/style.css?v=20260601d" />
+<link rel="stylesheet" href="css/classes.css?v=20260601d" />
+<script src="js/site-config.js?v=20260601d"></script>
+<script src="js/site-nav.js?v=20260601d" defer></script>
 </head>
 <body class="classes-page">
 <header class="topbar">
@@ -57,16 +57,16 @@
   <div class="hero-copy">
     <p class="eyebrow">Private studio education</p>
     <h1 id="hero-title">Learn the craft from the source.</h1>
-    <p>A high-touch class experience for artists and designers who want real process, elevated finishes, and direct mentoring with Connie.</p>
+    <p>A hands-on studio experience with Connie — real process, elevated finishes, and direct mentoring. Classes are paused for now; join the interest list to be first to know when new dates open.</p>
     <div class="hero-actions">
-      <a class="btn dark" href="contact.html">Request Dates</a>
-      <a class="btn" href="#tracks">View Tracks</a>
+      <a class="btn dark" href="contact.html">Join the interest list</a>
+      <a class="btn" href="#experience">How classes work</a>
     </div>
   </div>
 </section>
 
 <main class="page">
-  <section class="intro">
+  <section class="intro" id="experience">
     <p class="eyebrow">Class experience</p>
     <h2 class="section-title">Small classes. Real technique.</h2>
     <p>Connie teaches from her studio at Chatsworth Plantation in St. Gabriel. Classes stay intentionally small for focused instruction and hands-on detail you cannot get from a video.</p>
@@ -81,24 +81,22 @@
     </div>
   </section>
 
-  <section class="offerings">
-    <div class="offerings-head">
-      <div>
-        <p class="eyebrow">Now enrolling</p>
-        <h2 class="section-title">Currently Offered Classes</h2>
-      </div>
-      <p class="offerings-note"><span id="class-count">0</span> classes open now</p>
+  <section class="enrollment" id="enrollment">
+    <div class="enrollment-card">
+      <p class="eyebrow">Enrollment status</p>
+      <h2 class="section-title">Classes are paused right now.</h2>
+      <p>Connie isn't holding or booking classes at the moment. When the studio calendar reopens, new sessions and dates will be posted right here. Join the interest list and you'll be the first to hear when enrollment returns.</p>
+      <a class="btn dark" href="contact.html">Join the interest list</a>
     </div>
-    <div class="offerings-grid" id="offerings-grid"></div>
   </section>
 
   <section class="cta-band">
     <div>
-      <p class="eyebrow">Limited enrollment</p>
-      <h2 class="section-title">Reserve your class inquiry.</h2>
-      <p>Share your schedule and background. Connie will recommend the best track and available dates.</p>
+      <p class="eyebrow">Interest list</p>
+      <h2 class="section-title">Be first to know when classes return.</h2>
+      <p>Leave your name and a little about your background. When Connie opens new class dates, you'll hear from us before they're posted publicly.</p>
     </div>
-    <a class="btn dark" href="contact.html">Request Dates</a>
+    <a class="btn dark" href="contact.html">Join the interest list</a>
   </section>
 </main>
 
@@ -113,33 +111,9 @@
   <span>© 2026</span>
 </footer>
 
-<div class="class-modal" id="class-modal" aria-hidden="true">
-  <article class="class-panel">
-    <div class="class-head">
-      <div>
-        <p class="class-label" id="class-modal-code">Class</p>
-        <h3 class="class-title" id="class-modal-title">Class title</h3>
-      </div>
-      <button class="class-close" id="class-modal-close" type="button">Close</button>
-    </div>
-    <p class="class-summary" id="class-modal-summary"></p>
-    <section class="class-section">
-      <p>What to expect</p>
-      <ul id="class-modal-expect"></ul>
-    </section>
-    <section class="class-section">
-      <p>Good fit for</p>
-      <ul id="class-modal-fit"></ul>
-    </section>
-    <div class="class-foot">
-      <small id="class-modal-details"></small>
-      <a class="btn dark" href="contact.html">Request Dates</a>
-    </div>
-  </article>
-</div>
 <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.7/dist/gsap.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.7/dist/ScrollTrigger.min.js"></script>
-<script src="js/main.js?v=20260601"></script>
-<script src="js/classes.js?v=20260601"></script>
+<script src="js/main.js?v=20260601d"></script>
+<script src="js/classes.js?v=20260601d"></script>
 </body>
 </html>
