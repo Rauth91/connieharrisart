@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 /**
- * Build atelier practice pages — curated heroes, 3 spreads, gallery order, focal points.
+ * Build atelier practice pages — curated heroes, 5 spreads, gallery order, focal points.
  */
 const fs = require("fs");
 const path = require("path");
@@ -26,6 +26,8 @@ const PAGES = [
       ["Drawn<br>to Scale", "Every commission begins on the wall itself — proportions, sightlines, and a color study shaped to the room before a single brushstroke is laid."],
       ["Into the<br>Architecture", "Finished work settles into its space, reading as part of the architecture and the light rather than a picture hung upon it."],
       ["Layer<br>upon Layer", "Glaze over brushwork over ground — depth built slowly, so the surface holds its atmosphere for decades."],
+      ["Color in<br>Motion", "Light changes the mural through the day — Connie builds that movement into the palette so the wall never reads static."],
+      ["Room by<br>Room", "No two commissions share a template. Each mural is drawn for its architecture, its owner, and the story the space is meant to tell."],
     ],
   },
   {
@@ -39,6 +41,8 @@ const PAGES = [
       ["Tested<br>by Hand", "Drag, depth, and sheen are proven on sample boards first, so the finish that reaches your walls is already resolved."],
       ["Quiet<br>Color", "Tone moves softly across the surface — rich at midday, warmer by evening, and never flat."],
       ["Made for<br>Living", "Protective finishing systems keep every wall as beautiful years on as the day it was sealed."],
+      ["Depth<br>Under Light", "The finish is judged at every hour — morning grey, afternoon gold, evening warmth — before it ever leaves the sample board."],
+      ["Surface<br>by Surface", "Sheetrock, plaster, canvas, stone — Connie matches technique to substrate so the wall behaves as one cohesive plane."],
     ],
   },
   {
@@ -52,6 +56,8 @@ const PAGES = [
       ["Formed<br>in Plaster", "Relief is shaped in place, responding to the room's proportions and the way its light falls across the surface."],
       ["A Sense of<br>Permanence", "The finished wall reads as built-in — integral to the architecture, never simply applied to it."],
       ["Light<br>& Shadow", "Depth comes alive as daylight crosses the relief, the wall shifting in character from morning to evening."],
+      ["Built Up<br>Slowly", "Relief rises in layers — modeled, dried, refined — until the form feels carved from the wall itself."],
+      ["Edges &<br>Profiles", "Moldings, arches, and panel lines guide where relief lives. Connie follows the architecture, not a formula."],
     ],
   },
   {
@@ -65,6 +71,8 @@ const PAGES = [
       ["Paint &<br>Patina", "Hand-worked aging lends depth and character while keeping every profile crisp and intentional."],
       ["In the<br>Detail", "Glaze is layered to catch panel edges and millwork, drawing the eye to the craftsmanship beneath."],
       ["Built to<br>Endure", "Topcoat systems are chosen for real life — kitchens, baths, and the rooms that work the hardest."],
+      ["Profiles<br>Preserved", "Every edge and panel profile stays crisp through the finish — character without blur."],
+      ["Kitchens &<br>Baths", "The hardest-working rooms get finishes tested for moisture, heat, and daily use without sacrificing beauty."],
     ],
   },
   {
@@ -78,6 +86,8 @@ const PAGES = [
       ["Overhead<br>Atmosphere", "Venetian-inspired plaster finishes bring depth overhead, shaped for both historic and modern homes."],
       ["Underfoot<br>Artistry", "Decorative floors balance genuine beauty with the durability a floor is asked to give."],
       ["One<br>Continuous Room", "Color and texture are coordinated with walls, trim, and cabinetry so every surface belongs to the same story."],
+      ["Above the<br>Room", "A finished ceiling changes how tall a room feels and how light pools at the end of the day."],
+      ["Grounded<br>Below", "Decorative floors anchor the composition — pattern, tone, and wear resistance in balance."],
     ],
   },
   {
@@ -91,6 +101,8 @@ const PAGES = [
       ["Composed<br>by Panel", "Color and composition are studied panel by panel, shaped for folding screens and feature walls."],
       ["In<br>Harmony", "Scenes are woven through moldings, cabinetry, and furnishings until the room reads as one continuous landscape."],
       ["Every Branch,<br>Placed", "Fine brushwork and narrative detail — each bird, branch, and blossom set with intention."],
+      ["Birds &<br>Blossoms", "Each figure is placed with narrative intent — movement through foliage, balance across the panel."],
+      ["Screens &<br>Walls", "Whether a folding screen or a full feature wall, chinoiserie is composed to live with furniture and moldings."],
     ],
   },
 ];
@@ -112,7 +124,7 @@ function pick(map, key) {
 function resolveCurated(g, curated) {
   const map = indexGallery(g);
   const cover = pick(map, curated.cover) || g.slides[0];
-  const portfolio = curated.portfolio.map((k) => pick(map, k)).filter(Boolean).slice(0, 3);
+  const portfolio = curated.portfolio.map((k) => pick(map, k)).filter(Boolean);
 
   const ordered = [];
   const seen = new Set();
@@ -213,7 +225,7 @@ function photoFigure(src, alt, loading, extraClass, curated) {
 }
 
 function buildGallerySpread(page, preview, galleryOrder) {
-  const m = page.meta[3];
+  const m = page.meta[page.meta.length - 1];
   const previewHtml = preview
     .map(
       (src, i) => `
@@ -280,7 +292,7 @@ function buildGalleryChrome(page, images) {
 }
 
 function buildPhotoSpread(page, index, total, src, curated) {
-  const m = page.meta[(index + 1) % page.meta.length];
+  const m = page.meta[index + 1] || page.meta[page.meta.length - 1];
   const num = String(index + 1).padStart(2, "0");
   const tot = String(total).padStart(2, "0");
 
@@ -337,8 +349,8 @@ function buildPage(page) {
 
     railLabels = [
       spreadTitlePlain(m0[0]),
-      ...portfolio.map((_, i) => spreadTitlePlain(page.meta[(i + 1) % page.meta.length][0])),
-      spreadTitlePlain(page.meta[3][0]),
+      ...portfolio.map((_, i) => spreadTitlePlain(page.meta[i + 1][0])),
+      spreadTitlePlain(page.meta[page.meta.length - 1][0]),
       "Continue exploring",
     ];
 

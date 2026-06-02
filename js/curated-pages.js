@@ -11,7 +11,7 @@ const galleryKeys = (slides, galleries) => [
 
 const base = (focal) => ({
   cover: "slide-01",
-  portfolio: ["slide-02", "slide-03", "gallery-01"],
+  portfolio: ["slide-02", "slide-03", "slide-04", "gallery-01", "gallery-02"],
   galleryPreview: ["slide-01", "slide-02", "slide-03", "slide-04", "gallery-01", "gallery-02"],
   galleryOrder: galleryKeys(4, 14),
   focal: { cover: focal },
