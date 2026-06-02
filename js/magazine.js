@@ -163,11 +163,7 @@ function initMagazineGallery() {
     if (!src || srcIndex.has(src)) return;
     const img = el.querySelector("img");
     srcIndex.set(src, sources.length);
-    sources.push({
-      src,
-      alt: img?.alt || "",
-      caption: el.dataset.galleryCaption || "",
-    });
+    sources.push({ src, alt: img?.alt || "" });
   });
 
   let lightboxIndex = 0;
@@ -215,7 +211,8 @@ function initMagazineGallery() {
     }
 
     if (lightboxCaption) {
-      lightboxCaption.textContent = item.caption || item.alt.replace(/^[^—]+—\s*/, "").trim() || item.alt;
+      const plain = item.alt.replace(/^[^—]+—\s*/, "").trim();
+      lightboxCaption.textContent = plain || item.alt;
     }
     if (lightboxMeta) {
       lightboxMeta.textContent = `${String(lightboxIndex + 1).padStart(2, "0")} / ${String(sources.length).padStart(2, "0")}`;

@@ -9,7 +9,7 @@
     const submitButton = form.querySelector(".submit");
     const defaultLabel = submitButton.textContent;
     submitButton.textContent = "Sending...";
-    if (status) status.textContent = "Sending your message...";
+    if (status) status.textContent = "Submitting your inquiry...";
 
     try {
       const response = await fetch(form.action, {
@@ -18,16 +18,16 @@
         headers: { Accept: "application/json" },
       });
 
-      submitButton.textContent = response.ok ? "Message sent" : "Try again";
+      submitButton.textContent = response.ok ? "Message Sent" : "Try Again";
       if (status) {
         status.textContent = response.ok
-          ? "Thank you. Connie will follow up personally within a few business days."
-          : "Something went wrong. Please try again or email Connie directly.";
+          ? "Thank you. Connie will follow up soon."
+          : "Something went wrong. Please try again.";
       }
       if (response.ok) form.reset();
     } catch {
-      submitButton.textContent = "Try again";
-      if (status) status.textContent = "Connection issue. Please try again or call (225) 266-5037.";
+      submitButton.textContent = "Try Again";
+      if (status) status.textContent = "Connection issue. Please try again.";
     }
 
     setTimeout(() => {

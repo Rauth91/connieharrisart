@@ -6,19 +6,13 @@ const fs = require("fs");
 const path = require("path");
 
 const ROOT = path.join(__dirname, "..");
-const {
-  SITE_VERSION,
-  SITE_NAV,
-  SITE_NAV_WORK,
-  SITE_OG_IMAGE,
-  SITE_TAGLINE,
-  SITE_PRACTICES,
-} = require(path.join(ROOT, "js", "site-config.js"));
+const { SITE_VERSION } = require(path.join(ROOT, "js", "site-config.js"));
 const CACHE = SITE_VERSION;
 /** Practice pages: magazine layout with photos and gallery. */
 const INCLUDE_PHOTOS = true;
 const SITE_PHOTOS = require(path.join(ROOT, "js", "photo-config.js"));
 const { CURATED_PAGES } = require(path.join(ROOT, "js", "curated-pages.js"));
+const { SITE_NAV, SITE_PRACTICES } = require(path.join(ROOT, "js", "site-config.js"));
 
 const PAGES = [
   {
@@ -156,10 +150,6 @@ function focusClassFor(curated, src) {
   return ` magazine-art-frame--focus-${kind}`;
 }
 
-function projectCaption(page) {
-  return `St. Gabriel · ${page.title} · Hand-painted`;
-}
-
 function navBlock(activeHref) {
   const links = SITE_NAV.map(({ href, label }) => {
     const active = href === activeHref ? ' class="active"' : "";
@@ -205,13 +195,12 @@ function watermark() {
   return "";
 }
 
-function photoFigure(src, alt, loading, extraClass, curated, page) {
+function photoFigure(src, alt, loading, extraClass, curated) {
   const cls = extraClass ? ` magazine-photo--${extraClass}` : "";
   const key = basenameKey(src);
   const focal = focalFor(curated, key);
   const frameExtra = focusClassFor(curated, src);
   const immersive = extraClass === "cover" ? " magazine-photo--immersive" : "";
-  const caption = page ? projectCaption(page) : "";
 
   return `<figure class="magazine-photo${cls}${immersive}">
       <img class="magazine-photo-ambient" src="${src}" alt="" aria-hidden="true" loading="${loading}" decoding="async" style="object-position:${focal}" />
@@ -219,7 +208,6 @@ function photoFigure(src, alt, loading, extraClass, curated, page) {
         <div class="magazine-art-frame${frameExtra}">
           <img class="magazine-photo-main" src="${src}" alt="${alt}" loading="${loading}" decoding="async" data-focal="${focal}" />
         </div>
-        ${caption ? `<figcaption class="magazine-photo-caption">${caption}</figcaption>` : ""}
       </div>
     </figure>`;
 }
@@ -229,7 +217,7 @@ function buildGallerySpread(page, preview, galleryOrder) {
   const previewHtml = preview
     .map(
       (src, i) => `
-      <button type="button" class="magazine-gallery-thumb" data-gallery-src="${src}" data-gallery-caption="${projectCaption(page)}">
+      <button type="button" class="magazine-gallery-thumb" data-gallery-src="${src}">
         <img src="${src}" alt="${page.title} — ${altFromPath(src)}" loading="lazy" decoding="async" />
         <span class="magazine-gallery-thumb-num">${String(i + 1).padStart(2, "0")}</span>
       </button>`
@@ -261,7 +249,7 @@ function buildGalleryChrome(page, images) {
   const gridHtml = images
     .map(
       (src) => `
-      <button type="button" class="magazine-gallery-item" data-gallery-src="${src}" data-gallery-caption="${projectCaption(page)}">
+      <button type="button" class="magazine-gallery-item" data-gallery-src="${src}">
         <img src="${src}" alt="${page.title} — ${altFromPath(src)}" loading="lazy" decoding="async" />
       </button>`
     )
@@ -304,7 +292,7 @@ function buildPhotoSpread(page, index, total, src, curated) {
       <h2>${formatTitle(m[0])}</h2>
       <p>${m[1]}</p>
     </div>
-    ${photoFigure(src, `${page.title} — ${altFromPath(src)}`, index < 1 ? "eager" : "lazy", "", curated, page)}
+    ${photoFigure(src, `${page.title} — ${altFromPath(src)}`, index < 1 ? "eager" : "lazy", "", curated)}
   </section>`;
 }
 
@@ -366,7 +354,7 @@ function buildPage(page) {
         <a class="btn" href="index.html#work">All disciplines</a>
       </div>
     </div>
-    ${photoFigure(cover, page.title, "eager", "cover", curatedCfg, page)}
+    ${photoFigure(cover, page.title, "eager", "cover", curatedCfg)}
   </section>`;
 
     photos = portfolio
@@ -408,7 +396,6 @@ ${railLabels
       <div class="magazine-rule"><p class="eyebrow">Continue exploring</p></div>
       <h2>More from<br><span class="title-accent">the studio</span></h2>
       <p>Each discipline is a room in Connie's practice — murals, wall finishes, bas relief, cabinetry, ceilings, floors, and chinoiserie.</p>
-      <p class="magazine-outro-tagline">${SITE_TAGLINE}</p>
       <div class="practice-links">
         ${siblingLinks(page.active)}
       </div>
@@ -425,12 +412,8 @@ ${railLabels
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <meta name="description" content="${page.desc}" />
-<meta property="og:type" content="website" />
 <meta property="og:title" content="${page.title} | Connie Harris" />
 <meta property="og:description" content="${page.desc}" />
-<meta property="og:image" content="${SITE_OG_IMAGE}" />
-<meta name="twitter:card" content="summary_large_image" />
-<meta name="twitter:image" content="${SITE_OG_IMAGE}" />
 <meta name="theme-color" content="#12100d" />
 <link rel="icon" type="image/svg+xml" href="images/favicon.svg" />
 <title>${page.title} | Connie Harris</title>
@@ -443,7 +426,7 @@ ${railLabels
 <script src="js/site-nav.js?v=${CACHE}" defer></script>
 </head>
 <body class="magazine-page${INCLUDE_PHOTOS ? "" : " magazine-page--text"}">
-${navBlock(SITE_NAV_WORK)}
+${navBlock(page.active)}
 
 <div class="magazine-grain" aria-hidden="true"></div>
 <div class="magazine-progress" aria-hidden="true"><div class="magazine-progress-fill" id="magazine-progress-fill"></div></div>
