@@ -8,6 +8,9 @@
   --line:rgba(36,30,24,.16);
   --white:#fff7ea;
   --topbar-h:72px;
+  --site-content:1240px;
+  --site-gutter:clamp(1.15rem,5vw,4rem);
+  --site-pad-x:max(var(--site-gutter), calc((100% - var(--site-content)) / 2));
 }
 /* Touch optimization */
 *{-webkit-tap-highlight-color:transparent}
@@ -38,7 +41,7 @@ img{display:block;max-width:100%}
 
 .topbar{
   position:fixed;top:0;left:0;right:0;z-index:50;
-  height:var(--topbar-h);padding:0 clamp(0.9rem,2.6vw,2rem);
+  height:var(--topbar-h);padding:0 var(--site-pad-x);
   display:flex;align-items:center;justify-content:space-between;gap:.75rem;
   color:#fff4e6;
   background:linear-gradient(to bottom,rgba(30,23,18,.94),rgba(30,23,18,.62));
@@ -145,11 +148,27 @@ blockquote,.pullquote{
   animation:shine .95s ease-out;
 }
 
-.footer{padding:2rem clamp(1.2rem,4vw,4rem);display:flex;justify-content:space-between;gap:1rem;flex-wrap:wrap;color:var(--soft);font-size:.65rem;letter-spacing:.14em;text-transform:uppercase}
+.footer{
+  padding:clamp(2.5rem,5vw,3.5rem) var(--site-pad-x) 2rem;
+  display:grid;gap:1.4rem;
+  color:var(--soft);font-size:.65rem;letter-spacing:.14em;text-transform:uppercase;
+}
+.footer-tagline{
+  font-family:"Cormorant Garamond",serif;
+  font-size:clamp(1.15rem,2.2vw,1.55rem);
+  font-weight:300;font-style:italic;
+  letter-spacing:.01em;text-transform:none;
+  text-align:center;color:var(--ink);
+  line-height:1.35;max-width:36rem;margin:0 auto;
+}
+.footer-row{
+  display:flex;justify-content:space-between;align-items:center;
+  gap:1rem;flex-wrap:wrap;
+}
 .footer-social{display:flex;gap:1.2rem}
 .footer-social a{font-size:.6rem;letter-spacing:.18em;text-transform:uppercase;text-decoration:none;color:var(--soft);transition:color .2s ease}
 .footer-social a:hover{color:var(--gold)}
-.testimonials{padding:3rem clamp(1.2rem,6vw,7rem)}
+.testimonials{padding:clamp(3rem,7vw,5rem) var(--site-pad-x) clamp(3.5rem,8vw,6rem)}
 .testimonial-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:clamp(1.5rem,4vw,4rem);margin-top:1.5rem}
 .pullquote cite{display:block;margin-top:.8rem;font-style:normal;font-family:Inter,sans-serif;font-size:.6rem;letter-spacing:.18em;text-transform:uppercase;color:var(--gold)}
 
@@ -164,7 +183,7 @@ blockquote,.pullquote{
   :root{--topbar-h:64px}
   .topbar{padding:0 .85rem}
   .mobile-menu{left:.45rem;right:.45rem}
-  .footer{display:grid}
+  .footer-row{display:grid;justify-items:center;text-align:center}
 }
 @media(max-width:720px){.testimonial-grid{grid-template-columns:1fr}}
 @media(max-width:768px){
