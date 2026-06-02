@@ -191,8 +191,8 @@ function formatTitle(html) {
   return `${parts[0]}<br><span class="title-accent">${parts.slice(1).join(" ")}</span>`;
 }
 
-function watermark(title) {
-  return `<span class="magazine-watermark" aria-hidden="true">${title}</span>`;
+function watermark() {
+  return "";
 }
 
 function photoFigure(src, alt, loading, extraClass, curated) {
@@ -392,7 +392,6 @@ ${railLabels
 
   const outro = `
   <section class="magazine-spread magazine-spread--outro" data-spread-label="Continue exploring">
-    <span class="magazine-watermark" aria-hidden="true">Studio</span>
     <div class="magazine-copy">
       <div class="magazine-rule"><p class="eyebrow">Continue exploring</p></div>
       <h2>More from<br><span class="title-accent">the studio</span></h2>

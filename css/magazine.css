@@ -80,21 +80,6 @@ body.magazine-page::before{
   box-shadow:inset 0 1px 0 rgba(255,247,234,.06);
 }
 
-.magazine-watermark{
-  position:absolute;
-  left:-.08em;bottom:8vh;
-  z-index:0;
-  font-family:"Cormorant Garamond",serif;
-  font-weight:200;
-  font-size:clamp(5rem,18vw,16rem);
-  line-height:.8;
-  letter-spacing:-.04em;
-  color:rgba(255,245,232,.04);
-  pointer-events:none;
-  user-select:none;
-  white-space:nowrap;
-}
-
 /* —— Copy panel (dark editorial) —— */
 .magazine-copy{
   position:relative;z-index:2;
@@ -603,10 +588,6 @@ body.gallery-open .magazine-book{pointer-events:none}
     radial-gradient(ellipse 80% 60% at 50% 100%,rgba(167,123,69,.12),transparent 55%),
     linear-gradient(165deg,#1a1511,#12100d 60%);
 }
-.magazine-spread--outro .magazine-watermark{
-  left:50%;transform:translateX(-50%);
-  bottom:12vh;text-align:center;
-}
 .magazine-spread--outro .magazine-copy{
   max-width:46rem;margin:0 auto;
   border-right:none;text-align:left;
@@ -748,51 +729,69 @@ body.gallery-open .magazine-book{pointer-events:none}
 }
 
 @media(max-width:900px){
+  /* Proximity (not mandatory) lets taller spreads — like the gallery
+     preview — scroll freely while normal spreads still snap into place. */
+  .magazine-book{scroll-snap-type:y proximity}
   .magazine-spread{
     grid-template-columns:1fr;
     grid-template-rows:auto 1fr;
   }
   .magazine-copy{
     min-height:auto;
-    padding:1.85rem 1.35rem 1.5rem;
+    padding:1.6rem 1.4rem 1.5rem;
     border-right:none;
     border-bottom:1px solid rgba(255,244,230,.08);
+    background:linear-gradient(180deg,rgba(26,21,17,.55),rgba(18,16,13,0));
   }
   .magazine-copy::after{display:none}
-  .magazine-copy h2{font-size:clamp(2.35rem,10vw,3.2rem)}
-  .magazine-photo-inner{min-height:58vh;padding:1rem}
+  .magazine-copy h2{font-size:clamp(2.15rem,8.4vw,3rem)}
+  .magazine-copy p{font-size:1rem;line-height:1.68;max-width:34rem}
+  .magazine-photo-inner{min-height:60vh;padding:.85rem}
   .magazine-art-frame{
     height:auto;
-    width:min(88vw,400px);
-    max-height:62vh;
+    width:min(90vw,420px);
+    max-height:64vh;
   }
   .magazine-art-frame.is-landscape{
-    width:min(92vw,480px);
-    max-height:48vh;
+    width:min(94vw,500px);
+    max-height:50vh;
   }
   .magazine-photo--immersive .magazine-art-frame{
     width:100%;
-    height:62vh;
+    height:64vh;
   }
-  .magazine-watermark{font-size:clamp(4rem,22vw,8rem);bottom:4vh}
+  /* Bottom controls: progress page number on the left, page arrows on the right */
   .magazine-nav{
-    left:50%;transform:translateX(-50%);
-    bottom:max(1rem,env(safe-area-inset-bottom));
+    left:auto;right:clamp(1rem,4vw,1.5rem);transform:none;
+    bottom:max(1.1rem,env(safe-area-inset-bottom));
+    gap:.6rem;
   }
-  .magazine-ui{bottom:4.75rem}
-  .magazine-tap-next{width:100%;height:48%;top:auto}
+  .magazine-nav button{
+    width:54px;height:54px;font-size:1.3rem;
+    background:rgba(18,16,13,.82);
+  }
+  .magazine-ui{
+    left:clamp(1rem,4vw,1.5rem);right:auto;
+    bottom:max(1.6rem,calc(env(safe-area-inset-bottom) + .5rem));
+    text-align:left;
+  }
+  .magazine-page-num{font-size:1.7rem}
+  .magazine-spread-label{display:none}
+  .magazine-hint{display:none}
+  /* Rely on swipe + arrow buttons on touch; the tap overlay otherwise
+     blocks gallery thumbnails and causes accidental page turns. */
+  .magazine-tap-next,
+  .magazine-tap-prev{display:none}
   .magazine-gallery-layout{
     grid-template-columns:1fr;
-    gap:1.75rem;
+    gap:1.4rem;
     min-height:auto;
-    padding-top:calc(var(--topbar-h) + 1.75rem);
-    padding-bottom:2.5rem;
+    padding:calc(var(--topbar-h) + 1.4rem) 1.25rem 5.5rem;
   }
   .magazine-gallery-head{max-width:none}
-  .magazine-gallery-preview{grid-template-columns:repeat(2,1fr)}
+  .magazine-gallery-preview{grid-template-columns:repeat(2,1fr);gap:.6rem}
   .magazine-gallery-grid{grid-template-columns:repeat(2,1fr)}
   .magazine-rail{display:none}
-  .magazine-spread-label{max-width:10rem}
 }
 
 @media(prefers-reduced-motion:reduce){
