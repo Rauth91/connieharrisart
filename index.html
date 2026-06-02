@@ -18,10 +18,10 @@
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,200;0,300;0,400;0,500;1,200;1,300&family=Inter:wght@300;400;500&display=swap" rel="stylesheet" />
-<link rel="stylesheet" href="css/style.css?v=20260601" />
-<link rel="stylesheet" href="css/home.css?v=20260601" />
-<script src="js/site-config.js?v=20260601"></script>
-<script src="js/site-nav.js?v=20260601" defer></script>
+<link rel="stylesheet" href="css/style.css?v=20260601e" />
+<link rel="stylesheet" href="css/home.css?v=20260601e" />
+<script src="js/site-config.js?v=20260601e"></script>
+<script src="js/site-nav.js?v=20260601e" defer></script>
 </head>
 <body class="home-page">
 <header class="topbar">
@@ -107,30 +107,32 @@
       <p class="section-sub">A glimpse into the studio — process, material, and finished space.</p>
     </div>
     <div class="video-grid">
-      <article class="video-card">
+      <article class="video-card video-card--feature">
         <div class="video-wrap">
-          <video controls muted playsinline preload="metadata" poster="images/videos/studio-process.jpg">
-            <source src="https://cdn.coverr.co/videos/coverr-painting-on-canvas-1579/1080p.mp4" type="video/mp4" />
+          <video controls muted playsinline preload="metadata" poster="images/videos/studio-clip.jpg">
+            <source src="videos/studio-clip.mp4?v=20260601e" type="video/mp4" />
           </video>
         </div>
-        <p>Studio process</p>
+        <p>In the studio — painting a mural</p>
       </article>
-      <article class="video-card">
-        <div class="video-wrap">
-          <video controls muted playsinline preload="metadata" poster="images/videos/material-detail.jpg">
-            <source src="https://cdn.coverr.co/videos/coverr-painter-mixes-colors-1578/1080p.mp4" type="video/mp4" />
-          </video>
-        </div>
-        <p>Material detail</p>
-      </article>
-      <article class="video-card">
-        <div class="video-wrap">
-          <video controls muted playsinline preload="metadata" poster="images/videos/finished-atmosphere.jpg">
-            <source src="https://cdn.coverr.co/videos/coverr-modern-home-interior-5171/1080p.mp4" type="video/mp4" />
-          </video>
-        </div>
-        <p>Finished atmosphere</p>
-      </article>
+      <div class="video-stack">
+        <article class="video-card">
+          <div class="video-wrap">
+            <video controls muted playsinline preload="metadata" poster="images/videos/material-detail.jpg">
+              <source src="https://cdn.coverr.co/videos/coverr-painter-mixes-colors-1578/1080p.mp4" type="video/mp4" />
+            </video>
+          </div>
+          <p>Material detail</p>
+        </article>
+        <article class="video-card">
+          <div class="video-wrap">
+            <video controls muted playsinline preload="metadata" poster="images/videos/finished-atmosphere.jpg">
+              <source src="https://cdn.coverr.co/videos/coverr-modern-home-interior-5171/1080p.mp4" type="video/mp4" />
+            </video>
+          </div>
+          <p>Finished atmosphere</p>
+        </article>
+      </div>
     </div>
   </section>
 
@@ -148,7 +150,7 @@
 
   <section class="about-flow">
     <figure class="about-portrait reveal">
-      <img src="images/home/about-main.jpg?v=20260601" alt="Connie Harris painting a ceiling mural on scaffolding" />
+      <img src="images/home/about-main.jpg?v=20260601e" alt="Connie Harris painting a ceiling mural on scaffolding" />
     </figure>
     <div class="about-copy reveal">
       <p class="eyebrow">The artist</p>
@@ -179,7 +181,7 @@
 </footer>
 <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.7/dist/gsap.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.7/dist/ScrollTrigger.min.js"></script>
-<script src="js/main.js?v=20260601"></script>
-<script src="js/home.js?v=20260601"></script>
+<script src="js/main.js?v=20260601e"></script>
+<script src="js/home.js?v=20260601e"></script>
 </body>
 </html>
