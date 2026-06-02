@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 /**
  * Import photos from Desktop/website-ready into connieharris/images/
- * (3:4 crop, sized for web). Picks largest files for slides, rest for gallery.
+ * Uses Website-Selected (numbered picks) first, then fills from full folders.
  *
  * Usage: node tools/import-edited-photos.js [sourceDir]
  */
@@ -13,14 +13,14 @@ const ROOT = path.join(__dirname, "..");
 const DEFAULT_SOURCE = path.join(process.env.HOME, "Desktop", "website-ready");
 const SITE_PHOTOS = require(path.join(ROOT, "js", "photo-config.js"));
 
-const FOLDER_TO_KEY = {
-  "Bas-Relief": { key: "basRelief", dir: "bas-relief" },
-  Chinoiserie: { key: "chinoiserie", dir: "chinoiserie" },
-  Murals: { key: "murals", dir: "murals" },
-  "Wall-Finishes": { key: "fauxFinishes", dir: "faux-finishes" },
-  "Cabinet-Finishes": { key: "cabinetFinishes", dir: "cabinet-finishes" },
-  "Ceilings-Floors": { key: "ceilingsFloors", dir: "ceilings-floors" },
-};
+const DISCIPLINES = [
+  { key: "murals", dir: "murals", selected: "Murals", full: "Murals" },
+  { key: "fauxFinishes", dir: "faux-finishes", selected: "Wall-Finishes", full: "Wall Finishes" },
+  { key: "basRelief", dir: "bas-relief", selected: "Bas-Relief", full: "Bas-Relief" },
+  { key: "cabinetFinishes", dir: "cabinet-finishes", selected: "Cabinet-Finishes", full: "cabinet-finishes" },
+  { key: "ceilingsFloors", dir: "ceilings-floors", selected: "Ceilings-Floors", full: "ceilings-floors" },
+  { key: "chinoiserie", dir: "chinoiserie", selected: "Chinoiserie", full: "Chin" },
+];
 
 const PRESETS = {
   slide: { max: 1080, crop: true, aspect: [3, 4] },
@@ -46,25 +46,65 @@ function getSize(file) {
   return { w, h };
 }
 
-/**
- * Keep the curator's numbered order (01-, 02-, …). The leading number is the
- * intended priority — #1 becomes slide-01 (the cover/lead), and so on.
- * Unreadable files are dropped.
- */
-function orderImages(dir, files) {
+function leadingNum(name) {
+  const m = name.match(/^(\d+)/);
+  return m ? Number(m[1]) : Number.POSITIVE_INFINITY;
+}
+
+/** Match IMG_1234 across .jpg/.jpeg duplicates. */
+function imgStem(name) {
+  const base = name.replace(/^\d+-/, "");
+  const m = base.match(/IMG[_\s-]*(\d+|[A-F0-9-]{8,})/i);
+  if (m) return m[0].replace(/[_\s-]/g, "").toUpperCase();
+  return base.replace(/\.[^.]+$/, "").toLowerCase();
+}
+
+function toEntries(dir, files) {
   return files
     .map((f) => {
       const full = path.join(dir, f);
       const { w, h } = getSize(full);
-      return { f, area: w * h, w, h };
+      return { f, dir, full, area: w * h, w, h, numbered: Number.isFinite(leadingNum(f)) && leadingNum(f) !== Number.POSITIVE_INFINITY };
     })
-    .filter((x) => x.area > 0)
-    .sort((a, b) => leadingNum(a.f) - leadingNum(b.f) || a.f.localeCompare(b.f));
+    .filter((x) => x.area > 0);
 }
 
-function leadingNum(name) {
-  const m = name.match(/^(\d+)/);
-  return m ? Number(m[1]) : Number.POSITIVE_INFINITY;
+function orderNumbered(entries) {
+  return [...entries].sort((a, b) => leadingNum(a.f) - leadingNum(b.f) || a.f.localeCompare(b.f));
+}
+
+function orderByQuality(entries) {
+  return [...entries].sort((a, b) => b.area - a.area || a.f.localeCompare(b.f));
+}
+
+function dedupeEntries(entries) {
+  const seen = new Map();
+  for (const item of entries) {
+    const stem = imgStem(item.f);
+    const prev = seen.get(stem);
+    if (!prev || item.area > prev.area) seen.set(stem, item);
+  }
+  return [...seen.values()];
+}
+
+function buildRankedList(sourceDir, discipline) {
+  const selectedDir = path.join(sourceDir, "Website-Selected", discipline.selected);
+  const fullDir = path.join(sourceDir, discipline.full);
+
+  const selected = fs.existsSync(selectedDir)
+    ? orderNumbered(toEntries(selectedDir, listImages(selectedDir)))
+    : [];
+
+  const usedStems = new Set(selected.map((x) => imgStem(x.f)));
+  let extras = [];
+
+  if (fs.existsSync(fullDir)) {
+    extras = orderByQuality(toEntries(fullDir, listImages(fullDir))).filter(
+      (x) => !usedStems.has(imgStem(x.f))
+    );
+  }
+
+  return dedupeEntries([...selected, ...extras]);
 }
 
 function cleanDir(galleryDir) {
@@ -141,18 +181,14 @@ function updatePhotoConfig(manifest) {
   fs.writeFileSync(configPath, out);
 }
 
-function assignFolder(sourceDir, folderName, meta) {
-  const dir = path.join(sourceDir, folderName);
-  const files = listImages(dir);
-  if (!files.length) {
-    console.log(`  skip ${folderName} (empty)`);
+function assignFolder(sourceDir, discipline) {
+  const ranked = buildRankedList(sourceDir, discipline);
+  if (!ranked.length) {
+    console.log(`  skip ${discipline.dir} (no images)`);
     return null;
   }
 
-  const ranked = orderImages(dir, files);
-  const full = (f) => path.join(dir, f);
-  const { key, dir: galleryDir } = meta;
-
+  const { key, dir: galleryDir } = discipline;
   const slideCount = Math.min(SLIDE_COUNT, ranked.length);
   const galleryCount = Math.min(MAX_GALLERY, Math.max(0, ranked.length - slideCount));
 
@@ -161,46 +197,57 @@ function assignFolder(sourceDir, folderName, meta) {
 
   cleanDir(galleryDir);
 
-  const slidePaths = Array.from(
-    { length: slideCount },
-    (_, i) => `images/gallery/${galleryDir}/slide-${String(i + 1).padStart(2, "0")}.jpg`
-  );
   slides.forEach((item, i) => {
-    exportImage(full(item.f), slidePaths[i], PRESETS.slide);
+    exportImage(item.full, `images/gallery/${galleryDir}/slide-${String(i + 1).padStart(2, "0")}.jpg`, PRESETS.slide);
   });
 
-  const galleryPaths = galleryPathList(galleryDir, galleryCount);
   gallery.forEach((item, i) => {
-    if (galleryPaths[i]) exportImage(full(item.f), galleryPaths[i], PRESETS.gallery);
+    exportImage(item.full, `images/gallery/${galleryDir}/gallery-${String(i + 1).padStart(2, "0")}.jpg`, PRESETS.gallery);
   });
 
   const workSrc = slides[0] || ranked[0];
   if (SITE_PHOTOS.home.work[key] && workSrc) {
-    exportImage(full(workSrc.f), SITE_PHOTOS.home.work[key], PRESETS.work);
+    exportImage(workSrc.full, SITE_PHOTOS.home.work[key], PRESETS.work);
   }
 
+  const selectedCount = ranked.filter((x) => x.numbered).length;
   console.log(
-    `  ✓ ${folderName}: ${slideCount} slides, ${gallery.length} gallery (${ranked.length} source files)`
+    `  ✓ ${discipline.dir}: ${slideCount} slides, ${gallery.length} gallery (${selectedCount} curated picks + ${ranked.length - selectedCount} extras)`
   );
 
   return { key, dir: galleryDir, slideCount, galleryCount };
 }
 
 function assignHomeHero(sourceDir) {
-  const muralDir = path.join(sourceDir, "Murals");
-  const files = listImages(muralDir);
-  if (!files.length) return;
-  const ranked = orderImages(muralDir, files);
-  exportImage(path.join(muralDir, ranked[0].f), SITE_PHOTOS.home.hero, PRESETS.work);
-
-  const brDir = path.join(sourceDir, "Bas-Relief");
-  const br = listImages(brDir);
-  if (br.length) {
-    const r = orderImages(brDir, br);
-    exportImage(path.join(brDir, r[0].f), SITE_PHOTOS.contact.hero, PRESETS.work);
+  const muralRanked = buildRankedList(sourceDir, { selected: "Murals", full: "Murals" });
+  if (muralRanked.length) {
+    exportImage(muralRanked[0].full, SITE_PHOTOS.home.hero, PRESETS.work);
   }
 
-  console.log("  ✓ home hero, contact hero");
+  const brRanked = buildRankedList(sourceDir, {
+    selected: "Bas-Relief",
+    full: "Bas-Relief",
+  });
+  if (brRanked.length && SITE_PHOTOS.contact?.hero) {
+    exportImage(brRanked[0].full, SITE_PHOTOS.contact.hero, PRESETS.work);
+  }
+
+  console.log("  ✓ home hero");
+}
+
+function assignClasses(sourceDir) {
+  const classDir = path.join(sourceDir, "Class");
+  const files = orderByQuality(toEntries(classDir, listImages(classDir)));
+  if (!files.length) return;
+
+  if (SITE_PHOTOS.classes?.hero) {
+    exportImage(files[0].full, SITE_PHOTOS.classes.hero, PRESETS.work);
+  }
+  if (SITE_PHOTOS.classes?.signature && files[1]) {
+    exportImage(files[1].full, SITE_PHOTOS.classes.signature, PRESETS.work);
+  }
+
+  console.log(`  ✓ classes page (${Math.min(files.length, 2)} photos)`);
 }
 
 function main() {
@@ -210,16 +257,18 @@ function main() {
     process.exit(1);
   }
 
-  console.log(`Importing photos from ${sourceDir}\n`);
+  console.log(`Importing from ${sourceDir}`);
+  console.log(`  Priority: Website-Selected numbered picks, then full folders by resolution\n`);
 
   const manifest = [];
-  for (const [folder, meta] of Object.entries(FOLDER_TO_KEY)) {
-    const m = assignFolder(sourceDir, folder, meta);
+  for (const discipline of DISCIPLINES) {
+    const m = assignFolder(sourceDir, discipline);
     if (m) manifest.push(m);
   }
 
   updatePhotoConfig(manifest);
   assignHomeHero(sourceDir);
+  assignClasses(sourceDir);
 
   console.log("\nDone. Updated photo-config.js");
   console.log("Next: node tools/build-portfolio-pages.js");

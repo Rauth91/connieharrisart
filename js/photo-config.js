@@ -39,7 +39,10 @@ const SITE_PHOTOS = {
         "images/gallery/murals/gallery-08.jpg",
         "images/gallery/murals/gallery-09.jpg",
         "images/gallery/murals/gallery-10.jpg",
-        "images/gallery/murals/gallery-11.jpg"
+        "images/gallery/murals/gallery-11.jpg",
+        "images/gallery/murals/gallery-12.jpg",
+        "images/gallery/murals/gallery-13.jpg",
+        "images/gallery/murals/gallery-14.jpg"
       ]
     },
     fauxFinishes: {
@@ -60,7 +63,10 @@ const SITE_PHOTOS = {
         "images/gallery/faux-finishes/gallery-08.jpg",
         "images/gallery/faux-finishes/gallery-09.jpg",
         "images/gallery/faux-finishes/gallery-10.jpg",
-        "images/gallery/faux-finishes/gallery-11.jpg"
+        "images/gallery/faux-finishes/gallery-11.jpg",
+        "images/gallery/faux-finishes/gallery-12.jpg",
+        "images/gallery/faux-finishes/gallery-13.jpg",
+        "images/gallery/faux-finishes/gallery-14.jpg"
       ]
     },
     basRelief: {
@@ -79,7 +85,12 @@ const SITE_PHOTOS = {
         "images/gallery/bas-relief/gallery-06.jpg",
         "images/gallery/bas-relief/gallery-07.jpg",
         "images/gallery/bas-relief/gallery-08.jpg",
-        "images/gallery/bas-relief/gallery-09.jpg"
+        "images/gallery/bas-relief/gallery-09.jpg",
+        "images/gallery/bas-relief/gallery-10.jpg",
+        "images/gallery/bas-relief/gallery-11.jpg",
+        "images/gallery/bas-relief/gallery-12.jpg",
+        "images/gallery/bas-relief/gallery-13.jpg",
+        "images/gallery/bas-relief/gallery-14.jpg"
       ]
     },
     cabinetFinishes: {
@@ -100,7 +111,10 @@ const SITE_PHOTOS = {
         "images/gallery/cabinet-finishes/gallery-08.jpg",
         "images/gallery/cabinet-finishes/gallery-09.jpg",
         "images/gallery/cabinet-finishes/gallery-10.jpg",
-        "images/gallery/cabinet-finishes/gallery-11.jpg"
+        "images/gallery/cabinet-finishes/gallery-11.jpg",
+        "images/gallery/cabinet-finishes/gallery-12.jpg",
+        "images/gallery/cabinet-finishes/gallery-13.jpg",
+        "images/gallery/cabinet-finishes/gallery-14.jpg"
       ]
     },
     ceilingsFloors: {
@@ -121,7 +135,10 @@ const SITE_PHOTOS = {
         "images/gallery/ceilings-floors/gallery-08.jpg",
         "images/gallery/ceilings-floors/gallery-09.jpg",
         "images/gallery/ceilings-floors/gallery-10.jpg",
-        "images/gallery/ceilings-floors/gallery-11.jpg"
+        "images/gallery/ceilings-floors/gallery-11.jpg",
+        "images/gallery/ceilings-floors/gallery-12.jpg",
+        "images/gallery/ceilings-floors/gallery-13.jpg",
+        "images/gallery/ceilings-floors/gallery-14.jpg"
       ]
     },
     chinoiserie: {
@@ -142,7 +159,10 @@ const SITE_PHOTOS = {
         "images/gallery/chinoiserie/gallery-08.jpg",
         "images/gallery/chinoiserie/gallery-09.jpg",
         "images/gallery/chinoiserie/gallery-10.jpg",
-        "images/gallery/chinoiserie/gallery-11.jpg"
+        "images/gallery/chinoiserie/gallery-11.jpg",
+        "images/gallery/chinoiserie/gallery-12.jpg",
+        "images/gallery/chinoiserie/gallery-13.jpg",
+        "images/gallery/chinoiserie/gallery-14.jpg"
       ]
     }
   },
