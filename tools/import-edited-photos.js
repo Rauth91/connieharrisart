@@ -15,11 +15,11 @@ const SITE_PHOTOS = require(path.join(ROOT, "js", "photo-config.js"));
 
 const FOLDER_TO_KEY = {
   "Bas-Relief": { key: "basRelief", dir: "bas-relief" },
-  Chin: { key: "chinoiserie", dir: "chinoiserie" },
+  Chinoiserie: { key: "chinoiserie", dir: "chinoiserie" },
   Murals: { key: "murals", dir: "murals" },
-  "Wall Finishes": { key: "fauxFinishes", dir: "faux-finishes" },
-  "cabinet-finishes": { key: "cabinetFinishes", dir: "cabinet-finishes" },
-  "ceilings-floors": { key: "ceilingsFloors", dir: "ceilings-floors" },
+  "Wall-Finishes": { key: "fauxFinishes", dir: "faux-finishes" },
+  "Cabinet-Finishes": { key: "cabinetFinishes", dir: "cabinet-finishes" },
+  "Ceilings-Floors": { key: "ceilingsFloors", dir: "ceilings-floors" },
 };
 
 const PRESETS = {
@@ -28,7 +28,8 @@ const PRESETS = {
   work: { max: 1080, crop: true, aspect: [3, 4] },
 };
 
-const MAX_GALLERY = 12;
+const SLIDE_COUNT = 4;
+const MAX_GALLERY = 14;
 
 function listImages(dir) {
   if (!fs.existsSync(dir)) return [];
@@ -45,7 +46,12 @@ function getSize(file) {
   return { w, h };
 }
 
-function rankByQuality(dir, files) {
+/**
+ * Keep the curator's numbered order (01-, 02-, …). The leading number is the
+ * intended priority — #1 becomes slide-01 (the cover/lead), and so on.
+ * Unreadable files are dropped.
+ */
+function orderImages(dir, files) {
   return files
     .map((f) => {
       const full = path.join(dir, f);
@@ -53,7 +59,20 @@ function rankByQuality(dir, files) {
       return { f, area: w * h, w, h };
     })
     .filter((x) => x.area > 0)
-    .sort((a, b) => b.area - a.area);
+    .sort((a, b) => leadingNum(a.f) - leadingNum(b.f) || a.f.localeCompare(b.f));
+}
+
+function leadingNum(name) {
+  const m = name.match(/^(\d+)/);
+  return m ? Number(m[1]) : Number.POSITIVE_INFINITY;
+}
+
+function cleanDir(galleryDir) {
+  const dir = path.join(ROOT, "images", "gallery", galleryDir);
+  if (!fs.existsSync(dir)) return;
+  for (const f of fs.readdirSync(dir)) {
+    if (/^(slide|gallery)-\d+\.jpg$/i.test(f)) fs.unlinkSync(path.join(dir, f));
+  }
 }
 
 function cropBox(w, h, aspectW, aspectH) {
@@ -130,19 +149,24 @@ function assignFolder(sourceDir, folderName, meta) {
     return null;
   }
 
-  const ranked = rankByQuality(dir, files);
+  const ranked = orderImages(dir, files);
   const full = (f) => path.join(dir, f);
   const { key, dir: galleryDir } = meta;
-  const cfg = SITE_PHOTOS.gallery[key];
 
-  const slideCount = Math.min(4, ranked.length);
+  const slideCount = Math.min(SLIDE_COUNT, ranked.length);
   const galleryCount = Math.min(MAX_GALLERY, Math.max(0, ranked.length - slideCount));
 
   const slides = ranked.slice(0, slideCount);
   const gallery = ranked.slice(slideCount, slideCount + galleryCount);
 
+  cleanDir(galleryDir);
+
+  const slidePaths = Array.from(
+    { length: slideCount },
+    (_, i) => `images/gallery/${galleryDir}/slide-${String(i + 1).padStart(2, "0")}.jpg`
+  );
   slides.forEach((item, i) => {
-    exportImage(full(item.f), cfg.slides[i], PRESETS.slide);
+    exportImage(full(item.f), slidePaths[i], PRESETS.slide);
   });
 
   const galleryPaths = galleryPathList(galleryDir, galleryCount);
@@ -166,13 +190,13 @@ function assignHomeHero(sourceDir) {
   const muralDir = path.join(sourceDir, "Murals");
   const files = listImages(muralDir);
   if (!files.length) return;
-  const ranked = rankByQuality(muralDir, files);
+  const ranked = orderImages(muralDir, files);
   exportImage(path.join(muralDir, ranked[0].f), SITE_PHOTOS.home.hero, PRESETS.work);
 
   const brDir = path.join(sourceDir, "Bas-Relief");
   const br = listImages(brDir);
   if (br.length) {
-    const r = rankByQuality(brDir, br);
+    const r = orderImages(brDir, br);
     exportImage(path.join(brDir, r[0].f), SITE_PHOTOS.contact.hero, PRESETS.work);
   }
 
