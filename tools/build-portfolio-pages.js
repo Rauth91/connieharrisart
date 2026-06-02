@@ -22,10 +22,10 @@ const PAGES = [
     title: "Murals",
     desc: "Hand-painted custom murals by Connie Harris, designed to fit architecture, light, and the story of each room.",
     meta: [
-      ["Painted<br>Architecture", "Murals are Connie's favorite form — painting in color across surfaces too large to ignore. She freehands directly onto prepared walls, from Louisiana landscapes to nursery stories to architectural scenes."],
-      ["Concept<br>to Scale", "Every mural starts with spatial planning and color studies tailored to the room."],
-      ["Room<br>Integration", "Final work feels built into architecture, light, and furnishings."],
-      ["Layered<br>Finish", "Brushwork and glazes build atmosphere, depth, and permanence."],
+      ["Painted<br>Architecture", "The mural is where Connie paints without limits — color carried across walls and ceilings too large to ignore. Each is freehanded onto prepared surfaces, from Louisiana landscapes to storybook nurseries to scenes that reshape an entire room."],
+      ["Drawn<br>to Scale", "Every commission begins on the wall itself — proportions, sightlines, and a color study shaped to the room before a single brushstroke is laid."],
+      ["Into the<br>Architecture", "Finished work settles into its space, reading as part of the architecture and the light rather than a picture hung upon it."],
+      ["Layer<br>upon Layer", "Glaze over brushwork over ground — depth built slowly, so the surface holds its atmosphere for decades."],
     ],
   },
   {
@@ -35,10 +35,10 @@ const PAGES = [
     title: "Wall Finishes",
     desc: "Luxury faux finishes and decorative wall treatments crafted by hand for residential and hospitality interiors.",
     meta: [
-      ["Layered<br>Walls", "Faux finishing has been around for centuries. Connie has spent four decades expanding what it can do — on sheetrock, plaster, canvas, stone, and surfaces in between."],
-      ["Texture<br>Control", "Test boards define drag, depth, and final sheen before full install."],
-      ["Color<br>Quiet", "Subtle tone movement that reads rich in daylight and evening light."],
-      ["Built for<br>Living", "Protective finish systems keep surfaces beautiful through daily use."],
+      ["The Living<br>Wall", "Faux finishing is a centuries-old craft, and Connie has spent forty years stretching what it can do — across sheetrock, plaster, canvas, stone, and nearly any surface that will hold a finish."],
+      ["Tested<br>by Hand", "Drag, depth, and sheen are proven on sample boards first, so the finish that reaches your walls is already resolved."],
+      ["Quiet<br>Color", "Tone moves softly across the surface — rich at midday, warmer by evening, and never flat."],
+      ["Made for<br>Living", "Protective finishing systems keep every wall as beautiful years on as the day it was sealed."],
     ],
   },
   {
@@ -48,10 +48,10 @@ const PAGES = [
     title: "Bas Relief",
     desc: "Custom bas relief surfaces by Connie Harris, adding sculpted dimension and architectural depth to interiors.",
     meta: [
-      ["Dimensional<br>Relief", "Sculpted dimension, applied by hand and built layer by layer. Bas relief turns a flat wall into architecture — subtle to live with, striking to remember."],
-      ["Form<br>in Plaster", "Relief is modeled in place, responding to light and the room's proportions."],
-      ["Architectural<br>Presence", "Finished surfaces read as permanent — integral to the space."],
-      ["Light<br>& Shadow", "Depth reveals itself as daylight moves across the relief."],
+      ["Sculpted<br>by Hand", "Bas relief turns a flat wall into something architectural — dimension modeled by hand and built up layer by layer. Quiet enough to live with, striking enough to remember."],
+      ["Formed<br>in Plaster", "Relief is shaped in place, responding to the room's proportions and the way its light falls across the surface."],
+      ["A Sense of<br>Permanence", "The finished wall reads as built-in — integral to the architecture, never simply applied to it."],
+      ["Light<br>& Shadow", "Depth comes alive as daylight crosses the relief, the wall shifting in character from morning to evening."],
     ],
   },
   {
@@ -61,10 +61,10 @@ const PAGES = [
     title: "Cabinet Finishes",
     desc: "Custom cabinet finishing services with layered paint, patina, and protective topcoats built for long-term beauty.",
     meta: [
-      ["Aged<br>Cabinetry", "A painted cabinet outlasts a trend. Connie's finishes are built for longevity — customized to the wood, the room, and its light."],
-      ["Paint +<br>Patina", "Subtle aging techniques that maintain clarity and sophistication."],
-      ["Glazed<br>Detail", "Glaze layering designed to highlight panel profiles and millwork."],
-      ["Protected<br>Finish", "Topcoat systems selected for long-term beauty in active rooms."],
+      ["Cabinetry,<br>Reconsidered", "A painted cabinet should outlast the trend that inspired it. Connie's finishes are built for the long view — tuned to the wood, the room, and the light it lives in."],
+      ["Paint &<br>Patina", "Hand-worked aging lends depth and character while keeping every profile crisp and intentional."],
+      ["In the<br>Detail", "Glaze is layered to catch panel edges and millwork, drawing the eye to the craftsmanship beneath."],
+      ["Built to<br>Endure", "Topcoat systems are chosen for real life — kitchens, baths, and the rooms that work the hardest."],
     ],
   },
   {
@@ -74,10 +74,10 @@ const PAGES = [
     title: "Ceilings & Floors",
     desc: "Decorative ceiling and floor finishes that transform spatial atmosphere and complete interior design vision.",
     meta: [
-      ["Overhead<br>Drama", "The two surfaces most people forget. Connie does not. A painted ceiling changes a room's atmosphere, and a finished floor grounds everything above it."],
-      ["Plaster<br>Ceilings", "Venetian-inspired finishes shaped for modern and historic homes."],
-      ["Decorative<br>Floors", "Floor systems balancing artistry with daily durability."],
-      ["Architectural<br>Cohesion", "Color and texture coordinated with walls, trim, and cabinetry."],
+      ["The Fifth<br>Wall", "The two surfaces most people overlook — Connie never does. A painted ceiling changes the very air of a room, and a finished floor grounds everything above it."],
+      ["Overhead<br>Atmosphere", "Venetian-inspired plaster finishes bring depth overhead, shaped for both historic and modern homes."],
+      ["Underfoot<br>Artistry", "Decorative floors balance genuine beauty with the durability a floor is asked to give."],
+      ["One<br>Continuous Room", "Color and texture are coordinated with walls, trim, and cabinetry so every surface belongs to the same story."],
     ],
   },
   {
@@ -87,10 +87,10 @@ const PAGES = [
     title: "Chinoiserie",
     desc: "Hand-painted Chinoiserie by Connie Harris — custom panels, screens, and wall scenes with birds, blossoms, and garden landscapes.",
     meta: [
-      ["Garden<br>Painted", "Chinoiserie is Connie's lyrical take on the European tradition of East Asian landscape — birds, blossoms, pagodas, and garden scenes painted by hand for panels, screens, and entire rooms."],
-      ["Panel<br>Studies", "Color and composition studies shaped for folding screens and feature walls."],
-      ["Room<br>Harmony", "Scenes integrated with moldings, cabinetry, and furnishings so the story reads as one space."],
-      ["Line<br>& Story", "Precise brushwork and narrative detail — every branch and bird placed with intention."],
+      ["A Garden,<br>Painted", "Chinoiserie is Connie's lyrical take on a centuries-old European tradition — birds, blossoms, pagodas, and garden scenes painted by hand across panels, screens, and entire rooms."],
+      ["Composed<br>by Panel", "Color and composition are studied panel by panel, shaped for folding screens and feature walls."],
+      ["In<br>Harmony", "Scenes are woven through moldings, cabinetry, and furnishings until the room reads as one continuous landscape."],
+      ["Every Branch,<br>Placed", "Fine brushwork and narrative detail — each bird, branch, and blossom set with intention."],
     ],
   },
 ];
