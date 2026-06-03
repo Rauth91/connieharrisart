@@ -14,8 +14,8 @@ const CURATED_PAGES = {
   murals: base("center 35%"),
   fauxFinishes: base("center 38%"),
   basRelief: {
-    ...base("center 48%"),
-    focal: { cover: "center 48%", "slide-01": "center 48%" },
+    ...base("center 40%"),
+    focal: { cover: "center 40%", "slide-01": "center 40%" },
   },
   cabinetFinishes: base("center 40%"),
   ceilingsFloors: base("center 28%"),
