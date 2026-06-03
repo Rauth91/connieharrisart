@@ -16,7 +16,10 @@ const CURATED_PAGES = {
   basRelief: base("center 35%"),
   cabinetFinishes: base("center 40%"),
   ceilingsFloors: base("center 28%"),
-  chinoiserie: base("center 36%"),
+  chinoiserie: {
+    ...base("center 42%"),
+    focal: { cover: "center 42%", "slide-01": "center 42%" },
+  },
 };
 
 if (typeof module !== "undefined" && module.exports) {
