@@ -77,7 +77,7 @@ function initMagazine() {
         if (idx >= 0) setActive(idx);
       }
     },
-    { root: book, threshold: [0.4, 0.55, 0.7] }
+    { root: book, threshold: [0.25, 0.4, 0.55] }
   );
 
   spreads.forEach((s) => io.observe(s));
@@ -142,9 +142,6 @@ function initPhotoFraming() {
 }
 
 function initMagazineGallery() {
-  const panel = document.getElementById("magazine-gallery-panel");
-  const openBtn = document.getElementById("magazine-gallery-open");
-  const closeBtn = document.getElementById("magazine-gallery-close");
   const lightbox = document.getElementById("magazine-lightbox");
   const lightboxImg = document.getElementById("magazine-lightbox-img");
   const lightboxCaption = document.getElementById("magazine-lightbox-caption");
@@ -153,7 +150,7 @@ function initMagazineGallery() {
   const lightboxPrev = document.getElementById("magazine-lightbox-prev");
   const lightboxNext = document.getElementById("magazine-lightbox-next");
 
-  const triggers = [...document.querySelectorAll("[data-gallery-src]")];
+  const triggers = [...document.querySelectorAll(".magazine-gallery-thumb[data-gallery-src]")];
   if (!triggers.length) return;
 
   const sources = [];
@@ -167,21 +164,6 @@ function initMagazineGallery() {
   });
 
   let lightboxIndex = 0;
-
-  function openPanel() {
-    if (!panel) return;
-    panel.classList.add("show");
-    panel.setAttribute("aria-hidden", "false");
-    document.body.classList.add("gallery-open");
-  }
-
-  function closePanel() {
-    if (!panel) return;
-    panel.classList.remove("show");
-    panel.setAttribute("aria-hidden", "true");
-    document.body.classList.remove("gallery-open");
-    closeLightbox();
-  }
 
   function renderLightbox(i) {
     if (!lightboxImg) return;
@@ -224,21 +206,20 @@ function initMagazineGallery() {
     renderLightbox(i);
     lightbox.classList.add("show");
     lightbox.setAttribute("aria-hidden", "false");
+    document.body.classList.add("gallery-open");
   }
 
   function closeLightbox() {
     if (!lightbox) return;
     lightbox.classList.remove("show");
     lightbox.setAttribute("aria-hidden", "true");
+    document.body.classList.remove("gallery-open");
     if (lightboxImg) {
       lightboxImg.src = "";
       lightboxImg.style.opacity = "";
       lightboxImg.style.transform = "";
     }
   }
-
-  openBtn?.addEventListener("click", openPanel);
-  closeBtn?.addEventListener("click", closePanel);
 
   triggers.forEach((el) => {
     el.addEventListener("click", () => {
@@ -256,18 +237,11 @@ function initMagazineGallery() {
     if (e.target === lightbox) closeLightbox();
   });
 
-  panel?.addEventListener("click", (e) => {
-    if (e.target === panel) closePanel();
-  });
-
   document.addEventListener("keydown", (e) => {
-    if (lightbox?.classList.contains("show")) {
-      if (e.key === "Escape") closeLightbox();
-      if (e.key === "ArrowLeft") renderLightbox(lightboxIndex - 1);
-      if (e.key === "ArrowRight") renderLightbox(lightboxIndex + 1);
-      return;
-    }
-    if (panel?.classList.contains("show") && e.key === "Escape") closePanel();
+    if (!lightbox?.classList.contains("show")) return;
+    if (e.key === "Escape") closeLightbox();
+    if (e.key === "ArrowLeft") renderLightbox(lightboxIndex - 1);
+    if (e.key === "ArrowRight") renderLightbox(lightboxIndex + 1);
   });
 }
 

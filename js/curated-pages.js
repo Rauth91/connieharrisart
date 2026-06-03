@@ -1,19 +1,11 @@
 /**
  * Heroes, portfolio spreads, and gallery order per discipline.
- * Photos are imported in the curator's numbered order: slide-01 is the
- * lead (photo #1), then slide-02… and gallery-01… Missing keys are skipped,
- * and any extra imported images are appended to the gallery automatically.
+ * Photos are imported in numbered order: slide-01 is the cover, then slide-02…
+ * Gallery preview and order are built from photo-config at build time.
  */
-const galleryKeys = (slides, galleries) => [
-  ...Array.from({ length: slides }, (_, i) => `slide-${String(i + 1).padStart(2, "0")}`),
-  ...Array.from({ length: galleries }, (_, i) => `gallery-${String(i + 1).padStart(2, "0")}`),
-];
-
 const base = (focal) => ({
   cover: "slide-01",
   portfolio: ["slide-02", "slide-03", "slide-04", "gallery-01", "gallery-02"],
-  galleryPreview: ["slide-01", "slide-02", "slide-03", "slide-04", "gallery-01", "gallery-02"],
-  galleryOrder: galleryKeys(4, 14),
   focal: { cover: focal },
   focus: {},
 });

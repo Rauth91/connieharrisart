@@ -128,26 +128,14 @@ function resolveCurated(g, curated) {
 
   const ordered = [];
   const seen = new Set();
-  for (const key of curated.galleryOrder || []) {
-    const src = pick(map, key);
+  for (const src of [...g.slides, ...g.gallery]) {
     if (src && !seen.has(src)) {
       ordered.push(src);
       seen.add(src);
     }
   }
-  for (const src of [...g.slides, ...g.gallery]) {
-    if (!seen.has(src)) {
-      ordered.push(src);
-      seen.add(src);
-    }
-  }
 
-  const preview = curated.galleryPreview
-    .map((k) => pick(map, k))
-    .filter(Boolean)
-    .slice(0, 6);
-
-  return { cover, portfolio, galleryOrder: ordered, galleryPreview: preview };
+  return { cover, portfolio, galleryOrder: ordered, galleryPreview: ordered };
 }
 
 function focalFor(curated, key) {
@@ -225,7 +213,6 @@ function photoFigure(src, alt, loading, extraClass, curated) {
 }
 
 function buildGallerySpread(page, preview, galleryOrder) {
-  const m = page.meta[page.meta.length - 1];
   const previewHtml = preview
     .map(
       (src, i) => `
@@ -237,50 +224,24 @@ function buildGallerySpread(page, preview, galleryOrder) {
     .join("");
 
   return `
-  <section class="magazine-spread magazine-spread--gallery" data-page="gallery" id="gallery" data-spread-label="${spreadTitlePlain(m[0])}">
+  <section class="magazine-spread magazine-spread--gallery" data-page="gallery" id="gallery" data-spread-label="Full collection">
     ${watermark(page.title)}
     <div class="magazine-gallery-layout">
       <header class="magazine-gallery-head">
         <div class="magazine-rule"><p class="eyebrow">${page.title} · Gallery</p></div>
-        <h2>${formatTitle(m[0])}</h2>
-        <p>${m[1]}</p>
+        <h2>The full<br><span class="title-accent">collection</span></h2>
+        <p>Tap any image to view it full size. Every work in this discipline, in one place.</p>
         <p class="magazine-gallery-stat">${galleryOrder.length}<span>Works in this collection</span></p>
-        <button type="button" class="magazine-gallery-cta" id="magazine-gallery-open">
-          <span>View full collection</span>
-          <span class="magazine-gallery-cta-arrow" aria-hidden="true">→</span>
-        </button>
       </header>
-      <div class="magazine-gallery-preview" aria-label="Gallery preview">
+      <div class="magazine-gallery-preview" aria-label="Gallery">
         ${previewHtml}
       </div>
     </div>
   </section>`;
 }
 
-function buildGalleryChrome(page, images) {
-  const gridHtml = images
-    .map(
-      (src) => `
-      <button type="button" class="magazine-gallery-item" data-gallery-src="${src}">
-        <img src="${src}" alt="${page.title} — ${altFromPath(src)}" loading="lazy" decoding="async" />
-      </button>`
-    )
-    .join("");
-
+function buildGalleryChrome() {
   return `
-<div class="magazine-gallery-panel" id="magazine-gallery-panel" aria-hidden="true">
-  <header class="magazine-gallery-panel-head">
-    <div>
-      <p class="eyebrow">${page.title} · Gallery</p>
-      <p class="magazine-gallery-panel-count">${images.length} works</p>
-    </div>
-    <button type="button" class="magazine-gallery-close" id="magazine-gallery-close">Close</button>
-  </header>
-  <div class="magazine-gallery-grid" id="magazine-gallery-grid">
-    ${gridHtml}
-  </div>
-</div>
-
 <div class="magazine-lightbox" id="magazine-lightbox" aria-hidden="true">
   <button type="button" class="magazine-lightbox-close" id="magazine-lightbox-close">Close</button>
   <button type="button" class="magazine-lightbox-nav magazine-lightbox-prev" id="magazine-lightbox-prev" aria-label="Previous image">←</button>
@@ -350,7 +311,7 @@ function buildPage(page) {
     railLabels = [
       spreadTitlePlain(m0[0]),
       ...portfolio.map((_, i) => spreadTitlePlain(page.meta[i + 1][0])),
-      spreadTitlePlain(page.meta[page.meta.length - 1][0]),
+      "Full collection",
       "Continue exploring",
     ];
 
@@ -374,7 +335,7 @@ function buildPage(page) {
       .join("");
 
     gallerySpread = buildGallerySpread(page, galleryPreview, galleryOrder);
-    galleryChrome = buildGalleryChrome(page, galleryOrder);
+    galleryChrome = buildGalleryChrome();
   } else {
     const textSpreadCount = page.meta.length - 1;
 

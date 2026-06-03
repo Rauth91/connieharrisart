@@ -317,6 +317,8 @@ body.magazine-page::before{
 /* —— Gallery spread —— */
 .magazine-spread--gallery{
   grid-template-columns:1fr;
+  min-height:calc(100dvh - var(--topbar-h));
+  height:auto;
   background:
     radial-gradient(ellipse 70% 50% at 50% 100%,rgba(167,123,69,.1),transparent 55%),
     linear-gradient(165deg,#1a1511,#12100d);
@@ -325,25 +327,27 @@ body.magazine-page::before{
 .magazine-gallery-layout{
   position:relative;z-index:2;
   display:grid;
-  grid-template-columns:minmax(0,.82fr) minmax(0,1.18fr);
-  align-items:center;
-  gap:clamp(2rem,5vw,5rem);
+  grid-template-columns:1fr;
+  align-items:start;
+  gap:clamp(1.5rem,3vw,2.5rem);
   min-height:calc(100dvh - var(--topbar-h));
-  max-width:1280px;margin:0 auto;
-  padding:clamp(2.5rem,6vw,5rem) clamp(1.5rem,4vw,3.5rem);
+  max-width:1120px;margin:0 auto;
+  padding:clamp(2rem,5vw,4rem) clamp(1.25rem,4vw,2.5rem) clamp(3rem,6vw,5rem);
   box-sizing:border-box;
 }
 .magazine-gallery-head{
-  max-width:32rem;
+  max-width:36rem;
+  margin:0 auto;
+  text-align:center;
 }
 .magazine-gallery-head h2{
   font-size:clamp(2.5rem,5vw,4.25rem);
-  margin-bottom:1.25rem;max-width:14ch;
+  margin-bottom:1rem;max-width:none;
 }
 .magazine-gallery-head p{
-  color:rgba(255,247,234,.66);line-height:1.9;
+  color:rgba(255,247,234,.66);line-height:1.85;
   font-size:clamp(.95rem,1.1vw,1.05rem);
-  margin-bottom:1.85rem;max-width:34ch;
+  margin-bottom:1.25rem;max-width:none;
 }
 .magazine-gallery-stat{
   display:block;
@@ -351,6 +355,7 @@ body.magazine-page::before{
   font-size:clamp(2.4rem,4.2vw,3.4rem);font-weight:300;
   color:#fff7ea;line-height:1;
   letter-spacing:.01em;
+  margin-top:.5rem;
 }
 .magazine-gallery-stat span{
   display:block;
@@ -384,7 +389,6 @@ body.magazine-page::before{
 .magazine-gallery-head h2,
 .magazine-gallery-head p,
 .magazine-gallery-stat,
-.magazine-gallery-cta,
 .magazine-gallery-preview{
   opacity:0;transform:translateY(18px);
   transition:opacity .75s ease,transform .8s cubic-bezier(.16,1,.3,1);
@@ -393,22 +397,45 @@ body.magazine-page::before{
 .magazine-spread--gallery.is-active .magazine-gallery-head h2{opacity:1;transform:none;transition-delay:.12s}
 .magazine-spread--gallery.is-active .magazine-gallery-head p{opacity:1;transform:none;transition-delay:.2s}
 .magazine-spread--gallery.is-active .magazine-gallery-stat{opacity:1;transform:none;transition-delay:.24s}
-.magazine-spread--gallery.is-active .magazine-gallery-cta{opacity:1;transform:none;transition-delay:.3s}
-.magazine-spread--gallery.is-active .magazine-gallery-preview{opacity:1;transform:none;transition-delay:.38s}
+.magazine-spread--gallery.is-active .magazine-gallery-preview{
+  opacity:1;transform:none;transition-delay:.32s;
+}
+/* Keep transform off grid cells — Safari can mis-stack overlapping thumbs */
+.magazine-gallery-preview .magazine-gallery-thumb{
+  opacity:1;transform:none;
+}
 .magazine-gallery-preview{
   display:grid;
-  grid-template-columns:repeat(3,1fr);
-  gap:clamp(.5rem,1vw,.85rem);
+  grid-template-columns:repeat(3,minmax(0,1fr));
+  gap:clamp(.55rem,1vw,.85rem);
+  width:100%;
+  align-items:start;
 }
 .magazine-gallery-thumb{
-  position:relative;border:0;padding:0;margin:0;
+  display:grid;
+  grid-template:1fr / 1fr;
+  width:100%;
+  min-width:0;
+  min-height:0;
+  border:0;padding:0;margin:0;
   background:#0a0908;cursor:pointer;
-  aspect-ratio:3/4;overflow:hidden;
+  aspect-ratio:3/4;
+  overflow:hidden;
+  align-self:start;
   outline:1px solid rgba(255,244,230,.1);
   outline-offset:-1px;
+  -webkit-appearance:none;
+  appearance:none;
 }
 .magazine-gallery-thumb img{
-  width:100%;height:100%;object-fit:cover;object-position:center;
+  grid-area:1 / 1;
+  width:100%;
+  height:100%;
+  min-width:0;
+  min-height:0;
+  object-fit:cover;
+  object-position:center;
+  display:block;
   filter:brightness(.82) saturate(.9);
   transition:transform .9s cubic-bezier(.16,1,.3,1),filter .4s ease;
 }
@@ -433,13 +460,8 @@ body.magazine-page::before{
   position:absolute;left:.7rem;bottom:.6rem;z-index:2;
   font-size:.5rem;letter-spacing:.2em;
   color:rgba(255,247,234,.9);
-  opacity:0;transform:translateY(4px);
-  transition:opacity .3s ease,transform .3s ease;
+  opacity:.85;
   pointer-events:none;
-}
-.magazine-gallery-thumb:hover .magazine-gallery-thumb-num,
-.magazine-gallery-thumb:focus-visible .magazine-gallery-thumb-num{
-  opacity:1;transform:none;
 }
 
 /* Full gallery panel */
@@ -488,22 +510,38 @@ body.magazine-page::before{
   flex:1;overflow-y:auto;
   width:100%;max-width:1320px;margin:0 auto;
   display:grid;
-  grid-template-columns:repeat(auto-fill,minmax(min(230px,100%),1fr));
+  grid-template-columns:repeat(auto-fill,minmax(min(220px,100%),1fr));
   gap:clamp(.6rem,1.2vw,1.1rem);
   align-content:start;
+  align-items:start;
   padding-bottom:2rem;
   -webkit-overflow-scrolling:touch;
 }
 .magazine-gallery-item{
-  position:relative;
-  border:0;padding:0;margin:0;background:#0a0908;
-  cursor:pointer;overflow:hidden;
+  display:grid;
+  grid-template:1fr / 1fr;
+  width:100%;
+  min-width:0;
+  min-height:0;
+  border:0;padding:0;margin:0;
+  background:#0a0908;
+  cursor:pointer;
   aspect-ratio:3/4;
+  overflow:hidden;
+  align-self:start;
   outline:1px solid rgba(255,244,230,.08);
   outline-offset:-1px;
+  -webkit-appearance:none;
+  appearance:none;
 }
 .magazine-gallery-item img{
-  width:100%;height:100%;object-fit:cover;object-position:center;
+  grid-area:1 / 1;
+  width:100%;
+  height:100%;
+  min-width:0;
+  min-height:0;
+  object-fit:cover;
+  object-position:center;
   display:block;
   filter:brightness(.84) saturate(.92);
   transition:transform .9s cubic-bezier(.16,1,.3,1),filter .4s ease;
@@ -783,14 +821,12 @@ body.gallery-open .magazine-book{pointer-events:none}
   .magazine-tap-next,
   .magazine-tap-prev{display:none}
   .magazine-gallery-layout{
-    grid-template-columns:1fr;
-    gap:1.4rem;
+    gap:1.2rem;
     min-height:auto;
-    padding:calc(var(--topbar-h) + 1.4rem) 1.25rem 5.5rem;
+    padding:calc(var(--topbar-h) + 1.2rem) 1rem 5.5rem;
   }
-  .magazine-gallery-head{max-width:none}
-  .magazine-gallery-preview{grid-template-columns:repeat(2,1fr);gap:.6rem}
-  .magazine-gallery-grid{grid-template-columns:repeat(2,1fr)}
+  .magazine-gallery-head{max-width:none;text-align:left}
+  .magazine-gallery-preview{grid-template-columns:repeat(2,1fr);gap:.55rem}
   .magazine-rail{display:none}
 }
 
