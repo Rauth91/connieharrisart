@@ -18,13 +18,23 @@
         headers: { Accept: "application/json" },
       });
 
-      submitButton.textContent = response.ok ? "Message Sent" : "Try Again";
-      if (status) {
-        status.textContent = response.ok
-          ? "Thank you. Connie will follow up soon."
-          : "Something went wrong. Please try again.";
+      let ok = response.ok;
+      if (ok) {
+        try {
+          const data = await response.json();
+          ok = Boolean(data.success);
+        } catch {
+          ok = true;
+        }
       }
-      if (response.ok) form.reset();
+
+      submitButton.textContent = ok ? "Message Sent" : "Try Again";
+      if (status) {
+        status.textContent = ok
+          ? "Thank you. Connie will follow up soon."
+          : "Something went wrong. Please email connieharrisart@gmail.com.";
+      }
+      if (ok) form.reset();
     } catch {
       submitButton.textContent = "Try Again";
       if (status) status.textContent = "Connection issue. Please try again.";
