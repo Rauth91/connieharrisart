@@ -58,7 +58,7 @@ body.magazine-page::before{
   left:0;right:0;bottom:0;
   overflow-x:hidden;
   overflow-y:auto;
-  scroll-snap-type:y mandatory;
+  scroll-snap-type:y proximity;
   scroll-behavior:smooth;
   -webkit-overflow-scrolling:touch;
   scrollbar-width:none;
@@ -312,6 +312,7 @@ body.magazine-page::before{
   grid-template-columns:1fr;
   min-height:auto;
   height:auto;
+  scroll-snap-align:none;
   scroll-snap-stop:normal;
   overflow:visible;
   background:
@@ -375,6 +376,7 @@ body.magazine-page::before{
 .magazine-gallery-body{
   width:100%;
   min-width:0;
+  touch-action:pan-y;
 }
 .magazine-gallery-mosaic{
   list-style:none;
@@ -751,6 +753,12 @@ body.gallery-open .magazine-book{pointer-events:none}
   width:min(62%,780px);z-index:5;
   border:0;background:transparent;cursor:pointer;
 }
+/* Gallery spread is tall — don’t block scroll/clicks with page-turn overlays */
+body.magazine-on-gallery .magazine-tap-next,
+body.magazine-on-gallery .magazine-tap-prev{
+  display:none;
+  pointer-events:none;
+}
 .magazine-tap-prev{
   position:fixed;top:var(--topbar-h);left:0;bottom:0;
   width:min(20%,220px);z-index:5;
@@ -762,9 +770,6 @@ body.gallery-open .magazine-book{pointer-events:none}
 }
 
 @media(max-width:900px){
-  /* Proximity (not mandatory) lets taller spreads — like the gallery
-     preview — scroll freely while normal spreads still snap into place. */
-  .magazine-book{scroll-snap-type:y proximity}
   .magazine-spread{
     grid-template-columns:1fr;
     grid-template-rows:auto 1fr;

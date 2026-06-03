@@ -44,7 +44,20 @@ function initMagazine() {
     });
   }
 
+  function isGallerySpread(index = activeIndex) {
+    return spreads[index]?.classList.contains("magazine-spread--gallery");
+  }
+
   function findActiveSpreadIndex() {
+    const focusY = book.scrollTop + book.clientHeight * 0.22;
+
+    for (let idx = 0; idx < spreads.length; idx++) {
+      const spread = spreads[idx];
+      const top = spread.offsetTop;
+      const bottom = top + spread.offsetHeight;
+      if (focusY >= top && focusY < bottom) return idx;
+    }
+
     const bookRect = book.getBoundingClientRect();
     const mid = bookRect.top + bookRect.height * 0.42;
     let bestIdx = activeIndex;
@@ -78,6 +91,8 @@ function initMagazine() {
     if (progressFill) progressFill.style.height = `${((activeIndex + 1) / total) * 100}%`;
     if (prevBtn) prevBtn.disabled = activeIndex === 0;
     if (nextBtn) nextBtn.disabled = activeIndex === total - 1;
+
+    document.body.classList.toggle("magazine-on-gallery", isGallerySpread(activeIndex));
 
     preloadSpreadImages(activeIndex);
     spreadMainImages(current).forEach((img) => ensurePhotoVisible(img));
@@ -130,11 +145,20 @@ function initMagazine() {
 
   prevBtn?.addEventListener("click", () => goTo(activeIndex - 1));
   nextBtn?.addEventListener("click", () => goTo(activeIndex + 1));
-  tapNext?.addEventListener("click", () => goTo(activeIndex + 1));
-  tapPrev?.addEventListener("click", () => goTo(activeIndex - 1));
+  tapNext?.addEventListener("click", () => {
+    if (isGallerySpread()) return;
+    goTo(activeIndex + 1);
+  });
+  tapPrev?.addEventListener("click", () => {
+    if (isGallerySpread()) return;
+    goTo(activeIndex - 1);
+  });
 
   document.addEventListener("keydown", (e) => {
     if (galleryOpen() || lightboxOpen()) return;
+    /* On the gallery spread, let arrow keys scroll the page naturally */
+    if (isGallerySpread()) return;
+
     if (e.key === "ArrowDown" || e.key === "PageDown" || e.key === "ArrowRight") {
       e.preventDefault();
       goTo(activeIndex + 1);
