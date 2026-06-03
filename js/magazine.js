@@ -16,6 +16,7 @@ function initMagazine() {
 
   const total = spreads.length;
   let activeIndex = 0;
+  let scrollRaf = 0;
 
   function galleryOpen() {
     return document.body.classList.contains("gallery-open");
@@ -25,66 +26,99 @@ function initMagazine() {
     return document.getElementById("magazine-lightbox")?.classList.contains("show");
   }
 
+  function spreadMainImages(spread) {
+    return [...spread.querySelectorAll("img.magazine-photo-main")];
+  }
+
   function preloadSpreadImages(index) {
     [index - 1, index, index + 1].forEach((i) => {
       const spread = spreads[i];
       if (!spread || spread.classList.contains("magazine-spread--gallery")) return;
-      spread.querySelectorAll(".magazine-photo-main[src]").forEach((img) => {
-        if (img.complete || !img.src) return;
+      spreadMainImages(spread).forEach((img) => {
+        const src = img.getAttribute("src");
+        if (!src || img.complete) return;
         const preload = new Image();
         preload.decoding = "async";
-        preload.src = img.src;
+        preload.src = src;
       });
     });
   }
 
-  function setActive(index) {
-    activeIndex = Math.max(0, Math.min(index, total - 1));
+  function findActiveSpreadIndex() {
+    const bookRect = book.getBoundingClientRect();
+    const mid = bookRect.top + bookRect.height * 0.42;
+    let bestIdx = activeIndex;
+    let bestDist = Infinity;
+
+    spreads.forEach((spread, idx) => {
+      const rect = spread.getBoundingClientRect();
+      const spreadMid = rect.top + rect.height * 0.35;
+      const dist = Math.abs(spreadMid - mid);
+      if (dist < bestDist) {
+        bestDist = dist;
+        bestIdx = idx;
+      }
+    });
+
+    return bestIdx;
+  }
+
+  function setActive(index, options = {}) {
+    const next = Math.max(0, Math.min(index, total - 1));
+    if (!options.force && next === activeIndex) return;
+
+    activeIndex = next;
     const current = spreads[activeIndex];
 
     spreads.forEach((s, j) => s.classList.toggle("is-active", j === activeIndex));
     railDots.forEach((dot, j) => dot.classList.toggle("is-active", j === activeIndex));
 
     if (pageNum) pageNum.textContent = String(activeIndex + 1).padStart(2, "0");
-    if (spreadLabel) {
-      spreadLabel.textContent = current?.dataset.spreadLabel || "";
-    }
+    if (spreadLabel) spreadLabel.textContent = current?.dataset.spreadLabel || "";
     if (progressFill) progressFill.style.height = `${((activeIndex + 1) / total) * 100}%`;
     if (prevBtn) prevBtn.disabled = activeIndex === 0;
     if (nextBtn) nextBtn.disabled = activeIndex === total - 1;
 
     preloadSpreadImages(activeIndex);
-    if (current?.classList.contains("magazine-spread--gallery")) {
-      hydrateVisibleGalleryThumbs(current);
-    }
+    spreadMainImages(current).forEach((img) => ensurePhotoVisible(img));
+  }
+
+  function onBookScroll() {
+    if (galleryOpen() || lightboxOpen()) return;
+    cancelAnimationFrame(scrollRaf);
+    scrollRaf = requestAnimationFrame(() => {
+      setActive(findActiveSpreadIndex());
+    });
   }
 
   function goTo(index) {
     const target = spreads[index];
     if (!target) return;
     target.scrollIntoView({ behavior: "smooth", block: "start" });
-    setActive(index);
+    setActive(index, { force: true });
   }
 
-  const io = new IntersectionObserver(
-    (entries) => {
-      if (galleryOpen() || lightboxOpen()) return;
-      let best = null;
-      entries.forEach((entry) => {
-        if (!entry.isIntersecting) return;
-        if (!best || entry.intersectionRatio > best.ratio) {
-          best = { el: entry.target, ratio: entry.intersectionRatio };
-        }
-      });
-      if (best) {
-        const idx = spreads.indexOf(best.el);
-        if (idx >= 0) setActive(idx);
-      }
-    },
-    { root: book, threshold: [0.25, 0.4, 0.55] }
-  );
+  const io =
+    "IntersectionObserver" in window
+      ? new IntersectionObserver(
+          (entries) => {
+            if (galleryOpen() || lightboxOpen()) return;
+            let best = null;
+            entries.forEach((entry) => {
+              if (!entry.isIntersecting) return;
+              if (!best || entry.intersectionRatio > best.ratio) {
+                best = { idx: spreads.indexOf(entry.target), ratio: entry.intersectionRatio };
+              }
+            });
+            if (best && best.idx >= 0) setActive(best.idx);
+          },
+          { root: book, threshold: [0.2, 0.35, 0.5, 0.65] }
+        )
+      : null;
 
-  spreads.forEach((s) => io.observe(s));
+  spreads.forEach((s) => io?.observe(s));
+  book.addEventListener("scroll", onBookScroll, { passive: true });
+
   railDots.forEach((dot) => {
     dot.addEventListener("click", () => {
       const idx = Number(dot.dataset.spreadIndex);
@@ -92,7 +126,7 @@ function initMagazine() {
     });
   });
 
-  setActive(0);
+  setActive(0, { force: true });
 
   prevBtn?.addEventListener("click", () => goTo(activeIndex - 1));
   nextBtn?.addEventListener("click", () => goTo(activeIndex + 1));
@@ -112,45 +146,45 @@ function initMagazine() {
   });
 
   initPhotoFraming();
-  initGalleryThumbLazy();
+  initGalleryThumbFallback();
   initMagazineGallery();
 }
 
-function hydrateImg(img) {
-  const src = img.dataset.src;
-  if (!src || img.src) return;
-  img.src = src;
-  img.removeAttribute("data-src");
-}
-
-function hydrateVisibleGalleryThumbs(spread) {
-  spread.querySelectorAll(".magazine-gallery-thumb img[data-src]").forEach((img) => {
-    const rect = img.getBoundingClientRect();
-    if (rect.top < window.innerHeight + 320 && rect.bottom > -320) hydrateImg(img);
-  });
-}
-
-function initGalleryThumbLazy() {
-  const imgs = [...document.querySelectorAll(".magazine-gallery-thumb img[data-src]")];
-  if (!imgs.length) return;
-
-  if (!("IntersectionObserver" in window)) {
-    imgs.forEach(hydrateImg);
-    return;
+function ensurePhotoVisible(img) {
+  if (!img) return;
+  img.classList.add("is-ready");
+  if (img.complete && img.naturalWidth) {
+    img.classList.add("is-loaded");
+  } else {
+    img.addEventListener(
+      "load",
+      () => img.classList.add("is-loaded"),
+      { once: true }
+    );
+    img.addEventListener(
+      "error",
+      () => img.classList.add("is-error"),
+      { once: true }
+    );
   }
+}
 
-  const io = new IntersectionObserver(
-    (entries) => {
-      entries.forEach((entry) => {
-        if (!entry.isIntersecting) return;
-        hydrateImg(entry.target);
-        io.unobserve(entry.target);
-      });
-    },
-    { root: null, rootMargin: "280px 0px", threshold: 0.01 }
-  );
+function initGalleryThumbFallback() {
+  document.querySelectorAll(".magazine-gallery-thumb").forEach((btn) => {
+    const img = btn.querySelector("img");
+    const full = btn.dataset.gallerySrc;
+    if (!img || !full) return;
 
-  imgs.forEach((img) => io.observe(img));
+    img.addEventListener(
+      "error",
+      () => {
+        if (img.dataset.fallbackApplied) return;
+        img.dataset.fallbackApplied = "1";
+        img.src = full;
+      },
+      { once: true }
+    );
+  });
 }
 
 function initPhotoFraming() {
@@ -161,23 +195,30 @@ function initPhotoFraming() {
     if (!frame || !img.naturalWidth) return;
 
     const focal = img.dataset.focal;
-
     const ar = img.naturalWidth / img.naturalHeight;
     frame.classList.remove("is-landscape", "is-wide-portrait");
 
-    if (ar > 1.05) {
-      frame.classList.add("is-landscape");
-    } else if (ar < 0.68) {
-      frame.classList.add("is-wide-portrait");
-    }
+    if (ar > 1.05) frame.classList.add("is-landscape");
+    else if (ar < 0.68) frame.classList.add("is-wide-portrait");
 
-    const position = focal || (ar > 1.05 ? "center center" : ar < 0.68 ? "center 32%" : "center 38%");
+    const position =
+      focal || (ar > 1.05 ? "center center" : ar < 0.68 ? "center 32%" : "center 38%");
     img.style.objectPosition = position;
   }
 
   images.forEach((img) => {
+    ensurePhotoVisible(img);
     if (img.complete) apply(img);
-    else img.addEventListener("load", () => apply(img), { once: true });
+    else {
+      img.addEventListener(
+        "load",
+        () => {
+          apply(img);
+          img.classList.add("is-loaded");
+        },
+        { once: true }
+      );
+    }
   });
 }
 
@@ -196,7 +237,7 @@ function initMagazineGallery() {
   const sources = [];
   const srcIndex = new Map();
   triggers.forEach((el) => {
-    const src = el.dataset.gallerySrc || el.querySelector("img")?.src || "";
+    const src = el.dataset.gallerySrc || "";
     if (!src || srcIndex.has(src)) return;
     const img = el.querySelector("img");
     srcIndex.set(src, sources.length);
@@ -214,23 +255,24 @@ function initMagazineGallery() {
     lightboxImg.style.transform = "scale(.98)";
 
     const show = () => {
-      lightboxImg.src = item.src;
-      lightboxImg.alt = item.alt;
       requestAnimationFrame(() => {
         lightboxImg.style.opacity = "1";
         lightboxImg.style.transform = "scale(1)";
       });
     };
 
-    if (lightboxImg.src === item.src) show();
-    else {
-      lightboxImg.onload = () => {
-        lightboxImg.onload = null;
-        show();
-      };
-      lightboxImg.src = item.src;
-      lightboxImg.alt = item.alt;
-    }
+    const onReady = () => {
+      lightboxImg.onload = null;
+      lightboxImg.onerror = null;
+      show();
+    };
+
+    lightboxImg.onload = onReady;
+    lightboxImg.onerror = onReady;
+    lightboxImg.src = item.src;
+    lightboxImg.alt = item.alt;
+
+    if (lightboxImg.complete) onReady();
 
     if (lightboxCaption) {
       const plain = item.alt.replace(/^[^—]+—\s*/, "").trim();
@@ -255,7 +297,7 @@ function initMagazineGallery() {
     lightbox.setAttribute("aria-hidden", "true");
     document.body.classList.remove("gallery-open");
     if (lightboxImg) {
-      lightboxImg.src = "";
+      lightboxImg.removeAttribute("src");
       lightboxImg.style.opacity = "";
       lightboxImg.style.transform = "";
     }
@@ -263,9 +305,9 @@ function initMagazineGallery() {
 
   triggers.forEach((el) => {
     el.addEventListener("click", () => {
-      const src = el.dataset.gallerySrc || el.querySelector("img")?.src;
-      const i = srcIndex.get(src) ?? 0;
-      openLightbox(i);
+      const src = el.dataset.gallerySrc;
+      if (!src) return;
+      openLightbox(srcIndex.get(src) ?? 0);
     });
   });
 

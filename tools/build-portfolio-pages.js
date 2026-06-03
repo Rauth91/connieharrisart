@@ -222,7 +222,7 @@ function buildGallerySpread(page, preview, galleryOrder) {
       (src, i) => `
         <li class="magazine-gallery-cell">
           <button type="button" class="magazine-gallery-thumb" data-gallery-src="${src}">
-            <img src="" data-src="${thumbSrc(src)}" alt="${page.title} — ${altFromPath(src)}" width="520" height="650" loading="lazy" decoding="async" />
+            <img src="${thumbSrc(src)}" alt="${page.title} — ${altFromPath(src)}" width="520" height="650" loading="lazy" decoding="async" />
             <span class="magazine-gallery-thumb-num">${String(i + 1).padStart(2, "0")}</span>
           </button>
         </li>`
@@ -273,7 +273,7 @@ function buildPhotoSpread(page, index, total, src, curated) {
       <h2>${formatTitle(m[0])}</h2>
       <p>${m[1]}</p>
     </div>
-    ${photoFigure(src, `${page.title} — ${altFromPath(src)}`, index < 1 ? "eager" : "lazy", "", curated)}
+    ${photoFigure(src, `${page.title} — ${altFromPath(src)}`, "lazy", "", curated)}
   </section>`;
 }
 
@@ -310,11 +310,13 @@ function buildPage(page) {
   let gallerySpread = "";
   let galleryChrome = "";
   let railLabels;
+  let coverPreload = "";
 
   if (INCLUDE_PHOTOS) {
     const g = SITE_PHOTOS.gallery[page.key];
     const curatedCfg = CURATED_PAGES[page.key];
     const { cover, portfolio, galleryOrder, galleryPreview } = resolveCurated(g, curatedCfg);
+    coverPreload = `<link rel="preload" as="image" href="${cover}" fetchpriority="high" />\n`;
 
     railLabels = [
       spreadTitlePlain(m0[0]),
@@ -403,7 +405,7 @@ ${railLabels
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,200;0,300;0,400;0,500;1,200;1,300&family=Inter:wght@300;400;500&display=swap" rel="stylesheet" />
 <link rel="stylesheet" href="css/style.css?v=${CACHE}" />
 <link rel="stylesheet" href="css/magazine.css?v=${CACHE}" />
-<script src="js/site-config.js?v=${CACHE}"></script>
+${coverPreload}<script src="js/site-config.js?v=${CACHE}"></script>
 <script src="js/site-nav.js?v=${CACHE}" defer></script>
 </head>
 <body class="magazine-page${INCLUDE_PHOTOS ? "" : " magazine-page--text"}">

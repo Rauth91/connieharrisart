@@ -266,15 +266,17 @@ body.magazine-page::before{
   object-fit:cover;
   object-position:center 38%;
   filter:brightness(.88) saturate(.94) contrast(1.02);
-  opacity:0;
+  opacity:1;
   transform:none;
-  transition:opacity .85s ease,filter .5s ease;
+  transition:filter .5s ease,opacity .35s ease;
+}
+.magazine-photo-main.is-error{
+  opacity:.35;
 }
 .magazine-art-frame.is-landscape .magazine-photo-main{
   object-position:center center;
 }
 .magazine-spread.is-active .magazine-photo-main{
-  opacity:1;
   filter:brightness(.92) saturate(.97) contrast(1.03);
 }
 .magazine-art-frame::after{
@@ -419,8 +421,13 @@ body.magazine-page::before{
   object-fit:cover;
   object-position:center;
   display:block;
+  background:#1a1511;
   filter:brightness(.88) saturate(.92);
-  transition:transform .85s cubic-bezier(.16,1,.3,1),filter .35s ease;
+  transition:transform .85s cubic-bezier(.16,1,.3,1),filter .35s ease,opacity .25s ease;
+}
+.magazine-gallery-thumb img:not([src]),
+.magazine-gallery-thumb img[src=""]{
+  opacity:0;
 }
 .magazine-gallery-thumb:hover img,
 .magazine-gallery-thumb:focus-visible img{
