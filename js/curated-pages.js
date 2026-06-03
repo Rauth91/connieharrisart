@@ -11,7 +11,13 @@ const base = (focal) => ({
 });
 
 const CURATED_PAGES = {
-  murals: base("center 35%"),
+  murals: {
+    ...base("center 35%"),
+    focal: {
+      cover: "center 35%",
+      "slide-02": "center 32%",
+    },
+  },
   fauxFinishes: base("center 38%"),
   basRelief: {
     ...base("center 40%"),
