@@ -216,10 +216,12 @@ function buildGallerySpread(page, preview, galleryOrder) {
   const previewHtml = preview
     .map(
       (src, i) => `
-      <button type="button" class="magazine-gallery-thumb" data-gallery-src="${src}">
-        <img src="${src}" alt="${page.title} — ${altFromPath(src)}" loading="lazy" decoding="async" />
-        <span class="magazine-gallery-thumb-num">${String(i + 1).padStart(2, "0")}</span>
-      </button>`
+        <li class="magazine-gallery-cell">
+          <button type="button" class="magazine-gallery-thumb" data-gallery-src="${src}">
+            <img src="${src}" alt="${page.title} — ${altFromPath(src)}" loading="lazy" decoding="async" />
+            <span class="magazine-gallery-thumb-num">${String(i + 1).padStart(2, "0")}</span>
+          </button>
+        </li>`
     )
     .join("");
 
@@ -233,8 +235,10 @@ function buildGallerySpread(page, preview, galleryOrder) {
         <p>Tap any image to view it full size. Every work in this discipline, in one place.</p>
         <p class="magazine-gallery-stat">${galleryOrder.length}<span>Works in this collection</span></p>
       </header>
-      <div class="magazine-gallery-preview" aria-label="Gallery">
-        ${previewHtml}
+      <div class="magazine-gallery-body" aria-label="Gallery">
+        <ul class="magazine-gallery-mosaic" role="list">
+          ${previewHtml}
+        </ul>
       </div>
     </div>
   </section>`;

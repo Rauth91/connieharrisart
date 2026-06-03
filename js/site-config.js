@@ -1,5 +1,5 @@
 /** Site navigation, practice list, and asset cache version. */
-const SITE_VERSION = "20260601o";
+const SITE_VERSION = "20260601p";
 
 const SITE_PRACTICES = [
   { href: "murals.html", label: "Murals", slug: "murals" },
