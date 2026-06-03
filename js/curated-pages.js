@@ -24,7 +24,13 @@ const CURATED_PAGES = {
     focal: { cover: "center 40%", "slide-01": "center 40%" },
   },
   cabinetFinishes: base("center 40%"),
-  ceilingsFloors: base("center 28%"),
+  ceilingsFloors: {
+    ...base("center 28%"),
+    focal: {
+      cover: "center 28%",
+      "slide-03": "center 38%",
+    },
+  },
   chinoiserie: {
     ...base("center 42%"),
     focal: { cover: "center 42%", "slide-01": "center 42%" },
