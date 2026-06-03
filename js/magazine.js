@@ -28,10 +28,11 @@ function initMagazine() {
   function preloadSpreadImages(index) {
     [index - 1, index, index + 1].forEach((i) => {
       const spread = spreads[i];
-      if (!spread) return;
-      spread.querySelectorAll(".magazine-photo-main, .magazine-gallery-thumb img").forEach((img) => {
+      if (!spread || spread.classList.contains("magazine-spread--gallery")) return;
+      spread.querySelectorAll(".magazine-photo-main[src]").forEach((img) => {
         if (img.complete || !img.src) return;
         const preload = new Image();
+        preload.decoding = "async";
         preload.src = img.src;
       });
     });
@@ -53,6 +54,9 @@ function initMagazine() {
     if (nextBtn) nextBtn.disabled = activeIndex === total - 1;
 
     preloadSpreadImages(activeIndex);
+    if (current?.classList.contains("magazine-spread--gallery")) {
+      hydrateVisibleGalleryThumbs(current);
+    }
   }
 
   function goTo(index) {
@@ -108,7 +112,45 @@ function initMagazine() {
   });
 
   initPhotoFraming();
+  initGalleryThumbLazy();
   initMagazineGallery();
+}
+
+function hydrateImg(img) {
+  const src = img.dataset.src;
+  if (!src || img.src) return;
+  img.src = src;
+  img.removeAttribute("data-src");
+}
+
+function hydrateVisibleGalleryThumbs(spread) {
+  spread.querySelectorAll(".magazine-gallery-thumb img[data-src]").forEach((img) => {
+    const rect = img.getBoundingClientRect();
+    if (rect.top < window.innerHeight + 320 && rect.bottom > -320) hydrateImg(img);
+  });
+}
+
+function initGalleryThumbLazy() {
+  const imgs = [...document.querySelectorAll(".magazine-gallery-thumb img[data-src]")];
+  if (!imgs.length) return;
+
+  if (!("IntersectionObserver" in window)) {
+    imgs.forEach(hydrateImg);
+    return;
+  }
+
+  const io = new IntersectionObserver(
+    (entries) => {
+      entries.forEach((entry) => {
+        if (!entry.isIntersecting) return;
+        hydrateImg(entry.target);
+        io.unobserve(entry.target);
+      });
+    },
+    { root: null, rootMargin: "280px 0px", threshold: 0.01 }
+  );
+
+  imgs.forEach((img) => io.observe(img));
 }
 
 function initPhotoFraming() {
@@ -119,7 +161,6 @@ function initPhotoFraming() {
     if (!frame || !img.naturalWidth) return;
 
     const focal = img.dataset.focal;
-    const ambient = img.closest(".magazine-photo")?.querySelector(".magazine-photo-ambient");
 
     const ar = img.naturalWidth / img.naturalHeight;
     frame.classList.remove("is-landscape", "is-wide-portrait");
@@ -132,7 +173,6 @@ function initPhotoFraming() {
 
     const position = focal || (ar > 1.05 ? "center center" : ar < 0.68 ? "center 32%" : "center 38%");
     img.style.objectPosition = position;
-    if (ambient) ambient.style.objectPosition = position;
   }
 
   images.forEach((img) => {

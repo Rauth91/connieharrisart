@@ -195,18 +195,22 @@ function watermark() {
   return "";
 }
 
+function thumbSrc(src) {
+  return src.replace(/\.jpe?g$/i, "-thumb.jpg");
+}
+
 function photoFigure(src, alt, loading, extraClass, curated) {
   const cls = extraClass ? ` magazine-photo--${extraClass}` : "";
   const key = basenameKey(src);
   const focal = focalFor(curated, key);
   const frameExtra = focusClassFor(curated, src);
   const immersive = extraClass === "cover" ? " magazine-photo--immersive" : "";
+  const priority = extraClass === "cover" ? ' fetchpriority="high"' : "";
 
   return `<figure class="magazine-photo${cls}${immersive}">
-      <img class="magazine-photo-ambient" src="${src}" alt="" aria-hidden="true" loading="${loading}" decoding="async" style="object-position:${focal}" />
       <div class="magazine-photo-inner">
         <div class="magazine-art-frame${frameExtra}">
-          <img class="magazine-photo-main" src="${src}" alt="${alt}" loading="${loading}" decoding="async" data-focal="${focal}" />
+          <img class="magazine-photo-main" src="${src}" alt="${alt}" width="810" height="1080" loading="${loading}" decoding="async"${priority} data-focal="${focal}" />
         </div>
       </div>
     </figure>`;
@@ -218,7 +222,7 @@ function buildGallerySpread(page, preview, galleryOrder) {
       (src, i) => `
         <li class="magazine-gallery-cell">
           <button type="button" class="magazine-gallery-thumb" data-gallery-src="${src}">
-            <img src="${src}" alt="${page.title} — ${altFromPath(src)}" loading="lazy" decoding="async" />
+            <img src="" data-src="${thumbSrc(src)}" alt="${page.title} — ${altFromPath(src)}" width="520" height="650" loading="lazy" decoding="async" />
             <span class="magazine-gallery-thumb-num">${String(i + 1).padStart(2, "0")}</span>
           </button>
         </li>`
