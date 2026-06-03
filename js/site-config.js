@@ -1,5 +1,10 @@
 /** Site navigation, practice list, and asset cache version. */
-const SITE_VERSION = "20260602c";
+const SITE_VERSION = "20260603a";
+
+/** Public site origin (no trailing slash). Update when using a custom domain. */
+const SITE_ORIGIN = "https://rauth91.github.io/connieharrisart";
+
+const SITE_OG_IMAGE = `${SITE_ORIGIN}/images/og-share.jpg`;
 
 const SITE_PRACTICES = [
   { href: "murals.html", label: "Murals", slug: "murals" },
@@ -19,9 +24,11 @@ const SITE_NAV = [
 
 if (typeof window !== "undefined") {
   window.SITE_VERSION = SITE_VERSION;
+  window.SITE_ORIGIN = SITE_ORIGIN;
+  window.SITE_OG_IMAGE = SITE_OG_IMAGE;
   window.SITE_PRACTICES = SITE_PRACTICES;
   window.SITE_NAV = SITE_NAV;
 }
 if (typeof module !== "undefined" && module.exports) {
-  module.exports = { SITE_VERSION, SITE_PRACTICES, SITE_NAV };
+  module.exports = { SITE_VERSION, SITE_ORIGIN, SITE_OG_IMAGE, SITE_PRACTICES, SITE_NAV };
 }

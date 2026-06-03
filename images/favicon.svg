@@ -1,10 +1,12 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" aria-label="Connie Harris">
   <defs>
-    <linearGradient id="g" x1="0" y1="0" x2="1" y2="1">
-      <stop offset="0%" stop-color="#a77b45"/>
-      <stop offset="100%" stop-color="#6f4d35"/>
+    <linearGradient id="gold" x1="18" y1="12" x2="48" y2="52" gradientUnits="userSpaceOnUse">
+      <stop offset="0%" stop-color="#f0d4a8"/>
+      <stop offset="45%" stop-color="#c49a5c"/>
+      <stop offset="100%" stop-color="#7a5638"/>
     </linearGradient>
   </defs>
-  <rect width="64" height="64" rx="10" fill="#241e18"/>
-  <path d="M16 50V14h8.5c9.5 0 15 5.2 15 13.2 0 8.3-5.8 13.6-15.5 13.6H22V50h-6zM22 35h2.8c5.2 0 8.2-2.7 8.2-7.6 0-4.7-2.9-7.2-8-7.2H22V35z" fill="url(#g)"/>
+  <rect width="64" height="64" rx="13" fill="#241e18"/>
+  <rect x="1.5" y="1.5" width="61" height="61" rx="11.5" fill="none" stroke="#a77b45" stroke-opacity="0.35" stroke-width="1"/>
+  <path fill="url(#gold)" d="M40.2 18.2c-9.8 0-16.2 6.8-16.2 16.3 0 9.6 6.4 16.3 16.2 16.3 5.8 0 10.2-2.6 12.4-6.8h-7.4c-1.5 2.2-4.2 3.6-7.2 3.6-6.2 0-9.8-4.8-9.8-13.1 0-8.2 3.6-13.1 9.8-13.1 3.1 0 5.6 1.4 7.1 3.8h7.4c-2.4-5.2-7.4-8-13.3-8z"/>
 </svg>

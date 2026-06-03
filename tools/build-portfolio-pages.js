@@ -395,10 +395,20 @@ ${railLabels
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <meta name="description" content="${page.desc}" />
+<meta property="og:type" content="website" />
 <meta property="og:title" content="${page.title} | Connie Harris" />
 <meta property="og:description" content="${page.desc}" />
+<meta property="og:url" content="https://rauth91.github.io/connieharrisart/${page.file}" />
+<meta property="og:image" content="https://rauth91.github.io/connieharrisart/images/og-share.jpg" />
+<meta property="og:image:width" content="1200" />
+<meta property="og:image:height" content="630" />
+<meta property="og:image:alt" content="Hand-painted mural by Connie Harris, decorative artist in Louisiana" />
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:image" content="https://rauth91.github.io/connieharrisart/images/og-share.jpg" />
 <meta name="theme-color" content="#12100d" />
-<link rel="icon" type="image/svg+xml" href="images/favicon.svg" />
+<link rel="icon" href="images/favicon.svg" type="image/svg+xml" />
+<link rel="icon" href="images/favicon-32.png" type="image/png" sizes="32x32" />
+<link rel="apple-touch-icon" href="images/apple-touch-icon.png" sizes="180x180" />
 <title>${page.title} | Connie Harris</title>
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
