@@ -28,7 +28,7 @@ const CURATED_PAGES = {
     ...base("center 28%"),
     focal: {
       cover: "center 28%",
-      "slide-03": "center 38%",
+      "slide-03": "center 48%",
     },
   },
   chinoiserie: {
