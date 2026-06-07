@@ -1,7 +1,7 @@
 /**
  * Heroes, portfolio spreads, and gallery order per discipline.
  * Photos are imported in numbered order: slide-01 is the cover, then slide-02…
- * Gallery preview and order are built from photo-config at build time.
+ * Gallery mosaic shows only works not already on cover/portfolio spreads (deduped at build time).
  */
 const base = (focal) => ({
   cover: "slide-01",

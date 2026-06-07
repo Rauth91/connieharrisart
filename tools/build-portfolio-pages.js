@@ -2,6 +2,7 @@
 /**
  * Build atelier practice pages — curated heroes, 5 spreads, gallery order, focal points.
  */
+const crypto = require("crypto");
 const fs = require("fs");
 const path = require("path");
 
@@ -12,6 +13,10 @@ const CACHE = SITE_VERSION;
 const INCLUDE_PHOTOS = true;
 const SITE_PHOTOS = require(path.join(ROOT, "js", "photo-config.js"));
 const { CURATED_PAGES } = require(path.join(ROOT, "js", "curated-pages.js"));
+const {
+  BEFORE_AFTER,
+  shouldExcludeFromGallery,
+} = require(path.join(ROOT, "js", "before-after-config.js"));
 const { SITE_NAV, SITE_PRACTICES } = require(path.join(ROOT, "js", "site-config.js"));
 
 const PAGES = [
@@ -121,18 +126,35 @@ function pick(map, key) {
   return key ? map.get(key) : undefined;
 }
 
-function resolveCurated(g, curated) {
+function fileHash(src) {
+  const full = path.join(ROOT, src);
+  if (!fs.existsSync(full)) return null;
+  return crypto.createHash("md5").update(fs.readFileSync(full)).digest("hex");
+}
+
+function resolveCurated(g, curated, pageKey) {
   const map = indexGallery(g);
   const cover = pick(map, curated.cover) || g.slides[0];
   const portfolio = curated.portfolio.map((k) => pick(map, k)).filter(Boolean);
+  const featured = new Set([cover, ...portfolio].filter(Boolean));
+  const featuredHashes = new Set(
+    [...featured].map(fileHash).filter(Boolean)
+  );
 
   const ordered = [];
-  const seen = new Set();
+  const seenPath = new Set();
+  const seenHash = new Set(featuredHashes);
+
   for (const src of [...g.slides, ...g.gallery]) {
-    if (src && !seen.has(src)) {
-      ordered.push(src);
-      seen.add(src);
-    }
+    if (!src || seenPath.has(src) || shouldExcludeFromGallery(src, pageKey)) continue;
+    if (featured.has(src)) continue;
+
+    const hash = fileHash(src);
+    if (hash && seenHash.has(hash)) continue;
+
+    ordered.push(src);
+    seenPath.add(src);
+    if (hash) seenHash.add(hash);
   }
 
   return { cover, portfolio, galleryOrder: ordered, galleryPreview: ordered };
@@ -197,6 +219,61 @@ function watermark() {
 
 function thumbSrc(src) {
   return src.replace(/\.jpe?g$/i, "-thumb.jpg");
+}
+
+function beforeAfterFigure(entry, pageTitle) {
+  const beforeFocal = entry.focal?.before || "center 42%";
+  const afterFocal = entry.focal?.after || "center 42%";
+
+  return `<figure class="magazine-photo magazine-photo--compare">
+      <div class="magazine-photo-inner">
+        <div class="magazine-art-frame">
+          <div class="before-after" data-before-after>
+            <div class="before-after__stage">
+              <img class="before-after__img before-after__img--after" src="${entry.after}" alt="${entry.afterAlt || `${pageTitle} — after`}" width="810" height="1080" loading="lazy" decoding="async" style="object-position:${afterFocal}" />
+              <div class="before-after__before-layer">
+                <img class="before-after__img before-after__img--before" src="${entry.before}" alt="${entry.beforeAlt || `${pageTitle} — before`}" width="810" height="1080" loading="lazy" decoding="async" style="object-position:${beforeFocal}" />
+              </div>
+              <div class="before-after__handle" aria-hidden="true">
+                <span class="before-after__line"></span>
+                <span class="before-after__knob"></span>
+              </div>
+              <span class="before-after__label before-after__label--before">Before</span>
+              <span class="before-after__label before-after__label--after">After</span>
+            </div>
+            <input type="range" class="before-after__range" min="0" max="100" value="50" aria-label="Drag to compare before and after" />
+          </div>
+        </div>
+      </div>
+    </figure>`;
+}
+
+function buildBeforeAfterSpread(page, entry) {
+  return `
+  <section class="magazine-spread magazine-spread--compare" data-page="compare" data-spread-label="${spreadTitlePlain(entry.title)}">
+    ${watermark(page.title)}
+    <div class="magazine-copy">
+      <div class="magazine-rule"><p class="eyebrow">${page.title} · Transformation</p></div>
+      <h2>${formatTitle(entry.title)}</h2>
+      <p>${entry.body}</p>
+    </div>
+    ${beforeAfterFigure(entry, page.title)}
+  </section>`;
+}
+
+function insertBeforeAfterSpreads(page, portfolioSpreads) {
+  const entries = BEFORE_AFTER[page.key];
+  if (!entries?.length) return portfolioSpreads;
+
+  const merged = [...portfolioSpreads];
+  const sorted = [...entries].sort((a, b) => (b.insertAfter ?? 0) - (a.insertAfter ?? 0));
+
+  sorted.forEach((entry) => {
+    const at = Math.min(Math.max(0, (entry.insertAfter ?? 0) + 1), merged.length);
+    merged.splice(at, 0, buildBeforeAfterSpread(page, entry));
+  });
+
+  return merged;
 }
 
 function photoFigure(src, alt, loading, extraClass, curated) {
@@ -315,12 +392,20 @@ function buildPage(page) {
   if (INCLUDE_PHOTOS) {
     const g = SITE_PHOTOS.gallery[page.key];
     const curatedCfg = CURATED_PAGES[page.key];
-    const { cover, portfolio, galleryOrder, galleryPreview } = resolveCurated(g, curatedCfg);
+    const { cover, portfolio, galleryOrder, galleryPreview } = resolveCurated(g, curatedCfg, page.key);
     coverPreload = `<link rel="preload" as="image" href="${cover}" fetchpriority="high" />\n`;
+
+    const portfolioSpreads = portfolio.map((src, i) =>
+      buildPhotoSpread(page, i, portfolio.length, src, curatedCfg)
+    );
+    const photoSpreads = insertBeforeAfterSpreads(page, portfolioSpreads);
 
     railLabels = [
       spreadTitlePlain(m0[0]),
-      ...portfolio.map((_, i) => spreadTitlePlain(page.meta[i + 1][0])),
+      ...photoSpreads.map((html) => {
+        const match = html.match(/data-spread-label="([^"]+)"/);
+        return match ? match[1] : "";
+      }),
       "Full collection",
       "Continue exploring",
     ];
@@ -340,9 +425,7 @@ function buildPage(page) {
     ${photoFigure(cover, page.title, "eager", "cover", curatedCfg)}
   </section>`;
 
-    photos = portfolio
-      .map((src, i) => buildPhotoSpread(page, i, portfolio.length, src, curatedCfg))
-      .join("");
+    photos = photoSpreads.join("");
 
     gallerySpread = buildGallerySpread(page, galleryPreview, galleryOrder);
     galleryChrome = buildGalleryChrome();
@@ -417,6 +500,7 @@ ${railLabels
 <link rel="stylesheet" href="css/magazine.css?v=${CACHE}" />
 ${coverPreload}<script src="js/site-config.js?v=${CACHE}"></script>
 <script src="js/site-nav.js?v=${CACHE}" defer></script>
+${BEFORE_AFTER[page.key]?.length ? `<script src="js/before-after.js?v=${CACHE}" defer></script>\n` : ""}
 </head>
 <body class="magazine-page${INCLUDE_PHOTOS ? "" : " magazine-page--text"}">
 ${navBlock(page.active)}

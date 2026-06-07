@@ -5,6 +5,7 @@
  *
  * Usage: node tools/import-edited-photos.js [sourceDir]
  */
+const crypto = require("crypto");
 const fs = require("fs");
 const path = require("path");
 const { execSync } = require("child_process");
@@ -12,6 +13,7 @@ const { execSync } = require("child_process");
 const ROOT = path.join(__dirname, "..");
 const DEFAULT_SOURCE = path.join(process.env.HOME, "Desktop", "website-ready");
 const SITE_PHOTOS = require(path.join(ROOT, "js", "photo-config.js"));
+const { shouldExcludeFromGallery, normalizeStem } = require(path.join(ROOT, "js", "before-after-config.js"));
 
 const DISCIPLINES = [
   { key: "murals", dir: "murals", selected: "Murals", full: "Murals" },
@@ -77,14 +79,33 @@ function orderByQuality(entries) {
   return [...entries].sort((a, b) => b.area - a.area || a.f.localeCompare(b.f));
 }
 
+function fileHash(filePath) {
+  return crypto.createHash("md5").update(fs.readFileSync(filePath)).digest("hex");
+}
+
 function dedupeEntries(entries) {
-  const seen = new Map();
+  const seenStem = new Map();
+  const seenHash = new Map();
+
   for (const item of entries) {
     const stem = imgStem(item.f);
-    const prev = seen.get(stem);
-    if (!prev || item.area > prev.area) seen.set(stem, item);
+    let hash;
+    try {
+      hash = fileHash(item.full);
+    } catch {
+      continue;
+    }
+
+    const prevStem = seenStem.get(stem);
+    const prevHash = seenHash.get(hash);
+    const prev = prevStem || prevHash;
+    if (!prev || item.area > prev.area) {
+      seenStem.set(stem, item);
+      seenHash.set(hash, item);
+    }
   }
-  return [...seen.values()];
+
+  return [...new Set([...seenStem.values()])];
 }
 
 function buildRankedList(sourceDir, discipline) {
@@ -104,7 +125,9 @@ function buildRankedList(sourceDir, discipline) {
     );
   }
 
-  return dedupeEntries([...selected, ...extras]);
+  return dedupeEntries([...selected, ...extras]).filter(
+    (item) => !shouldExcludeFromGallery(item.f, discipline.key)
+  );
 }
 
 function cleanDir(galleryDir) {
@@ -177,7 +200,7 @@ function updatePhotoConfig(manifest) {
   const body = JSON.stringify(site, null, 2)
     .replace(/"([^"]+)":/g, "$1:")
     .replace(/"/g, '"');
-  const out = `const SITE_PHOTOS = ${body};\n\nif (typeof window !== "undefined") {\n  window.SITE_PHOTOS = SITE_PHOTOS;\n}\nif (typeof module !== "undefined" && module.exports) {\n  module.exports = SITE_PHOTOS;\n}\n`;
+  const out = `const SITE_PHOTOS = ${body};\n\nif (typeof module !== "undefined" && module.exports) {\n  module.exports = SITE_PHOTOS;\n}\n`;
   fs.writeFileSync(configPath, out);
 }
 
@@ -222,14 +245,6 @@ function assignHomeHero(sourceDir) {
   const muralRanked = buildRankedList(sourceDir, { selected: "Murals", full: "Murals" });
   if (muralRanked.length) {
     exportImage(muralRanked[0].full, SITE_PHOTOS.home.hero, PRESETS.work);
-  }
-
-  const brRanked = buildRankedList(sourceDir, {
-    selected: "Bas-Relief",
-    full: "Bas-Relief",
-  });
-  if (brRanked.length && SITE_PHOTOS.contact?.hero) {
-    exportImage(brRanked[0].full, SITE_PHOTOS.contact.hero, PRESETS.work);
   }
 
   console.log("  ✓ home hero");

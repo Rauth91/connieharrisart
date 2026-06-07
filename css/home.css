@@ -99,12 +99,6 @@
   .work-grid{grid-template-columns:repeat(2,1fr);gap:1px}
   .work-card{aspect-ratio:3/4;min-height:0;max-height:none}
 }
-.video-showcase{padding:0 var(--home-pad-x) 6rem}
-.video-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:clamp(.7rem,1.6vw,1.2rem);margin:1rem 0 0;width:100%}
-.video-card{border:1px solid var(--line);background:rgba(255,255,255,.34);padding:.65rem}
-.video-wrap{position:relative;aspect-ratio:9/16;overflow:hidden;background:#19130f}
-.video-wrap video{width:100%;height:100%;object-fit:cover;display:block}
-.video-card p{margin-top:.55rem;font-size:.58rem;letter-spacing:.2em;text-transform:uppercase;color:var(--gold)}
 .about-flow{display:grid;grid-template-columns:1fr 1.1fr;gap:clamp(1.5rem,5vw,6rem);align-items:center;padding:clamp(4rem,9vw,9rem) var(--home-pad-x)}
 .about-portrait{margin:0;aspect-ratio:3/4;max-height:min(720px,78vh);background:#f3ebe0;border-radius:0 120px 0 0;overflow:hidden;box-shadow:0 28px 80px rgba(42,31,23,.18)}.about-portrait img{width:100%;height:100%;object-fit:cover;object-position:center top;display:block;filter:saturate(.94)}
 .about-copy{max-width:48rem}.about-copy .section-title{margin:.55rem 0 1.5rem}.about-copy p{line-height:1.9;color:var(--soft);margin-top:1rem;font-size:clamp(1rem,1.35vw,1.15rem);letter-spacing:.01em}.about-copy .lead{font-family:"Cormorant Garamond",serif;font-size:clamp(1.5rem,2.8vw,2.4rem);font-weight:300;line-height:1.15;color:var(--ink);letter-spacing:-.015em}
@@ -238,7 +232,6 @@
   .work-head{display:block}
   .section-sub{margin-top:1rem}
   .work-card{max-height:400px}
-  .video-grid{grid-template-columns:repeat(2,1fr);gap:.9rem}
   .about-flow{grid-template-columns:1fr}
   .about-portrait{max-height:none;width:100%;max-width:28rem;margin:0 auto}
   .studio-path-steps{grid-template-columns:1fr}
@@ -266,8 +259,6 @@
   .work-card span{font-size:.46rem;letter-spacing:.16em}
   .work-card h3{font-size:clamp(1.15rem,5.2vw,1.7rem);margin-top:.15rem}
   .work-card .view-link{margin-top:.35rem;font-size:.44rem}
-  .video-showcase{padding:0 var(--home-pad-x) 2.4rem}
-  .video-grid{gap:.55rem}
   .studio-path{padding:2.5rem var(--home-pad-x)}
   .studio-path-steps{gap:.75rem}
   .voices-inner{padding:2rem 1.25rem}

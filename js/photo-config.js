@@ -9,11 +9,6 @@ const SITE_PHOTOS = {
       ceilingsFloors: "images/work/ceilings-floors.jpg",
       murals: "images/work/murals.jpg",
       chinoiserie: "images/work/chinoiserie.jpg"
-    },
-    videos: {
-      studio: "images/videos/studio-process.jpg",
-      material: "images/videos/material-detail.jpg",
-      finished: "images/videos/finished-atmosphere.jpg"
     }
   },
   classes: {
@@ -165,15 +160,9 @@ const SITE_PHOTOS = {
         "images/gallery/chinoiserie/gallery-14.jpg"
       ]
     }
-  },
-  contact: {
-    hero: "images/contact/hero.jpg"
   }
 };
 
-if (typeof window !== "undefined") {
-  window.SITE_PHOTOS = SITE_PHOTOS;
-}
 if (typeof module !== "undefined" && module.exports) {
   module.exports = SITE_PHOTOS;
 }

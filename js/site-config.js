@@ -1,5 +1,5 @@
 /** Site navigation, practice list, and asset cache version. */
-const SITE_VERSION = "20260603b";
+const SITE_VERSION = "20260608a";
 
 /** Public site origin (no trailing slash). Update when using a custom domain. */
 const SITE_ORIGIN = "https://rauth91.github.io/connieharrisart";

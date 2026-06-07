@@ -77,6 +77,14 @@ After editing `js/site-config.js`:
 node tools/sync-nav.js
 ```
 
+## Sync navigation (home, classes, contact only)
+
+Practice gallery pages get nav from `build-portfolio-pages.js`. For static pages:
+
+```bash
+node tools/sync-nav.js
+```
+
 ## Cache busting
 
 All pages use `SITE_VERSION` in `js/site-config.js`. Bump it when CSS or JS changes ship.

@@ -22,7 +22,7 @@
       if (ok) {
         try {
           const data = await response.json();
-          ok = Boolean(data.success);
+          ok = Boolean(data.ok ?? data.success);
         } catch {
           ok = true;
         }

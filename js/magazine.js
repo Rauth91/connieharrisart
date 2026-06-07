@@ -27,7 +27,9 @@ function initMagazine() {
   }
 
   function spreadMainImages(spread) {
-    return [...spread.querySelectorAll("img.magazine-photo-main")];
+    const mains = [...spread.querySelectorAll("img.magazine-photo-main")];
+    const compare = [...spread.querySelectorAll(".before-after__img")];
+    return [...mains, ...compare];
   }
 
   function preloadSpreadImages(index) {
@@ -93,6 +95,10 @@ function initMagazine() {
     if (nextBtn) nextBtn.disabled = activeIndex === total - 1;
 
     document.body.classList.toggle("magazine-on-gallery", isGallerySpread(activeIndex));
+    document.body.classList.toggle(
+      "magazine-on-compare",
+      current?.classList.contains("magazine-spread--compare")
+    );
 
     preloadSpreadImages(activeIndex);
     spreadMainImages(current).forEach((img) => ensurePhotoVisible(img));
@@ -145,12 +151,12 @@ function initMagazine() {
 
   prevBtn?.addEventListener("click", () => goTo(activeIndex - 1));
   nextBtn?.addEventListener("click", () => goTo(activeIndex + 1));
-  tapNext?.addEventListener("click", () => {
-    if (isGallerySpread()) return;
+  tapNext?.addEventListener("click", (e) => {
+    if (isGallerySpread() || e.target.closest("[data-before-after]")) return;
     goTo(activeIndex + 1);
   });
-  tapPrev?.addEventListener("click", () => {
-    if (isGallerySpread()) return;
+  tapPrev?.addEventListener("click", (e) => {
+    if (isGallerySpread() || e.target.closest("[data-before-after]")) return;
     goTo(activeIndex - 1);
   });
 

@@ -22,11 +22,13 @@
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,200;0,300;0,400;0,500;1,200;1,300&family=Inter:wght@300;400;500&display=swap" rel="stylesheet" />
-<link rel="stylesheet" href="css/style.css?v=20260603a" />
-<link rel="stylesheet" href="css/magazine.css?v=20260603a" />
+<link rel="stylesheet" href="css/style.css?v=20260608a" />
+<link rel="stylesheet" href="css/magazine.css?v=20260608a" />
 <link rel="preload" as="image" href="images/gallery/faux-finishes/slide-01.jpg" fetchpriority="high" />
-<script src="js/site-config.js?v=20260603a"></script>
-<script src="js/site-nav.js?v=20260603a" defer></script>
+<script src="js/site-config.js?v=20260608a"></script>
+<script src="js/site-nav.js?v=20260608a" defer></script>
+<script src="js/before-after.js?v=20260608a" defer></script>
+
 </head>
 <body class="magazine-page">
 <header class="topbar">
@@ -81,8 +83,9 @@
 <button type="button" class="magazine-rail-dot" data-spread-index="3" aria-label="Made for Living"><span class="magazine-rail-tip">Made for Living</span></button>
 <button type="button" class="magazine-rail-dot" data-spread-index="4" aria-label="Depth Under Light"><span class="magazine-rail-tip">Depth Under Light</span></button>
 <button type="button" class="magazine-rail-dot" data-spread-index="5" aria-label="Surface by Surface"><span class="magazine-rail-tip">Surface by Surface</span></button>
-<button type="button" class="magazine-rail-dot" data-spread-index="6" aria-label="Full collection"><span class="magazine-rail-tip">Full collection</span></button>
-<button type="button" class="magazine-rail-dot" data-spread-index="7" aria-label="Continue exploring"><span class="magazine-rail-tip">Continue exploring</span></button>
+<button type="button" class="magazine-rail-dot" data-spread-index="6" aria-label="Before & After"><span class="magazine-rail-tip">Before & After</span></button>
+<button type="button" class="magazine-rail-dot" data-spread-index="7" aria-label="Full collection"><span class="magazine-rail-tip">Full collection</span></button>
+<button type="button" class="magazine-rail-dot" data-spread-index="8" aria-label="Continue exploring"><span class="magazine-rail-tip">Continue exploring</span></button>
 </nav>
 
 <main class="magazine-book" id="magazine-book">
@@ -182,6 +185,35 @@
       </div>
     </figure>
   </section>
+  <section class="magazine-spread magazine-spread--compare" data-page="compare" data-spread-label="Before & After">
+    
+    <div class="magazine-copy">
+      <div class="magazine-rule"><p class="eyebrow">Wall Finishes · Transformation</p></div>
+      <h2>Before &<br><span class="title-accent">After</span></h2>
+      <p>Drag the handle to compare the wall mid-finish and the completed metallic plaster — hand-stenciled pattern over a troweled ground.</p>
+    </div>
+    <figure class="magazine-photo magazine-photo--compare">
+      <div class="magazine-photo-inner">
+        <div class="magazine-art-frame">
+          <div class="before-after" data-before-after>
+            <div class="before-after__stage">
+              <img class="before-after__img before-after__img--after" src="images/before-after/faux-finishes/01-after.jpg" alt="Wall Finishes — decorative wall after finishing" width="810" height="1080" loading="lazy" decoding="async" style="object-position:center 50%" />
+              <div class="before-after__before-layer">
+                <img class="before-after__img before-after__img--before" src="images/before-after/faux-finishes/01-before.jpg" alt="Wall Finishes — decorative wall before finishing" width="810" height="1080" loading="lazy" decoding="async" style="object-position:center 42%" />
+              </div>
+              <div class="before-after__handle" aria-hidden="true">
+                <span class="before-after__line"></span>
+                <span class="before-after__knob"></span>
+              </div>
+              <span class="before-after__label before-after__label--before">Before</span>
+              <span class="before-after__label before-after__label--after">After</span>
+            </div>
+            <input type="range" class="before-after__range" min="0" max="100" value="50" aria-label="Drag to compare before and after" />
+          </div>
+        </div>
+      </div>
+    </figure>
+  </section>
 
   <section class="magazine-spread magazine-spread--gallery" data-page="gallery" id="gallery" data-spread-label="Full collection">
     
@@ -190,117 +222,81 @@
         <div class="magazine-rule"><p class="eyebrow">Wall Finishes · Gallery</p></div>
         <h2>The full<br><span class="title-accent">collection</span></h2>
         <p>Tap any image to view it full size. Every work in this discipline, in one place.</p>
-        <p class="magazine-gallery-stat">18<span>Works in this collection</span></p>
+        <p class="magazine-gallery-stat">12<span>Works in this collection</span></p>
       </header>
       <div class="magazine-gallery-body" aria-label="Gallery">
         <ul class="magazine-gallery-mosaic" role="list">
           
         <li class="magazine-gallery-cell">
-          <button type="button" class="magazine-gallery-thumb" data-gallery-src="images/gallery/faux-finishes/slide-01.jpg">
-            <img src="images/gallery/faux-finishes/slide-01-thumb.jpg" alt="Wall Finishes — Slide 01" width="520" height="650" loading="lazy" decoding="async" />
-            <span class="magazine-gallery-thumb-num">01</span>
-          </button>
-        </li>
-        <li class="magazine-gallery-cell">
-          <button type="button" class="magazine-gallery-thumb" data-gallery-src="images/gallery/faux-finishes/slide-02.jpg">
-            <img src="images/gallery/faux-finishes/slide-02-thumb.jpg" alt="Wall Finishes — Slide 02" width="520" height="650" loading="lazy" decoding="async" />
-            <span class="magazine-gallery-thumb-num">02</span>
-          </button>
-        </li>
-        <li class="magazine-gallery-cell">
-          <button type="button" class="magazine-gallery-thumb" data-gallery-src="images/gallery/faux-finishes/slide-03.jpg">
-            <img src="images/gallery/faux-finishes/slide-03-thumb.jpg" alt="Wall Finishes — Slide 03" width="520" height="650" loading="lazy" decoding="async" />
-            <span class="magazine-gallery-thumb-num">03</span>
-          </button>
-        </li>
-        <li class="magazine-gallery-cell">
-          <button type="button" class="magazine-gallery-thumb" data-gallery-src="images/gallery/faux-finishes/slide-04.jpg">
-            <img src="images/gallery/faux-finishes/slide-04-thumb.jpg" alt="Wall Finishes — Slide 04" width="520" height="650" loading="lazy" decoding="async" />
-            <span class="magazine-gallery-thumb-num">04</span>
-          </button>
-        </li>
-        <li class="magazine-gallery-cell">
-          <button type="button" class="magazine-gallery-thumb" data-gallery-src="images/gallery/faux-finishes/gallery-01.jpg">
-            <img src="images/gallery/faux-finishes/gallery-01-thumb.jpg" alt="Wall Finishes — Gallery 01" width="520" height="650" loading="lazy" decoding="async" />
-            <span class="magazine-gallery-thumb-num">05</span>
-          </button>
-        </li>
-        <li class="magazine-gallery-cell">
-          <button type="button" class="magazine-gallery-thumb" data-gallery-src="images/gallery/faux-finishes/gallery-02.jpg">
-            <img src="images/gallery/faux-finishes/gallery-02-thumb.jpg" alt="Wall Finishes — Gallery 02" width="520" height="650" loading="lazy" decoding="async" />
-            <span class="magazine-gallery-thumb-num">06</span>
-          </button>
-        </li>
-        <li class="magazine-gallery-cell">
           <button type="button" class="magazine-gallery-thumb" data-gallery-src="images/gallery/faux-finishes/gallery-03.jpg">
             <img src="images/gallery/faux-finishes/gallery-03-thumb.jpg" alt="Wall Finishes — Gallery 03" width="520" height="650" loading="lazy" decoding="async" />
-            <span class="magazine-gallery-thumb-num">07</span>
+            <span class="magazine-gallery-thumb-num">01</span>
           </button>
         </li>
         <li class="magazine-gallery-cell">
           <button type="button" class="magazine-gallery-thumb" data-gallery-src="images/gallery/faux-finishes/gallery-04.jpg">
             <img src="images/gallery/faux-finishes/gallery-04-thumb.jpg" alt="Wall Finishes — Gallery 04" width="520" height="650" loading="lazy" decoding="async" />
-            <span class="magazine-gallery-thumb-num">08</span>
+            <span class="magazine-gallery-thumb-num">02</span>
           </button>
         </li>
         <li class="magazine-gallery-cell">
           <button type="button" class="magazine-gallery-thumb" data-gallery-src="images/gallery/faux-finishes/gallery-05.jpg">
             <img src="images/gallery/faux-finishes/gallery-05-thumb.jpg" alt="Wall Finishes — Gallery 05" width="520" height="650" loading="lazy" decoding="async" />
-            <span class="magazine-gallery-thumb-num">09</span>
+            <span class="magazine-gallery-thumb-num">03</span>
           </button>
         </li>
         <li class="magazine-gallery-cell">
           <button type="button" class="magazine-gallery-thumb" data-gallery-src="images/gallery/faux-finishes/gallery-06.jpg">
             <img src="images/gallery/faux-finishes/gallery-06-thumb.jpg" alt="Wall Finishes — Gallery 06" width="520" height="650" loading="lazy" decoding="async" />
-            <span class="magazine-gallery-thumb-num">10</span>
+            <span class="magazine-gallery-thumb-num">04</span>
           </button>
         </li>
         <li class="magazine-gallery-cell">
           <button type="button" class="magazine-gallery-thumb" data-gallery-src="images/gallery/faux-finishes/gallery-07.jpg">
             <img src="images/gallery/faux-finishes/gallery-07-thumb.jpg" alt="Wall Finishes — Gallery 07" width="520" height="650" loading="lazy" decoding="async" />
-            <span class="magazine-gallery-thumb-num">11</span>
+            <span class="magazine-gallery-thumb-num">05</span>
           </button>
         </li>
         <li class="magazine-gallery-cell">
           <button type="button" class="magazine-gallery-thumb" data-gallery-src="images/gallery/faux-finishes/gallery-08.jpg">
             <img src="images/gallery/faux-finishes/gallery-08-thumb.jpg" alt="Wall Finishes — Gallery 08" width="520" height="650" loading="lazy" decoding="async" />
-            <span class="magazine-gallery-thumb-num">12</span>
+            <span class="magazine-gallery-thumb-num">06</span>
           </button>
         </li>
         <li class="magazine-gallery-cell">
           <button type="button" class="magazine-gallery-thumb" data-gallery-src="images/gallery/faux-finishes/gallery-09.jpg">
             <img src="images/gallery/faux-finishes/gallery-09-thumb.jpg" alt="Wall Finishes — Gallery 09" width="520" height="650" loading="lazy" decoding="async" />
-            <span class="magazine-gallery-thumb-num">13</span>
+            <span class="magazine-gallery-thumb-num">07</span>
           </button>
         </li>
         <li class="magazine-gallery-cell">
           <button type="button" class="magazine-gallery-thumb" data-gallery-src="images/gallery/faux-finishes/gallery-10.jpg">
             <img src="images/gallery/faux-finishes/gallery-10-thumb.jpg" alt="Wall Finishes — Gallery 10" width="520" height="650" loading="lazy" decoding="async" />
-            <span class="magazine-gallery-thumb-num">14</span>
+            <span class="magazine-gallery-thumb-num">08</span>
           </button>
         </li>
         <li class="magazine-gallery-cell">
           <button type="button" class="magazine-gallery-thumb" data-gallery-src="images/gallery/faux-finishes/gallery-11.jpg">
             <img src="images/gallery/faux-finishes/gallery-11-thumb.jpg" alt="Wall Finishes — Gallery 11" width="520" height="650" loading="lazy" decoding="async" />
-            <span class="magazine-gallery-thumb-num">15</span>
+            <span class="magazine-gallery-thumb-num">09</span>
           </button>
         </li>
         <li class="magazine-gallery-cell">
           <button type="button" class="magazine-gallery-thumb" data-gallery-src="images/gallery/faux-finishes/gallery-12.jpg">
             <img src="images/gallery/faux-finishes/gallery-12-thumb.jpg" alt="Wall Finishes — Gallery 12" width="520" height="650" loading="lazy" decoding="async" />
-            <span class="magazine-gallery-thumb-num">16</span>
+            <span class="magazine-gallery-thumb-num">10</span>
           </button>
         </li>
         <li class="magazine-gallery-cell">
           <button type="button" class="magazine-gallery-thumb" data-gallery-src="images/gallery/faux-finishes/gallery-13.jpg">
             <img src="images/gallery/faux-finishes/gallery-13-thumb.jpg" alt="Wall Finishes — Gallery 13" width="520" height="650" loading="lazy" decoding="async" />
-            <span class="magazine-gallery-thumb-num">17</span>
+            <span class="magazine-gallery-thumb-num">11</span>
           </button>
         </li>
         <li class="magazine-gallery-cell">
           <button type="button" class="magazine-gallery-thumb" data-gallery-src="images/gallery/faux-finishes/gallery-14.jpg">
             <img src="images/gallery/faux-finishes/gallery-14-thumb.jpg" alt="Wall Finishes — Gallery 14" width="520" height="650" loading="lazy" decoding="async" />
-            <span class="magazine-gallery-thumb-num">18</span>
+            <span class="magazine-gallery-thumb-num">12</span>
           </button>
         </li>
         </ul>
@@ -337,7 +333,7 @@
   <p class="magazine-lightbox-meta" id="magazine-lightbox-meta"></p>
 </div>
 
-<script src="js/main.js?v=20260603a"></script>
-<script src="js/magazine.js?v=20260603a"></script>
+<script src="js/main.js?v=20260608a"></script>
+<script src="js/magazine.js?v=20260608a"></script>
 </body>
 </html>
